@@ -4443,6 +4443,7 @@ img {
   background-color: #faf9f6;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  scroll-margin-top: 85px;
 }
 
 .products-section-container {
