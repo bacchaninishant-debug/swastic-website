@@ -1177,5 +1177,111 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // 16. Luxury Mobile Navigation Drawer Controller
+  function initMobileNavDrawer() {
+    // Check if drawer exists; if not, create and inject it
+    let backdrop = document.getElementById('mobileNavBackdrop');
+    let drawer = document.getElementById('mobileNavDrawer');
+
+    if (!drawer) {
+      backdrop = document.createElement('div');
+      backdrop.id = 'mobileNavBackdrop';
+      backdrop.className = 'mobile-nav-drawer-backdrop';
+
+      let userBlock = '';
+      try {
+        const rawCust = localStorage.getItem('swastic_customer');
+        if (rawCust) {
+          const cust = JSON.parse(rawCust);
+          userBlock = `
+            <div class="mobile-drawer-user-card">
+              <div class="mobile-drawer-user-info">
+                <span class="mobile-drawer-user-name">${cust.firstName ? cust.firstName + ' ' + (cust.lastName || '') : 'VIP Client'}</span>
+                <span class="mobile-drawer-user-tier">✦ Heritage Collector Tier ✦</span>
+              </div>
+              <a href="account.html" class="mobile-drawer-user-link">View Profile</a>
+            </div>
+          `;
+        } else {
+          userBlock = `
+            <div class="mobile-drawer-user-card">
+              <div class="mobile-drawer-user-info">
+                <span class="mobile-drawer-user-name">Guest Client</span>
+                <span class="mobile-drawer-user-tier">Join Collector Circle</span>
+              </div>
+              <a href="login.html" class="mobile-drawer-user-link">Sign In</a>
+            </div>
+          `;
+        }
+      } catch(e) {}
+
+      drawer = document.createElement('div');
+      drawer.id = 'mobileNavDrawer';
+      drawer.className = 'mobile-nav-drawer';
+      drawer.innerHTML = `
+        <div class="mobile-drawer-header">
+          <a href="index.html" class="mobile-drawer-logo">
+            <span class="drawer-brand-title">SWASTIC EXPORTS</span>
+            <span class="drawer-brand-sub">HOUSE OF GEMS</span>
+          </a>
+          <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close Menu">✕</button>
+        </div>
+        ${userBlock}
+        <ul class="mobile-drawer-links">
+          <li class="mobile-drawer-link-item"><a href="index.html"><span>Home</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="shapes.html"><span>Shop by Shape</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="index.html#diamond-products-section"><span>Natural Gemstones</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="promise.html"><span>The Swastic Promise</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="index.html#stories-section"><span>Exhibitions &amp; Stories</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="about.html"><span>About Atelier</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="account.html"><span>My Atelier Profile</span><span class="link-arrow">→</span></a></li>
+        </ul>
+        <div class="mobile-drawer-footer">
+          <a href="https://wa.me/919820012345" target="_blank" rel="noopener" class="mobile-drawer-wa-btn">
+            <span>💬 Direct WhatsApp Concierge</span>
+          </a>
+          <p class="mobile-drawer-contact-line">Direct Line: +91 98200 12345</p>
+          <p class="mobile-drawer-contact-line">Bharat Diamond Bourse, BKC, Mumbai</p>
+        </div>
+      `;
+
+      document.body.appendChild(backdrop);
+      document.body.appendChild(drawer);
+
+      // Close events
+      const closeBtn = drawer.querySelector('#mobileDrawerClose');
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      backdrop.addEventListener('click', closeDrawer);
+
+      drawer.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          closeDrawer();
+        });
+      });
+    }
+
+    function openDrawer() {
+      if (drawer) drawer.classList.add('active');
+      if (backdrop) backdrop.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      if (drawer) drawer.classList.remove('active');
+      if (backdrop) backdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Attach to any mobile menu toggle buttons
+    document.querySelectorAll('#mobileMenuBtn, .mobile-menu-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openDrawer();
+      });
+    });
+  }
+
+  initMobileNavDrawer();
 });
 
