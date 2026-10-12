@@ -739,16 +739,708 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Search Bar Trigger
-  const searchTrigger = document.getElementById('searchTrigger');
-  if (searchTrigger) {
-    searchTrigger.addEventListener('click', () => {
-      const query = prompt('Search SWASTIC EXPORTS Gemstones & Fine Jewelry (e.g., Solitaire, Eternity, Emerald):');
-      if (query) {
-        alert(`Searching Swastic Exports catalog for "${query}"...`);
+  // ==========================================================================
+  // SWASTIC EXPORTS - LUXURY WHITE SEARCH MODAL & GEMSTONE SUGGESTIONS
+  // ==========================================================================
+  const SWASTIC_SEARCH_CATALOG = [
+    {
+      id: 'gem-emerald',
+      title: '2.60 CT Colombian Emerald Cut Loose Gemstone',
+      price: 3800,
+      priceStr: '$3,800',
+      spec: 'GIA • Vivid Green • VVS • Royal Provenance',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-emerald.png',
+      category: 'emerald colombian zambian green loose gemstone step cut beryl gia certified'
+    },
+    {
+      id: 'gem-burma-ruby',
+      title: '3.50 CT Natural Burma Pigeon Blood Ruby',
+      price: 6200,
+      priceStr: '$6,200',
+      spec: 'GIA Certified • Untreated • Vivid Pigeon Blood Red',
+      badge: 'RARE COLLECTOR',
+      img: 'images/gem-burma-ruby.jpg',
+      category: 'ruby burma red loose gemstone cushion gia corundum untreated'
+    },
+    {
+      id: 'gem-blue-sapphire',
+      title: '3.65 CT Ceylon Royal Blue Sapphire Precision Cut',
+      price: 4800,
+      priceStr: '$4,800',
+      spec: 'GIA • Velvety Royal Blue • VVS1 • Precision Cut',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-blue-aquamarine.jpg',
+      category: 'sapphire blue ceylon royal blue loose gemstone precision cut gia'
+    },
+    {
+      id: 'gem-aquamarine',
+      title: '3.15 CT Santa Maria Aquamarine Cushion Cut',
+      price: 2100,
+      priceStr: '$2,100',
+      spec: 'GIA • Santa Maria Cyan • VVS1 • Radiant Cushion Cut',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-aquamarine.png',
+      category: 'aquamarine cyan blue cushion cut loose gemstone beryl santa maria gia'
+    },
+    {
+      id: 'gem-goshenite-diamond',
+      title: '2.75 CT Goshenite Brilliant Pure Diamond Gemstone',
+      price: 3200,
+      priceStr: '$3,200',
+      spec: 'GIA • D Color • VVS1 • Triple Excellent Optical Fire',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-goshenite-diamond.png',
+      category: 'diamond goshenite d color brilliant oval loose gemstone beryl gia'
+    },
+    {
+      id: 'gem-red-beryl',
+      title: '1.90 CT Red Beryl Step Cut Loose Gemstone',
+      price: 4500,
+      priceStr: '$4,500',
+      spec: 'GIA • Vivid Raspberry Red • VVS2 • Rare Utah Bixbite',
+      badge: 'ULTRA RARE',
+      img: 'images/product-gem-red-beryl.png',
+      category: 'red beryl ruby crimson step cut bixbite rare loose gemstone utah'
+    },
+    {
+      id: 'gem-morganite',
+      title: '3.40 CT Blush Peach Morganite Pear Cut Gemstone',
+      price: 1950,
+      priceStr: '$1,950',
+      spec: 'GIA • Blush Peach Pink • VVS1 • Heirloom Teardrop',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-morganite.png',
+      category: 'morganite pink peach pear teardrop loose gemstone beryl blush'
+    },
+    {
+      id: 'gem-heliodor',
+      title: '3.20 CT Heliodor Golden Step Cut Loose Gemstone',
+      price: 1750,
+      priceStr: '$1,750',
+      spec: 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-heliodor.png',
+      category: 'heliodor yellow golden step cut loose gemstone beryl sunshine'
+    },
+    {
+      id: 'gem-green-beryl',
+      title: '2.35 CT Mint Green Beryl Emerald Cut Gemstone',
+      price: 1850,
+      priceStr: '$1,850',
+      spec: 'GIA • Mint Green • VVS1 • Heirloom Step Cut',
+      badge: 'GIA CERTIFIED',
+      img: 'images/product-gem-green-beryl.png',
+      category: 'green beryl emerald cut mint green loose gemstone beryl gia'
+    },
+    {
+      id: 'gem-maxixe',
+      title: '2.80 CT Maxixe Cobalt Blue Oval Cut Gemstone',
+      price: 2950,
+      priceStr: '$2,950',
+      spec: 'GIA • Royal Cobalt Blue • VVS1 • Rare Natural Specimen',
+      badge: 'RARE SPECIMEN',
+      img: 'images/product-gem-maxixe.png',
+      category: 'maxixe blue cobalt blue oval loose gemstone beryl rare'
+    },
+    {
+      id: 'arrival-paraiba',
+      title: 'Baby Blue Paraiba Tourmaline 25.92ct Matched Pair',
+      price: 8400,
+      priceStr: '$8,400',
+      spec: 'Matched Pair • 25.92 CT • Neon Cyan Blue',
+      badge: 'MATCHED PAIR',
+      img: 'images/pair-paraiba-tourmaline.png',
+      category: 'paraiba tourmaline cyan neon blue pair matched earrings'
+    },
+    {
+      id: 'arrival-ct0458',
+      title: 'Vivid Green Chrome Tourmaline 5.73ct Matched Pair',
+      price: 2650,
+      priceStr: '$2,650',
+      spec: 'Matched Pair • 5.73 CT • Vivid Forest Green Teardrop',
+      badge: 'MATCHED PAIR',
+      img: 'images/pair-chrome-tourmaline-5ct.png',
+      category: 'chrome tourmaline green pear teardrop pair earrings'
+    },
+    {
+      id: 'shape-emerald-blue',
+      title: '2.45 CT Zambian Emerald-Cut Certified Gemstone',
+      price: 4400,
+      priceStr: '$4,400',
+      spec: 'Natural Certified • VVS1 • Step Cut Hall of Mirrors • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-emerald.jpg',
+      category: 'emerald cut emerald step cut solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-round-blue',
+      title: '2.00 CT Round Brilliant Cut Certified Gemstone',
+      price: 4250,
+      priceStr: '$4,250',
+      spec: 'Natural Certified • VVS1 • 57 Facet Brilliant Fire • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-round.jpg',
+      category: 'round brilliant cut diamond solitaire loose gemstone fire gia'
+    },
+    {
+      id: 'shape-oval-blue',
+      title: '2.15 CT Oval-Cut Royal Certified Gemstone',
+      price: 4050,
+      priceStr: '$4,050',
+      spec: 'Natural Certified • VVS1 • Royal Silhouette • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-oval.jpg',
+      category: 'oval cut royal silhouette solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-cushion-blue',
+      title: '2.25 CT Cushion-Cut Certified Gemstone',
+      price: 3980,
+      priceStr: '$3,980',
+      spec: 'Natural Certified • VVS1 • Soft Pillow Faceting • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-cushion.jpg',
+      category: 'cushion cut soft pillow solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-pear-blue',
+      title: '2.20 CT Pear-Cut Teardrop Certified Gemstone',
+      price: 4100,
+      priceStr: '$4,100',
+      spec: 'Natural Certified • VVS1 • Teardrop Elegance • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-pear.jpg',
+      category: 'pear cut teardrop solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-heart-blue',
+      title: '2.05 CT Heart-Cut Certified Gemstone',
+      price: 3850,
+      priceStr: '$3,850',
+      spec: 'Natural Certified • VVS1 • Romantic Symmetry • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-heart.jpg',
+      category: 'heart cut romantic solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-princess-blue',
+      title: '2.03 CT Princess-Cut Square Fire Gemstone',
+      price: 3950,
+      priceStr: '$3,950',
+      spec: 'Natural Certified • VVS2 • Square Brilliant Fire • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-princess.jpg',
+      category: 'princess cut square fire solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-marquise-blue',
+      title: '2.10 CT Marquise-Cut Royal Silhouette Gemstone',
+      price: 4180,
+      priceStr: '$4,180',
+      spec: 'Natural Certified • VVS1 • Dramatic Royal Silhouette • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: 'images/diamond-blue-marquise.jpg',
+      category: 'marquise cut dramatic royal solitaire loose gemstone gia'
+    },
+    {
+      id: 'ring-emerald-solitaire',
+      title: 'Emerald Cut Natural Solitaire Fine Jewelry Ring',
+      price: 5400,
+      priceStr: '$5,400',
+      spec: '18K Yellow Gold / Platinum • 2.50 CT Center • Handcrafted',
+      badge: 'FINE JEWELRY',
+      img: 'images/ring-emerald.jpg',
+      category: 'ring emerald cut solitaire diamond jewelry gold platinum'
+    },
+    {
+      id: 'ring-round-platinum',
+      title: 'Round Brilliant Platinum Solitaire Engagement Ring',
+      price: 4900,
+      priceStr: '$4,900',
+      spec: 'Solid Platinum 950 • 2.00 CT Center • Six-Prong Crown',
+      badge: 'FINE JEWELRY',
+      img: 'images/ring-round.jpg',
+      category: 'ring round brilliant platinum engagement jewelry solitaire'
+    },
+    {
+      id: 'collection-emerald-bracelet',
+      title: 'Signature Natural Emerald Tennis Bracelet',
+      price: 6800,
+      priceStr: '$6,800',
+      spec: '18K White Gold • 8.50 CT Total Zambian Emeralds',
+      badge: 'FINE JEWELRY',
+      img: 'images/collection-bracelet.jpg',
+      category: 'bracelet emerald tennis jewelry 18k white gold zambian'
+    },
+    {
+      id: 'collection-eternity-band',
+      title: 'Full Eternity Pavé Diamond & Gemstone Band',
+      price: 3600,
+      priceStr: '$3,600',
+      spec: '18K Yellow Gold • 3.20 CT Total • Hand-Set French Pavé',
+      badge: 'ETERNITY BAND',
+      img: 'images/collection-eternity.jpg',
+      category: 'eternity band ring pave diamond gold wedding anniversary'
+    }
+  ];
+
+  const initSwasticSearchModal = () => {
+    let modal = document.getElementById('swasticSearchModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'swastic-search-modal-backdrop';
+      modal.id = 'swasticSearchModal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.innerHTML = `
+        <div class="swastic-search-modal-container" role="dialog" aria-modal="true" aria-labelledby="swasticSearchTitle">
+          <div class="swastic-search-header">
+            <div class="swastic-search-topline">
+              <span class="swastic-search-brand-tag" id="swasticSearchTitle">
+                <svg viewBox="0 0 24 24" class="swastic-gem-icon"><path d="M6 3h12l4 6-10 12L2 9l4-6z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                SWASTIC EXPORTS • GEMSTONE CATALOG
+              </span>
+              <button type="button" class="swastic-search-close-btn" id="closeSearchModalBtn" aria-label="Close search">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>CLOSE</span>
+                <span class="swastic-esc-hint">ESC</span>
+              </button>
+            </div>
+
+            <div class="swastic-search-input-box">
+              <svg class="swastic-input-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="search" 
+                id="swasticSearchInput" 
+                class="swastic-search-input" 
+                placeholder="Search gemstones, cuts, or fine jewelry (e.g., Emerald, Ruby, Oval, Solitaire, Aquamarine)..." 
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button type="button" class="swastic-clear-btn" id="swasticClearSearchBtn" aria-label="Clear search">✕</button>
+            </div>
+
+            <div class="swastic-search-trending-pills">
+              <span class="trending-label">Trending:</span>
+              <button type="button" class="search-tag-chip" data-search="Emerald">✦ Emerald</button>
+              <button type="button" class="search-tag-chip" data-search="Ruby">✦ Burma Ruby</button>
+              <button type="button" class="search-tag-chip" data-search="Sapphire">✦ Ceylon Sapphire</button>
+              <button type="button" class="search-tag-chip" data-search="Aquamarine">✦ Aquamarine</button>
+              <button type="button" class="search-tag-chip" data-search="Oval">✦ Oval Cut</button>
+              <button type="button" class="search-tag-chip" data-search="Solitaire">✦ Solitaire Rings</button>
+              <button type="button" class="search-tag-chip" data-search="Heliodor">✦ Heliodor</button>
+              <button type="button" class="search-tag-chip" data-search="GIA">✦ GIA Certified</button>
+            </div>
+          </div>
+
+          <div class="swastic-search-body" id="swasticSearchBody">
+            <!-- DEFAULT SUGGESTIONS VIEW -->
+            <div class="swastic-search-default-view" id="swasticSearchDefaultView">
+              
+              <!-- 1. GEMSTONE IMAGE SUGGESTIONS -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon">💎</span>
+                    POPULAR GEMSTONES
+                  </h3>
+                  <span class="swastic-section-hint">Select a gemstone to explore verified inventory</span>
+                </div>
+
+                <div class="swastic-gem-suggestions-grid">
+                  <div class="gem-suggest-card" data-search="Emerald">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-emerald.png" alt="Natural Emerald" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Emerald</span>
+                    <span class="gem-suggest-desc">Colombian & Zambian</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Ruby">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/gem-burma-ruby.jpg" alt="Burma Pigeon Blood Ruby" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Burma Ruby</span>
+                    <span class="gem-suggest-desc">Pigeon Blood Crimson</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Sapphire">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-blue-aquamarine.jpg" alt="Royal Ceylon Sapphire" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Royal Sapphire</span>
+                    <span class="gem-suggest-desc">Velvety Ceylon Blue</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Aquamarine">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-aquamarine.png" alt="Santa Maria Aquamarine" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Aquamarine</span>
+                    <span class="gem-suggest-desc">Santa Maria Cyan</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Diamond">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-goshenite-diamond.png" alt="Pure Brilliant Diamond" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Pure Diamond</span>
+                    <span class="gem-suggest-desc">D Color • VVS1 Fire</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Morganite">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-morganite.png" alt="Blush Peach Morganite" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Morganite</span>
+                    <span class="gem-suggest-desc">Blush Peach Pink</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Heliodor">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-heliodor.png" alt="Golden Heliodor" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Heliodor</span>
+                    <span class="gem-suggest-desc">Sunshine Golden Step</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Tourmaline">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/gem-green-tourmaline.jpg" alt="Chrome & Paraiba Tourmaline" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Tourmaline</span>
+                    <span class="gem-suggest-desc">Paraiba & Chrome Green</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Green Beryl">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-green-beryl.png" alt="Mint Green Beryl" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Green Beryl</span>
+                    <span class="gem-suggest-desc">Mint Green Step Cut</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Red Beryl">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="images/product-gem-red-beryl.png" alt="Rare Red Beryl" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Red Beryl</span>
+                    <span class="gem-suggest-desc">Utah Crimson Bixbite</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. BROWSE BY CUT & SHAPE -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon">✨</span>
+                    BROWSE BY CUT & SHAPE
+                  </h3>
+                </div>
+                <div class="swastic-shapes-suggestions-row">
+                  <button type="button" class="shape-suggest-pill" data-search="Emerald Cut">
+                    <img src="images/shape-emerald.png" alt="Emerald Cut"> Emerald Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Round">
+                    <img src="images/shape-round.png" alt="Round Brilliant"> Round Brilliant
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Oval">
+                    <img src="images/shape-oval.png" alt="Oval Cut"> Oval Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Cushion">
+                    <img src="images/shape-radiant.png" alt="Cushion Cut"> Cushion Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Pear">
+                    <img src="images/shape-pear.png" alt="Pear Cut"> Pear Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Princess">
+                    <img src="images/shape-princess.png" alt="Princess Cut"> Princess Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Heart">
+                    <img src="images/shape-heart.png" alt="Heart Cut"> Heart Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Marquise">
+                    <img src="images/shape-marquise.png" alt="Marquise Cut"> Marquise Cut
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3. FEATURED CERTIFIED STONES PREVIEW -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon">⭐</span>
+                    FEATURED CERTIFIED STONES
+                  </h3>
+                  <span class="swastic-section-hint">Individually certified rare specimens</span>
+                </div>
+                <div class="swastic-search-results-grid" id="swasticSearchFeaturedGrid"></div>
+              </div>
+
+            </div>
+
+            <!-- RESULTS VIEW -->
+            <div class="swastic-search-results-view" id="swasticSearchResultsView" style="display: none;">
+              <div class="swastic-results-header-bar">
+                <span class="swastic-results-count" id="swasticResultsCount">Showing results</span>
+                <button type="button" class="swastic-reset-search-btn" id="swasticResetSearchBtn">Clear & View Gemstone Guide</button>
+              </div>
+              <div class="swastic-search-results-grid" id="swasticSearchResultsGrid"></div>
+              <div class="swastic-search-empty" id="swasticSearchEmpty" style="display: none;">
+                <div class="empty-icon">💎</div>
+                <h4 class="empty-title">No matching gemstones found</h4>
+                <p class="empty-desc">We couldn't find any items matching your search query. Try one of our signature gemstones:</p>
+                <div class="empty-suggestions">
+                  <button type="button" class="search-tag-chip" data-search="Emerald">✦ Emerald</button>
+                  <button type="button" class="search-tag-chip" data-search="Ruby">✦ Burma Ruby</button>
+                  <button type="button" class="search-tag-chip" data-search="Sapphire">✦ Sapphire</button>
+                  <button type="button" class="search-tag-chip" data-search="Oval">✦ Oval Cut</button>
+                  <button type="button" class="search-tag-chip" data-search="Solitaire">✦ Solitaire Rings</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="swastic-search-footer">
+            <div class="footer-left">
+              <span>Looking for custom cutting, calibrated parcels, or GIA lots?</span>
+              <a href="about.html" class="footer-link">Consult Master Gemologist →</a>
+            </div>
+            <div class="footer-right">
+              <span>Press <kbd>ESC</kbd> to close</span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    const input = document.getElementById('swasticSearchInput');
+    const clearBtn = document.getElementById('swasticClearSearchBtn');
+    const closeBtn = document.getElementById('closeSearchModalBtn');
+    const defaultView = document.getElementById('swasticSearchDefaultView');
+    const resultsView = document.getElementById('swasticSearchResultsView');
+    const resultsGrid = document.getElementById('swasticSearchResultsGrid');
+    const featuredGrid = document.getElementById('swasticSearchFeaturedGrid');
+    const resultsCount = document.getElementById('swasticResultsCount');
+    const emptyState = document.getElementById('swasticSearchEmpty');
+    const resetBtn = document.getElementById('swasticResetSearchBtn');
+
+    // Render Product Card Helper
+    const createProductCardHtml = (prod) => {
+      return `
+        <article class="swastic-product-card" data-product-id="${prod.id}">
+          <div class="prod-thumb-box">
+            <span class="prod-badge">${prod.badge}</span>
+            <img src="${prod.img}" alt="${prod.title}" loading="lazy">
+          </div>
+          <div class="prod-info-box">
+            <span class="prod-spec-text">${prod.spec}</span>
+            <h4 class="prod-name-title">${prod.title}</h4>
+            <p class="prod-price-tag">${prod.priceStr}</p>
+            <div class="prod-actions-row">
+              <button type="button" class="prod-add-bag-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}" data-price="${prod.price}" data-spec="${prod.spec.replace(/"/g, '&quot;')}" data-img="${prod.img}">
+                ADD TO BAG
+              </button>
+              <button type="button" class="prod-view-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}">
+                DETAILS
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    };
+
+    // Attach Action Listeners to Product Cards
+    const bindProductCardEvents = (container) => {
+      if (!container) return;
+      container.querySelectorAll('.prod-add-bag-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const { id, title, price, spec, img } = btn.dataset;
+          if (typeof window.addProductToBag === 'function') {
+            window.addProductToBag(id, title, parseFloat(price), spec, img);
+          } else if (typeof window.quickAddProduct === 'function') {
+            window.quickAddProduct(id, title, spec, parseFloat(price), img);
+          }
+          btn.classList.add('added-success');
+          btn.textContent = 'ADDED ✓';
+          setTimeout(() => {
+            btn.classList.remove('added-success');
+            btn.textContent = 'ADD TO BAG';
+          }, 1800);
+        });
+      });
+
+      container.querySelectorAll('.prod-view-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeModal();
+          if (window.location.pathname.includes('shapes.html')) {
+            const el = document.getElementById('diamond-products-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.location.href = 'shapes.html#diamond-products-section';
+          }
+        });
+      });
+    };
+
+    // Populate Featured Products Preview (Top 4)
+    if (featuredGrid && featuredGrid.children.length === 0) {
+      const featured = SWASTIC_SEARCH_CATALOG.slice(0, 4);
+      featuredGrid.innerHTML = featured.map(createProductCardHtml).join('');
+      bindProductCardEvents(featuredGrid);
+    }
+
+    // Open Modal Function
+    const openModal = (keyword = '') => {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        if (input) {
+          input.focus();
+          if (keyword) {
+            input.value = keyword;
+            handleSearch(keyword);
+          }
+        }
+      }, 50);
+    };
+
+    // Close Modal Function
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (input) input.blur();
+    };
+
+    // Perform Live Filtering
+    const handleSearch = (rawQuery) => {
+      const query = (rawQuery || '').trim().toLowerCase();
+      if (!query) {
+        defaultView.style.display = 'block';
+        resultsView.style.display = 'none';
+        clearBtn.classList.remove('visible');
+        return;
+      }
+
+      clearBtn.classList.add('visible');
+      defaultView.style.display = 'none';
+      resultsView.style.display = 'block';
+
+      const queryTokens = query.split(/\s+/).filter(Boolean);
+
+      const matchedProducts = SWASTIC_SEARCH_CATALOG.filter(prod => {
+        const searchText = `${prod.title} ${prod.spec} ${prod.category} ${prod.badge} ${prod.priceStr}`.toLowerCase();
+        return queryTokens.every(token => searchText.includes(token));
+      });
+
+      if (matchedProducts.length > 0) {
+        emptyState.style.display = 'none';
+        resultsGrid.style.display = 'grid';
+        resultsGrid.innerHTML = matchedProducts.map(createProductCardHtml).join('');
+        bindProductCardEvents(resultsGrid);
+        resultsCount.innerHTML = `Found <strong>${matchedProducts.length}</strong> matching gemstone${matchedProducts.length === 1 ? '' : 's'} for "<strong>${rawQuery}</strong>"`;
+      } else {
+        resultsGrid.style.display = 'none';
+        resultsGrid.innerHTML = '';
+        emptyState.style.display = 'block';
+        resultsCount.innerHTML = `0 results found for "<strong>${rawQuery}</strong>"`;
+      }
+    };
+
+    // Event Bindings
+    if (input) {
+      input.addEventListener('input', (e) => handleSearch(e.target.value));
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (input) {
+          input.value = '';
+          input.focus();
+          handleSearch('');
+        }
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (input) {
+          input.value = '';
+          input.focus();
+          handleSearch('');
+        }
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
       }
     });
-  }
+
+    // Delegate Clicks for Suggestion Chips & Cards
+    modal.addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-search]');
+      if (chip) {
+        const keyword = chip.dataset.search;
+        if (input && keyword) {
+          input.value = keyword;
+          input.focus();
+          handleSearch(keyword);
+        }
+      }
+    });
+
+    // Bind all Search Triggers in Navbar & Page (Desktop + Mobile touch)
+    const bindTriggers = () => {
+      const triggers = document.querySelectorAll('#searchTrigger, .search-pill-container, #headerSearchInput, .mobile-search-trigger, #mobileDrawerSearchBtn');
+      triggers.forEach(el => {
+        el.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal();
+        };
+      });
+    };
+    bindTriggers();
+
+    // Delegated click listener for any dynamically added triggers or mobile elements
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('#searchTrigger, .search-pill-container, #headerSearchInput, .mobile-search-trigger, #mobileDrawerSearchBtn');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        openModal();
+      }
+    });
+
+    // Global helper
+    window.openSwasticSearch = openModal;
+    window.closeSwasticSearch = closeModal;
+  };
+
+  initSwasticSearchModal();
 
   // 6. Featured Diamond & Ring Products Filter & Actions
   window.filterProductCategory = (category) => {
@@ -1228,6 +1920,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close Menu">✕</button>
         </div>
         ${userBlock}
+        <div class="mobile-drawer-search-wrap">
+          <button type="button" class="mobile-drawer-search-btn" id="mobileDrawerSearchBtn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Search Gemstones &amp; Jewelry...</span>
+          </button>
+        </div>
         <ul class="mobile-drawer-links">
           <li class="mobile-drawer-link-item"><a href="index.html"><span>Home</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="shapes.html"><span>Shop by Shape</span><span class="link-arrow">→</span></a></li>
@@ -1253,6 +1954,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const closeBtn = drawer.querySelector('#mobileDrawerClose');
       if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
       backdrop.addEventListener('click', closeDrawer);
+
+      const drawerSearchBtn = drawer.querySelector('#mobileDrawerSearchBtn');
+      if (drawerSearchBtn) {
+        drawerSearchBtn.addEventListener('click', () => {
+          closeDrawer();
+          if (typeof window.openSwasticSearch === 'function') {
+            window.openSwasticSearch();
+          }
+        });
+      }
 
       drawer.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
