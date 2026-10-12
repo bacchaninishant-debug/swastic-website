@@ -263,10 +263,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartDrawerFooter = document.getElementById('cartDrawerFooter');
   const cartSubtotalValue = document.getElementById('cartSubtotalValue');
 
+  // Load persisted cart from localStorage
   let cart = [];
+  try {
+    const saved = localStorage.getItem('swastic_gem_cart');
+    if (saved) cart = JSON.parse(saved);
+  } catch(e) {}
+
+  const saveCart = () => {
+    try {
+      localStorage.setItem('swastic_gem_cart', JSON.stringify(cart));
+    } catch(e) {}
+  };
 
   const updateCartUI = () => {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
     if (cartBadgeCount) {
       cartBadgeCount.textContent = totalItems;
       cartBadgeCount.classList.toggle('has-items', totalItems > 0);
@@ -274,58 +285,91 @@ document.addEventListener('DOMContentLoaded', () => {
     if (drawerCount) drawerCount.textContent = totalItems;
 
     if (cart.length === 0) {
-      emptyCartView.style.display = 'block';
-      cartItemsList.style.display = 'none';
-      cartDrawerFooter.style.display = 'none';
+      if (emptyCartView) emptyCartView.style.display = 'block';
+      if (cartItemsList) cartItemsList.style.display = 'none';
+      if (cartDrawerFooter) cartDrawerFooter.style.display = 'none';
     } else {
-      emptyCartView.style.display = 'none';
-      cartItemsList.style.display = 'block';
-      cartDrawerFooter.style.display = 'block';
+      if (emptyCartView) emptyCartView.style.display = 'none';
+      if (cartItemsList) cartItemsList.style.display = 'block';
+      if (cartDrawerFooter) cartDrawerFooter.style.display = 'block';
 
       let subtotal = 0;
       cartItemsList.innerHTML = cart.map((item, idx) => {
-        const itemTotal = item.priceNum * item.quantity;
+        const qty = item.quantity || 1;
+        const itemTotal = item.priceNum * qty;
         subtotal += itemTotal;
         return `
-          <div class="cart-item-row">
+          <div class="cart-item-row" data-id="${item.id}">
             <img src="${item.img}" alt="${item.title}" class="cart-item-img">
             <div class="cart-item-details">
               <div class="cart-item-title">${item.title}</div>
               <div class="cart-item-meta">${item.spec}</div>
-              <div class="cart-item-price">$${itemTotal.toLocaleString()} (Qty: ${item.quantity})</div>
-              <div class="cart-item-remove" onclick="removeCartItem(${idx})">Remove</div>
+              <div class="cart-item-price-row">
+                <span class="cart-item-price">$${itemTotal.toLocaleString()}</span>
+                ${qty > 1 ? `<span class="cart-item-unit-note">($${item.priceNum.toLocaleString()} each)</span>` : ''}
+              </div>
+              <div class="cart-qty-wrapper">
+                <div class="cart-qty-btn-group">
+                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)" aria-label="Decrease quantity" title="Decrease quantity">−</button>
+                  <span class="cart-qty-val">${qty}</span>
+                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)" aria-label="Increase quantity" title="Increase quantity">+</button>
+                </div>
+                <button type="button" class="cart-item-remove-link" onclick="removeCartItem(${idx})">Remove</button>
+              </div>
             </div>
           </div>
         `;
       }).join('');
 
-      cartSubtotalValue.textContent = `$${subtotal.toLocaleString()}.00`;
+      if (cartSubtotalValue) {
+        cartSubtotalValue.textContent = `$${subtotal.toLocaleString()}.00`;
+      }
     }
   };
 
   const openCart = () => {
-    cartDrawer.classList.add('active');
-    cartBackdrop.classList.add('active');
+    if (cartDrawer) cartDrawer.classList.add('active');
+    if (cartBackdrop) cartBackdrop.classList.add('active');
   };
 
   const closeCart = () => {
-    cartDrawer.classList.remove('active');
-    cartBackdrop.classList.remove('active');
+    if (cartDrawer) cartDrawer.classList.remove('active');
+    if (cartBackdrop) cartBackdrop.classList.remove('active');
   };
 
   if (cartBtn) cartBtn.addEventListener('click', openCart);
   if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
   if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
 
+  // Global Cart Manipulation Methods
+  window.changeCartQty = (idx, delta) => {
+    if (!cart[idx]) return;
+    const newQty = (cart[idx].quantity || 1) + delta;
+    if (newQty <= 0) {
+      cart.splice(idx, 1);
+    } else {
+      cart[idx].quantity = newQty;
+    }
+    saveCart();
+    updateCartUI();
+    if (document.getElementById('checkoutModalBackdrop')?.classList.contains('active')) {
+      renderCheckoutSummary();
+    }
+  };
+
   window.removeCartItem = (idx) => {
     cart.splice(idx, 1);
+    saveCart();
     updateCartUI();
+    if (document.getElementById('checkoutModalBackdrop')?.classList.contains('active')) {
+      renderCheckoutSummary();
+    }
   };
 
   window.quickAddProduct = (id, title, spec, priceNum, img) => {
     const existingIndex = cart.findIndex(item => item.id === id);
     if (existingIndex > -1) {
-      cart[existingIndex].quantity += 1;
+      cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
     } else {
       cart.push({
         id,
@@ -337,9 +381,264 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    saveCart();
     updateCartUI();
     openCart();
   };
+
+  // Initial cart UI render
+  updateCartUI();
+
+  // =========================================================================
+  // SECURE ATELIER CHECKOUT & PAYMENT FLOW
+  // =========================================================================
+  const checkoutModalBackdrop = document.getElementById('checkoutModalBackdrop');
+  const closeCheckoutBtn = document.getElementById('closeCheckoutBtn');
+  const checkoutItemsList = document.getElementById('checkoutItemsList');
+  const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+  const checkoutGrandTotal = document.getElementById('checkoutGrandTotal');
+  const payBtnLabel = document.getElementById('payBtnLabel');
+  const confirmPayBtn = document.getElementById('confirmPayBtn');
+  const checkoutFlowGrid = document.getElementById('checkoutFlowGrid');
+  const orderSuccessView = document.getElementById('orderSuccessView');
+  const successOrderId = document.getElementById('successOrderId');
+  const successReceiptDetails = document.getElementById('successReceiptDetails');
+  const successContinueBtn = document.getElementById('successContinueBtn');
+  const successPrintBtn = document.getElementById('successPrintBtn');
+  const applyCouponBtn = document.getElementById('applyCouponBtn');
+  const couponCodeInput = document.getElementById('couponCodeInput');
+  const couponMessage = document.getElementById('couponMessage');
+  const discountLine = document.getElementById('discountLine');
+  const checkoutDiscount = document.getElementById('checkoutDiscount');
+
+  let activeDiscountPercent = 0;
+
+  const renderCheckoutSummary = () => {
+    if (!checkoutItemsList) return;
+    if (cart.length === 0) {
+      checkoutItemsList.innerHTML = `<p style="padding:20px;text-align:center;color:#888;">No items in cart</p>`;
+      if (checkoutSubtotal) checkoutSubtotal.textContent = "$0.00";
+      if (checkoutGrandTotal) checkoutGrandTotal.textContent = "$0.00";
+      if (payBtnLabel) payBtnLabel.textContent = "COMPLETE SECURE ORDER — $0.00";
+      return;
+    }
+
+    let subtotal = 0;
+    checkoutItemsList.innerHTML = cart.map((item) => {
+      const qty = item.quantity || 1;
+      const lineTotal = item.priceNum * qty;
+      subtotal += lineTotal;
+      return `
+        <div class="checkout-item-card">
+          <img src="${item.img}" alt="${item.title}" class="checkout-item-thumb">
+          <div class="checkout-item-info">
+            <div class="checkout-item-title">${item.title}</div>
+            <div class="checkout-item-spec">${item.spec}</div>
+            <div class="checkout-item-qty-tag">Quantity: ${qty}</div>
+          </div>
+          <div class="checkout-item-price-col">
+            <div class="checkout-item-line-total">$${lineTotal.toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const discountAmount = Math.round(subtotal * (activeDiscountPercent / 100));
+    const grandTotal = Math.max(0, subtotal - discountAmount);
+
+    if (checkoutSubtotal) checkoutSubtotal.textContent = `$${subtotal.toLocaleString()}.00`;
+    if (discountLine) {
+      if (activeDiscountPercent > 0) {
+        discountLine.style.display = 'flex';
+        if (checkoutDiscount) checkoutDiscount.textContent = `-$${discountAmount.toLocaleString()}.00`;
+      } else {
+        discountLine.style.display = 'none';
+      }
+    }
+    if (checkoutGrandTotal) checkoutGrandTotal.textContent = `$${grandTotal.toLocaleString()}.00`;
+    if (payBtnLabel) payBtnLabel.textContent = `CONFIRM & PAY $${grandTotal.toLocaleString()} NOW`;
+  };
+
+  const openCheckout = () => {
+    if (cart.length === 0) {
+      alert("Your shopping bag is currently empty. Please select a certified gemstone first.");
+      return;
+    }
+    closeCart();
+    if (checkoutFlowGrid) checkoutFlowGrid.style.display = 'grid';
+    if (orderSuccessView) orderSuccessView.style.display = 'none';
+    renderCheckoutSummary();
+    if (checkoutModalBackdrop) {
+      checkoutModalBackdrop.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeCheckout = () => {
+    if (checkoutModalBackdrop) {
+      checkoutModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  // Wire all checkout buttons on the page
+  document.querySelectorAll('.checkout-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCheckout();
+    });
+  });
+
+  if (closeCheckoutBtn) closeCheckoutBtn.addEventListener('click', closeCheckout);
+  if (checkoutModalBackdrop) {
+    checkoutModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === checkoutModalBackdrop) closeCheckout();
+    });
+  }
+
+  // Payment Tabs Switcher
+  const payTabBtns = document.querySelectorAll('.pay-tab-btn');
+  payTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      payTabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.getAttribute('data-tab');
+      document.querySelectorAll('.payment-tab-content').forEach(p => p.style.display = 'none');
+      if (tab === 'card') {
+        const c = document.getElementById('tabContentCard');
+        if (c) c.style.display = 'block';
+      } else if (tab === 'upi') {
+        const u = document.getElementById('tabContentUpi');
+        if (u) u.style.display = 'block';
+      } else if (tab === 'wire') {
+        const w = document.getElementById('tabContentWire');
+        if (w) w.style.display = 'block';
+      }
+    });
+  });
+
+  // Card formatting helpers
+  const cardNum = document.getElementById('cardNum');
+  if (cardNum) {
+    cardNum.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+      let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+      e.target.value = formatted;
+    });
+  }
+
+  const cardExp = document.getElementById('cardExp');
+  if (cardExp) {
+    cardExp.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+      if (val.length >= 3) {
+        e.target.value = `${val.substring(0, 2)}/${val.substring(2)}`;
+      } else {
+        e.target.value = val;
+      }
+    });
+  }
+
+  // Coupon handling
+  if (applyCouponBtn && couponCodeInput) {
+    applyCouponBtn.addEventListener('click', () => {
+      const code = couponCodeInput.value.trim().toUpperCase();
+      if (code === 'SWASTIC10' || code === 'ROYAL10' || code === 'WELCOME10') {
+        activeDiscountPercent = 10;
+        if (couponMessage) {
+          couponMessage.className = 'coupon-msg success';
+          couponMessage.textContent = '✓ 10% Atelier Courtesy Discount applied successfully!';
+        }
+        renderCheckoutSummary();
+      } else if (code) {
+        if (couponMessage) {
+          couponMessage.className = 'coupon-msg error';
+          couponMessage.textContent = 'Invalid code. Try "SWASTIC10" for 10% courtesy discount.';
+        }
+      }
+    });
+  }
+
+  // Confirm Payment Action
+  if (confirmPayBtn) {
+    confirmPayBtn.addEventListener('click', () => {
+      const email = document.getElementById('checkoutEmail')?.value.trim();
+      const firstName = document.getElementById('checkoutFirstName')?.value.trim();
+      const lastName = document.getElementById('checkoutLastName')?.value.trim();
+      const address = document.getElementById('checkoutAddress')?.value.trim();
+
+      if (!email || !firstName || !address) {
+        alert("Please provide your delivery contact information (Email, Name, Address) for insured armored dispatch.");
+        document.getElementById('checkoutEmail')?.focus();
+        return;
+      }
+
+      // Show processing animation
+      confirmPayBtn.disabled = true;
+      confirmPayBtn.innerHTML = `
+        <span class="pay-btn-icon">⏳</span>
+        <span class="pay-btn-text">Securing Escrow & Authorizing Payment...</span>
+      `;
+
+      setTimeout(() => {
+        confirmPayBtn.disabled = false;
+        confirmPayBtn.innerHTML = `
+          <span class="pay-btn-icon">🔒</span>
+          <span class="pay-btn-text" id="payBtnLabel">COMPLETE SECURE ORDER</span>
+        `;
+
+        // Switch to Order Confirmed state
+        if (checkoutFlowGrid) checkoutFlowGrid.style.display = 'none';
+        if (orderSuccessView) orderSuccessView.style.display = 'block';
+
+        const randId = `SE-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+        if (successOrderId) successOrderId.textContent = randId;
+
+        let totalCharged = 0;
+        const itemsHtml = cart.map(item => {
+          const qty = item.quantity || 1;
+          const line = item.priceNum * qty;
+          totalCharged += line;
+          return `<tr><td style="padding:6px 0;">${item.title} (x${qty})</td><td style="text-align:right;font-weight:600;">$${line.toLocaleString()}</td></tr>`;
+        }).join('');
+
+        const discountAmt = Math.round(totalCharged * (activeDiscountPercent / 100));
+        const finalCharged = Math.max(0, totalCharged - discountAmt);
+
+        if (successReceiptDetails) {
+          successReceiptDetails.innerHTML = `
+            <table style="width:100%;font-size:12.5px;border-collapse:collapse;color:#333;">
+              <tr><td style="padding:4px 0;color:#777;">Client Name:</td><td style="text-align:right;font-weight:600;">${firstName} ${lastName || ''}</td></tr>
+              <tr><td style="padding:4px 0;color:#777;">Email:</td><td style="text-align:right;font-weight:600;">${email}</td></tr>
+              <tr><td style="padding:4px 0;color:#777;">Shipping Destination:</td><td style="text-align:right;font-weight:600;">${address}</td></tr>
+              <tr><td style="padding:4px 0;color:#777;">Shipping Protocol:</td><td style="text-align:right;font-weight:600;color:#15803d;">Complimentary Armored Courier (Brink's / FedEx)</td></tr>
+              <tr><td colspan="2" style="padding:10px 0 6px;border-bottom:1px solid #eee;font-weight:700;color:#111;">Purchased Gemstones:</td></tr>
+              ${itemsHtml}
+              ${activeDiscountPercent > 0 ? `<tr><td style="padding:6px 0;color:#15803d;">Courtesy Discount (${activeDiscountPercent}%):</td><td style="text-align:right;color:#15803d;">-$${discountAmt.toLocaleString()}</td></tr>` : ''}
+              <tr style="border-top:1px solid #111;font-size:14px;font-weight:700;"><td style="padding:10px 0 4px;">Total Paid:</td><td style="text-align:right;padding:10px 0 4px;color:#111;">$${finalCharged.toLocaleString()}.00</td></tr>
+            </table>
+          `;
+        }
+
+        // Empty cart and reset
+        cart = [];
+        saveCart();
+        updateCartUI();
+      }, 1200);
+    });
+  }
+
+  if (successContinueBtn) {
+    successContinueBtn.addEventListener('click', () => {
+      closeCheckout();
+    });
+  }
+
+  if (successPrintBtn) {
+    successPrintBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
 
   const customizeRingBtn = document.getElementById('customizeRingBtn');
   if (customizeRingBtn) {
@@ -819,5 +1118,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  // 14. 4 Compact Box Reels Controller (New Arrivals Section)
+  document.querySelectorAll('.reel-box-card').forEach(card => {
+    const video = card.querySelector('.reel-box-video');
+    const soundBtn = card.querySelector('.reel-sound-toggle');
+    const wrap = card.querySelector('.reel-box-video-wrap');
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {});
+      if (soundBtn) {
+        soundBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          soundBtn.classList.toggle('unmuted', !video.muted);
+        });
+      }
+      if (wrap) {
+        wrap.addEventListener('click', () => {
+          if (video.paused) { video.play(); } else { video.pause(); }
+        });
+      }
+    }
+  });
 });
 

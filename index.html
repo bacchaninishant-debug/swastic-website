@@ -1260,6 +1260,261 @@
     </div>
   </aside>
 
+  <!-- Secure Atelier Checkout & Payment Modal -->
+  <div class="checkout-modal-backdrop" id="checkoutModalBackdrop">
+    <div class="checkout-modal-card" id="checkoutModalCard">
+      <div class="checkout-modal-header">
+        <div class="checkout-brand-title">
+          <span class="checkout-eyebrow">✦ SWASTIC EXPORTS ATELIER ✦</span>
+          <h2>SECURE ESCROW CHECKOUT</h2>
+          <span class="checkout-security-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            256-Bit SSL Encrypted • GIA Certified Dispatch
+          </span>
+        </div>
+        <button class="modal-close-btn" id="closeCheckoutBtn" aria-label="Close Checkout">&times;</button>
+      </div>
+
+      <div class="checkout-modal-body" id="checkoutModalBody">
+        <!-- Main Checkout View (Form + Summary) -->
+        <div class="checkout-flow-grid" id="checkoutFlowGrid">
+          <!-- Left Column: Delivery & Payment Details -->
+          <div class="checkout-details-column">
+            <!-- Step 1: Delivery Details -->
+            <div class="checkout-section-box">
+              <div class="checkout-section-title">
+                <span class="step-num">1</span>
+                <h3>Client &amp; Insured Delivery Details</h3>
+              </div>
+              <div class="checkout-form-grid">
+                <div class="form-group full-width">
+                  <label for="checkoutEmail">Email Address (For GIA Dossier &amp; Tracking)</label>
+                  <input type="email" id="checkoutEmail" placeholder="client@luxuryatelier.com" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="checkoutFirstName">First Name</label>
+                  <input type="text" id="checkoutFirstName" placeholder="Nishant" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="checkoutLastName">Last Name</label>
+                  <input type="text" id="checkoutLastName" placeholder="Bacchani" required>
+                </div>
+                <div class="form-group full-width">
+                  <label for="checkoutPhone">Phone Number (Required for Armored Hand-Off)</label>
+                  <input type="tel" id="checkoutPhone" placeholder="+91 98765 43210" required>
+                </div>
+                <div class="form-group full-width">
+                  <label for="checkoutAddress">Delivery Address</label>
+                  <input type="text" id="checkoutAddress" placeholder="Penthouse 4B, Linking Road" required>
+                </div>
+                <div class="form-group third-width">
+                  <label for="checkoutCity">City</label>
+                  <input type="text" id="checkoutCity" placeholder="Mumbai" required>
+                </div>
+                <div class="form-group third-width">
+                  <label for="checkoutState">State / Region</label>
+                  <input type="text" id="checkoutState" placeholder="Maharashtra" required>
+                </div>
+                <div class="form-group third-width">
+                  <label for="checkoutPostal">Postal / ZIP</label>
+                  <input type="text" id="checkoutPostal" placeholder="400050" required>
+                </div>
+                <div class="form-group full-width">
+                  <label for="checkoutCountry">Country / Region</label>
+                  <select id="checkoutCountry">
+                    <option value="India">India (Mumbai Atelier Delivery / Direct)</option>
+                    <option value="United States">United States (FedEx Armored Priority)</option>
+                    <option value="United Arab Emirates">United Arab Emirates (Dubai DMCC Escrow)</option>
+                    <option value="United Kingdom">United Kingdom (London Mayfair)</option>
+                    <option value="Switzerland">Switzerland (Geneva FreePort / Direct)</option>
+                    <option value="Hong Kong">Hong Kong (Central Vault Delivery)</option>
+                    <option value="Singapore">Singapore (Marina Bay Escrow)</option>
+                    <option value="Other">Other International Destination</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Payment Method -->
+            <div class="checkout-section-box">
+              <div class="checkout-section-title">
+                <span class="step-num">2</span>
+                <h3>Payment &amp; Atelier Settlement</h3>
+              </div>
+              <div class="payment-tabs-header">
+                <button type="button" class="pay-tab-btn active" data-tab="card">
+                  <svg width="18" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <span>Credit / Debit Card</span>
+                </button>
+                <button type="button" class="pay-tab-btn" data-tab="upi">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  <span>UPI / QR / GPay</span>
+                </button>
+                <button type="button" class="pay-tab-btn" data-tab="wire">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  <span>Bank Wire / Escrow</span>
+                </button>
+              </div>
+
+              <!-- Payment Tab 1: Card -->
+              <div class="payment-tab-content active" id="tabContentCard">
+                <div class="card-security-badges">
+                  <span>Visa</span>
+                  <span>MasterCard</span>
+                  <span>American Express</span>
+                  <span>RuPay</span>
+                  <span class="pci-badge">PCI-DSS Level 1</span>
+                </div>
+                <div class="form-group full-width">
+                  <label for="cardNum">Card Number</label>
+                  <div class="input-with-icon">
+                    <input type="text" id="cardNum" placeholder="4532 •••• •••• 8892" maxlength="19">
+                    <span class="card-type-icon">💳</span>
+                  </div>
+                </div>
+                <div class="form-group full-width">
+                  <label for="cardHolder">Cardholder Name (As printed on card)</label>
+                  <input type="text" id="cardHolder" placeholder="NISHANT BACCHANI">
+                </div>
+                <div class="form-row-duo">
+                  <div class="form-group half-width">
+                    <label for="cardExp">Expiry Date</label>
+                    <input type="text" id="cardExp" placeholder="MM / YY" maxlength="5">
+                  </div>
+                  <div class="form-group half-width">
+                    <label for="cardCvv">CVV / Security Code</label>
+                    <input type="password" id="cardCvv" placeholder="•••" maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment Tab 2: UPI / QR -->
+              <div class="payment-tab-content" id="tabContentUpi" style="display:none;">
+                <div class="upi-instructions">
+                  <p>Instant zero-fee settlement via any Indian or International UPI provider.</p>
+                </div>
+                <div class="form-group full-width">
+                  <label for="upiId">Enter Virtual Payment Address (VPA / UPI ID)</label>
+                  <input type="text" id="upiId" placeholder="username@okhdfcbank / username@paytm">
+                </div>
+                <div class="upi-apps-row">
+                  <span class="upi-pill">Google Pay</span>
+                  <span class="upi-pill">PhonePe</span>
+                  <span class="upi-pill">Paytm</span>
+                  <span class="upi-pill">BHIM UPI</span>
+                  <span class="upi-pill">Cred</span>
+                </div>
+                <div class="upi-qr-preview-box">
+                  <div class="qr-code-dummy">
+                    <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+                  </div>
+                  <div class="qr-text">
+                    <strong>Scan to Pay Instantly</strong>
+                    <p>Open your mobile banking app to authorize directly with your secure UPI PIN.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment Tab 3: Bank Wire / Escrow -->
+              <div class="payment-tab-content" id="tabContentWire" style="display:none;">
+                <div class="wire-box-info">
+                  <h4>SWASTIC EXPORTS ATELIER PRIVATE BANKING</h4>
+                  <p class="wire-desc">Recommended for high-value certified loose gemstones and auction-grade matched pairs. Funds are held in insured third-party escrow until client inspection.</p>
+                  <table class="wire-details-table">
+                    <tr><td>Beneficiary:</td><td>Swastic Exports Gemological Atelier Ltd.</td></tr>
+                    <tr><td>Bank:</td><td>Standard Chartered Bank / HDFC Private Wealth</td></tr>
+                    <tr><td>Account No:</td><td>50200084920194</td></tr>
+                    <tr><td>IFSC Code:</td><td>SCBL0036001</td></tr>
+                    <tr><td>SWIFT / BIC:</td><td>SCBLINBBXXX</td></tr>
+                  </table>
+                  <p class="wire-note">Proforma Invoice &amp; escrow contract will be generated automatically upon confirming order.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Summary & Pay Action -->
+          <div class="checkout-summary-column">
+            <div class="checkout-summary-card">
+              <h3>ORDER SUMMARY</h3>
+              <div class="checkout-items-scroll" id="checkoutItemsList">
+                <!-- Dynamically populated from cart -->
+              </div>
+
+              <!-- Coupon Row -->
+              <div class="checkout-coupon-row">
+                <input type="text" id="couponCodeInput" placeholder="PROMO / ATELIER CODE">
+                <button type="button" id="applyCouponBtn">APPLY</button>
+              </div>
+              <div id="couponMessage" class="coupon-msg"></div>
+
+              <!-- Price Totals -->
+              <div class="checkout-totals-block">
+                <div class="checkout-total-line">
+                  <span>Gemstones Subtotal</span>
+                  <span id="checkoutSubtotal">$0.00</span>
+                </div>
+                <div class="checkout-total-line">
+                  <span>Armored Worldwide Shipping (Brink's / FedEx)</span>
+                  <span class="free-badge">COMPLIMENTARY</span>
+                </div>
+                <div class="checkout-total-line">
+                  <span>GIA Laboratory Seal &amp; Origin Dossier</span>
+                  <span class="free-badge">INCLUDED</span>
+                </div>
+                <div class="checkout-total-line discount-line" id="discountLine" style="display:none;">
+                  <span>Atelier Courtesy Discount (10%)</span>
+                  <span id="checkoutDiscount">-$0.00</span>
+                </div>
+                <div class="checkout-total-line grand-total-line">
+                  <span>Total Amount</span>
+                  <span id="checkoutGrandTotal">$0.00</span>
+                </div>
+              </div>
+
+              <!-- Pay CTA Button -->
+              <button type="button" class="checkout-pay-btn" id="confirmPayBtn">
+                <span class="pay-btn-icon">🔒</span>
+                <span class="pay-btn-text" id="payBtnLabel">COMPLETE SECURE ORDER — $0.00</span>
+              </button>
+
+              <div class="checkout-trust-badges">
+                <div class="trust-badge-item">
+                  <span class="trust-badge-icon">✓</span>
+                  <span>100% Mine-to-Market Authentic Natural Stones</span>
+                </div>
+                <div class="trust-badge-item">
+                  <span class="trust-badge-icon">✓</span>
+                  <span>Complimentary Insured Courier &amp; 30-Day Inspection</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Success View (Hidden by default, shown after payment) -->
+        <div class="order-success-view" id="orderSuccessView" style="display:none;">
+          <div class="success-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2.2" class="success-svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span class="success-eyebrow">TRANSACTION CONFIRMED • ATELIER ESCROW SECURED</span>
+          <h2>Payment Successful! Order Confirmed</h2>
+          <p class="success-order-id">Order Reference: <strong id="successOrderId">SE-2026-84920</strong></p>
+          <p class="success-message">Thank you for your acquisition. Your natural gemstones have been reserved in our vault. A master gemologist inspection certificate and tracked armored courier details have been dispatched to your email.</p>
+          
+          <div class="success-receipt-card" id="successReceiptDetails">
+            <!-- Receipt breakdown -->
+          </div>
+
+          <div class="success-actions-row">
+            <button type="button" class="hero-cta-btn dark-cta" id="successContinueBtn">CONTINUE BROWSING COLLECTION</button>
+            <button type="button" class="hero-cta-btn secondary-btn" id="successPrintBtn">PRINT / SAVE INVOICE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Interactive Gemstone Specs Modal -->
   <div class="modal-backdrop" id="specsModalBackdrop">
     <div class="specs-modal-card">
