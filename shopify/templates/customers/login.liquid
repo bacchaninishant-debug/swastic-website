@@ -1,0 +1,169 @@
+{% comment %}
+  Shopify Template: customers/login.liquid
+  Atelier Client Access for Swastic Exports House of Natural Gemstones
+{% endcomment %}
+
+<div class="account-page-wrapper">
+  <div class="account-page-container">
+    <nav class="account-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span class="breadcrumb-current">Client Sign In</span>
+    </nav>
+
+    <div class="auth-split-grid">
+      <!-- Left: Client Sign In Form -->
+      <div class="auth-card" id="customerLoginForm">
+        <div class="auth-card-badge">
+          <span>✦</span> ATELIER CLIENT ACCESS <span>✦</span>
+        </div>
+        <h1 class="auth-card-title">Sign In to Your Account</h1>
+        <p class="auth-card-sub">
+          Access your gemstone orders, certified digital GIA dossiers, private vault viewings, and bespoke acquisitions.
+        </p>
+
+        {% form 'customer_login' %}
+          {{ form.errors | default_errors }}
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="CustomerEmail">Email Address</label>
+            <input 
+              type="email" 
+              name="customer[email]" 
+              id="CustomerEmail" 
+              class="auth-form-input" 
+              autocomplete="email" 
+              autocorrect="off" 
+              autocapitalize="off" 
+              placeholder="e.g. collector@swasticexports.com" 
+              required
+            >
+          </div>
+
+          {% if form.password_needed %}
+            <div class="auth-form-group">
+              <div class="auth-label-row">
+                <label class="auth-form-label" for="CustomerPassword">Password</label>
+                <a href="#recover" id="RecoverPassword" class="auth-text-link">Forgot Password?</a>
+              </div>
+              <input 
+                type="password" 
+                value="" 
+                name="customer[password]" 
+                id="CustomerPassword" 
+                class="auth-form-input" 
+                autocomplete="current-password" 
+                placeholder="••••••••••••" 
+                required
+              >
+            </div>
+          {% endif %}
+
+          <button type="submit" class="auth-submit-btn">SIGN IN TO ATELIER</button>
+        {% endform %}
+
+        <!-- Recover Password Form (Hidden by default) -->
+        <div id="RecoverPasswordForm" style="display: none; margin-top: 30px; border-top: 1px solid #ebe5dc; padding-top: 25px;">
+          <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; margin-bottom: 8px; color: #111;">Reset Client Password</h2>
+          <p style="font-size: 13px; color: #666; margin-bottom: 20px;">We will send you an encrypted recovery link to regain atelier access.</p>
+          
+          {% form 'recover_customer_password' %}
+            {{ form.errors | default_errors }}
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="RecoverEmail">Registered Email</label>
+              <input type="email" name="email" id="RecoverEmail" class="auth-form-input" placeholder="collector@swasticexports.com" required>
+            </div>
+            <button type="submit" class="auth-submit-btn">SEND RESET INSTRUCTIONS</button>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="#login" id="HideRecoverPasswordLink" class="auth-text-link">Return to Sign In</a>
+            </div>
+          {% endform %}
+        </div>
+
+        <div class="auth-card-footer">
+          <p class="auth-footer-text">
+            Don't have an Atelier Account yet?
+            <a href="{{ routes.account_register_url }}" class="auth-accent-link">Request VIP Access</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Collector Privileges Banner -->
+      <div class="auth-privileges-panel">
+        <div class="privileges-header">
+          <span class="privilege-icon-sparkle">✦</span>
+          <h3>Private Client Privileges</h3>
+          <p>Every member enjoys tailored curation from the Swastic Exports gemological team.</p>
+        </div>
+
+        <div class="privilege-cards-stack">
+          <div class="privilege-mini-card">
+            <div class="privilege-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a880" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 6v6l4 2"></path>
+              </svg>
+            </div>
+            <div>
+              <h4>Priority Armored Logistics</h4>
+              <p>Track your fully insured, tamper-sealed gemstone consignments with real-time tracking.</p>
+            </div>
+          </div>
+
+          <div class="privilege-mini-card">
+            <div class="privilege-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a880" stroke-width="1.8">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+            <div>
+              <h4>Digital GIA & IGI Dossier Vault</h4>
+              <p>Instant lifetime access to high-resolution certificates, laser inscription proofs, and origin dossiers.</p>
+            </div>
+          </div>
+
+          <div class="privilege-mini-card">
+            <div class="privilege-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a880" stroke-width="1.8">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4>Private Vault Previews</h4>
+              <p>First privilege on unheated Ceylon sapphires, Colombian emeralds, and Pigeon's Blood rubies before public release.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="privileges-direct-support">
+          <p>Need immediate gemologist assistance?</p>
+          <a href="https://wa.me/919820000000" target="_blank" rel="noopener">
+            <span>Direct WhatsApp Concierge: +91 98200 00000</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple recovery form toggle for Shopify customer portal
+  const recoverBtn = document.getElementById('RecoverPassword');
+  const cancelBtn = document.getElementById('HideRecoverPasswordLink');
+  const recoverForm = document.getElementById('RecoverPasswordForm');
+  if (recoverBtn && recoverForm) {
+    recoverBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      recoverForm.style.display = recoverForm.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+  if (cancelBtn && recoverForm) {
+    cancelBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      recoverForm.style.display = 'none';
+    });
+  }
+</script>

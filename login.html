@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Sign In | SWASTIC EXPORTS Private Atelier</title>
+  <meta name="description" content="Sign in to your Swastic Exports private client account to view orders, vault shipments, GIA certification dossiers, and saved gemstone collections.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header Notification Bar -->
+  <div class="top-notification-bar">
+    <p>✦ COMPLIMENTARY FULLY INSURED ARMORED COURIER DISPATCH ON ALL CERTIFIED GEMSTONES ✦</p>
+  </div>
+
+  <!-- Main Luxury Header -->
+  <header class="main-header" id="mainHeader">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-title">SWASTIC EXPORTS</span>
+          <span class="logo-sub">HOUSE OF GEMS</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <div class="search-pill-container" id="searchTrigger" onclick="window.location.href='index.html#diamond-products-section'">
+          <input type="text" placeholder="Search gems..." id="headerSearchInput" readonly>
+          <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        
+        <button class="nav-action-btn wishlist-btn" id="wishlistBtn" aria-label="Favorites" title="View Favorites">
+          <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="action-badge" id="wishlistBadgeCount"></span>
+        </button>
+
+        <button class="nav-action-btn user-btn active" id="userBtn" aria-label="Account" title="Client Account">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <button class="nav-action-btn cart-btn" id="cartBtn" aria-label="Shopping Bag" title="View Bag">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="action-badge" id="cartBadgeCount"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Bar -->
+    <nav class="main-navigation">
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
+        <li class="nav-item"><a href="shapes.html" class="nav-link">SHOP BY SHAPE</a></li>
+        <li class="nav-item"><a href="index.html#diamond-products-section" class="nav-link">GEMSTONES</a></li>
+        <li class="nav-item"><a href="promise.html" class="nav-link">PROMISE</a></li>
+        <li class="nav-item"><a href="index.html#stories-section" class="nav-link">STORIES</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">ABOUT</a></li>
+        <li class="nav-item"><a href="account.html" class="nav-link highlight-menu">MY PROFILE</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Login Main Content Area -->
+  <main class="account-page-wrapper">
+    <div class="account-page-container">
+      <!-- Breadcrumb -->
+      <div class="account-breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="account.html">Account</a>
+        <span class="sep">/</span>
+        <span class="current">Sign In</span>
+      </div>
+
+      <div class="auth-split-grid">
+        <!-- Left: Sign In Card -->
+        <div class="auth-card">
+          <!-- Normal Login Form -->
+          <div id="loginFormSection">
+            <div class="auth-header">
+              <span class="auth-eyebrow">✦ SWASTIC EXPORTS CLIENT PORTAL ✦</span>
+              <h1 class="auth-title">Client Sign In</h1>
+              <p class="auth-subtitle">Access your private atelier collection, vault reserves, GIA certificates &amp; tracked armored deliveries.</p>
+            </div>
+
+            <form class="auth-form" id="customerLoginForm" onsubmit="handleCustomerLogin(event)">
+              <div class="auth-form-group">
+                <label class="auth-label" for="loginEmail">Email Address</label>
+                <div class="auth-input-wrap">
+                  <input type="email" id="loginEmail" class="auth-input" placeholder="client@luxuryatelier.com" required autocomplete="email">
+                </div>
+              </div>
+
+              <div class="auth-form-group">
+                <div class="auth-label-row">
+                  <label class="auth-label" for="loginPassword">Password</label>
+                  <span class="auth-forgot-link" onclick="togglePasswordRecovery(true)">Forgot Password?</span>
+                </div>
+                <div class="auth-input-wrap">
+                  <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••••••" required autocomplete="current-password">
+                  <button type="button" class="auth-pwd-toggle" onclick="togglePasswordVisibility('loginPassword')" aria-label="Toggle password visibility">👁️</button>
+                </div>
+              </div>
+
+              <label class="auth-checkbox-row">
+                <input type="checkbox" id="rememberMe" checked>
+                <span>Remember this workstation for 30 days (Secured Session)</span>
+              </label>
+
+              <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">SIGN IN TO ATELIER</button>
+
+              <button type="button" class="auth-demo-btn" onclick="fillDemoCredentials()">
+                ⚡ One-Click Demo Access as Nishant Bacchani (VIP Member)
+              </button>
+
+              <div class="auth-switch-prompt">
+                <span>New to Swastic Exports?</span>
+                <a href="signup.html">Create an Atelier Account</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Forgot Password Form (Hidden by default) -->
+          <div id="recoverFormSection" style="display:none;">
+            <div class="auth-header">
+              <span class="auth-eyebrow">✦ SECURE RECOVERY ✦</span>
+              <h2 class="auth-title">Reset Password</h2>
+              <p class="auth-subtitle">Enter your registered email address and our encrypted vault system will send you a one-time recovery key.</p>
+            </div>
+
+            <form class="auth-form" onsubmit="handlePasswordRecovery(event)">
+              <div class="auth-form-group">
+                <label class="auth-label" for="recoverEmail">Email Address</label>
+                <div class="auth-input-wrap">
+                  <input type="email" id="recoverEmail" class="auth-input" placeholder="client@luxuryatelier.com" required>
+                </div>
+              </div>
+
+              <button type="submit" class="auth-submit-btn">SEND RESET INSTRUCTIONS</button>
+              
+              <div class="auth-switch-prompt">
+                <span class="auth-forgot-link" onclick="togglePasswordRecovery(false)">← Return to Sign In</span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: The Private Atelier Advantage -->
+        <div class="auth-benefits-card">
+          <div class="auth-benefits-header">
+            <span class="auth-eyebrow">✦ PRIVATE PRIVILEGES ✦</span>
+            <h3>The Atelier Experience</h3>
+          </div>
+
+          <div class="auth-benefit-item">
+            <div class="auth-benefit-icon">💎</div>
+            <div class="auth-benefit-text">
+              <strong>Private Vault Access</strong>
+              <p>Exclusive 48-hour priority reservation on unheated rare gemstones and museum-grade calibrated layouts before public catalog release.</p>
+            </div>
+          </div>
+
+          <div class="auth-benefit-item">
+            <div class="auth-benefit-icon">📜</div>
+            <div class="auth-benefit-text">
+              <strong>Digital GIA &amp; Provenance Dossiers</strong>
+              <p>Instant encrypted access to laboratory verification reports, laser inscription numbers, and mine-to-market authenticity records.</p>
+            </div>
+          </div>
+
+          <div class="auth-benefit-item">
+            <div class="auth-benefit-icon">🛡️</div>
+            <div class="auth-benefit-text">
+              <strong>Live Armored Courier Tracking</strong>
+              <p>End-to-end continuous telemetry on Brink's &amp; FedEx Priority armored shipments with direct liaison to your personal delivery officer.</p>
+            </div>
+          </div>
+
+          <div class="auth-benefit-item">
+            <div class="auth-benefit-icon">🏛️</div>
+            <div class="auth-benefit-text">
+              <strong>Dedicated Master Gemologist</strong>
+              <p>Direct priority line to our senior gemological appraisers for custom cutting calibration and high-jewelry bespoke mountings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-column brand-col">
+        <div class="footer-logo">SWASTIC EXPORTS</div>
+        <p class="footer-tagline">Mastering handcrafted fine gemstones and bespoke jewelry across generations.</p>
+        <div class="footer-certifications">
+          <span class="cert-badge">GIA CERTIFIED</span>
+          <span class="cert-badge">IGI CERTIFIED</span>
+          <span class="cert-badge">CONFLICT-FREE</span>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>FINE GEMSTONES</h4>
+        <ul>
+          <li><a href="shapes.html">Shop by Shape</a></li>
+          <li><a href="index.html#diamond-products-section">Loose Certified Gemstones</a></li>
+          <li><a href="index.html#new-arrivals-section">New Arrivals</a></li>
+          <li><a href="promise.html">The Swastic Promise</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>CLIENT SERVICES</h4>
+        <ul>
+          <li><a href="account.html">My Profile &amp; Orders</a></li>
+          <li><a href="login.html">Atelier Sign In</a></li>
+          <li><a href="signup.html">Create Account</a></li>
+          <li><a href="about.html">About Swastic Exports</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>CONCIERGE LIAISON</h4>
+        <p class="footer-contact-item"><strong>Direct Atelier:</strong> +91 98765 43210</p>
+        <p class="footer-contact-item"><strong>Email:</strong> client@swasticexports.com</p>
+        <p class="footer-contact-item"><strong>Hours:</strong> 24/7 Private Vault Support</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom-bar">
+      <p>&copy; 2026 SWASTIC EXPORTS. All rights reserved. Handcrafted with bespoke precision.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function togglePasswordVisibility(id) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+      } else {
+        input.type = 'password';
+      }
+    }
+
+    function togglePasswordRecovery(showRecover) {
+      document.getElementById('loginFormSection').style.display = showRecover ? 'none' : 'block';
+      document.getElementById('recoverFormSection').style.display = showRecover ? 'block' : 'none';
+    }
+
+    function fillDemoCredentials() {
+      document.getElementById('loginEmail').value = 'nishant.bacchani@luxuryatelier.com';
+      document.getElementById('loginPassword').value = 'AtelierVIP2026!';
+      // Automatically log in
+      handleCustomerLogin(new Event('submit'));
+    }
+
+    function handleCustomerLogin(e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const btn = document.getElementById('loginSubmitBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'AUTHENTICATING ATELIER ACCESS...';
+      }
+
+      setTimeout(() => {
+        // Save customer session in localStorage
+        const customer = {
+          firstName: 'Nishant',
+          lastName: 'Bacchani',
+          email: email || 'nishant.bacchani@luxuryatelier.com',
+          phone: '+91 98765 43210',
+          tier: 'Private Atelier Collector • Tier I',
+          memberSince: 'October 2024',
+          currency: 'USD ($)',
+          preferredCut: 'Emerald & Cushion Cuts'
+        };
+        localStorage.setItem('swastic_customer', JSON.stringify(customer));
+        window.location.href = 'account.html';
+      }, 700);
+    }
+
+    function handlePasswordRecovery(e) {
+      e.preventDefault();
+      const email = document.getElementById('recoverEmail').value;
+      alert(`An encrypted recovery code has been dispatched to ${email}. Please check your inbox.`);
+      togglePasswordRecovery(false);
+    }
+  </script>
+</body>
+</html>

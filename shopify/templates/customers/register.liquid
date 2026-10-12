@@ -1,0 +1,136 @@
+{% comment %}
+  Shopify Template: customers/register.liquid
+  Atelier VIP Registration for Swastic Exports House of Natural Gemstones
+{% endcomment %}
+
+<div class="account-page-wrapper">
+  <div class="account-page-container">
+    <nav class="account-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span class="breadcrumb-current">Create Client Profile</span>
+    </nav>
+
+    <div class="auth-split-grid">
+      <!-- Left: Registration Form -->
+      <div class="auth-card">
+        <div class="auth-card-badge">
+          <span>✦</span> SWASTIC EXPORTS ATELIER <span>✦</span>
+        </div>
+        <h1 class="auth-card-title">Join the Collector Circle</h1>
+        <p class="auth-card-sub">
+          Register to preserve certified GIA dossiers, track armored international consignments, and unlock direct wholesale pricing.
+        </p>
+
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="FirstName">First Name</label>
+              <input 
+                type="text" 
+                name="customer[first_name]" 
+                id="FirstName" 
+                class="auth-form-input" 
+                {% if form.first_name %}value="{{ form.first_name }}"{% endif %} 
+                placeholder="e.g. Nishant" 
+                required
+              >
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-form-label" for="LastName">Last Name</label>
+              <input 
+                type="text" 
+                name="customer[last_name]" 
+                id="LastName" 
+                class="auth-form-input" 
+                {% if form.last_name %}value="{{ form.last_name }}"{% endif %} 
+                placeholder="e.g. Bacchani" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="Email">Email Address</label>
+            <input 
+              type="email" 
+              name="customer[email]" 
+              id="Email" 
+              class="auth-form-input" 
+              {% if form.email %}value="{{ form.email }}"{% endif %} 
+              autocomplete="email" 
+              placeholder="e.g. collector@swasticexports.com" 
+              required
+            >
+          </div>
+
+          <div class="auth-form-group">
+            <label class="auth-form-label" for="CreatePassword">Password</label>
+            <input 
+              type="password" 
+              name="customer[password]" 
+              id="CreatePassword" 
+              class="auth-form-input" 
+              placeholder="Create strong password (min. 8 characters)" 
+              required
+            >
+          </div>
+
+          <button type="submit" class="auth-submit-btn">CREATE ATELIER ACCOUNT</button>
+        {% endform %}
+
+        <div class="auth-card-footer">
+          <p class="auth-footer-text">
+            Already have an Atelier Account?
+            <a href="{{ routes.account_login_url }}" class="auth-accent-link">Sign In Here</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Privilege overview -->
+      <div class="auth-privileges-panel">
+        <div class="privileges-header">
+          <span class="privilege-icon-sparkle">✦</span>
+          <h3>Private Member Benefits</h3>
+          <p>Direct provenance from legacy gemstone cutters with 30+ years of trust.</p>
+        </div>
+
+        <div class="privilege-cards-stack">
+          <div class="privilege-mini-card">
+            <div class="privilege-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a880" stroke-width="1.8">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div>
+              <h4>Ethical Provenance Tracking</h4>
+              <p>Each natural gemstone is laser inscribed with certified mine and laboratory lineage.</p>
+            </div>
+          </div>
+
+          <div class="privilege-mini-card">
+            <div class="privilege-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a880" stroke-width="1.8">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M7 15h0M2 9.5h20"></path>
+              </svg>
+            </div>
+            <div>
+              <h4>Escrow & Private Banking Security</h4>
+              <p>Global escrow settlement, RTGS wire verification, and insured Brink's / Malca-Amit transit.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="privileges-direct-support">
+          <p>Questions regarding custom certification?</p>
+          <a href="{{ routes.root_url }}#contact">
+            <span>Speak with Senior Gemological Curator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

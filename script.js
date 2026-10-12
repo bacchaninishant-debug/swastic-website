@@ -1141,5 +1141,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // 15. Client Account / Profile Navigation Controller
+  const userBtns = document.querySelectorAll('#userBtn, .user-btn');
+  try {
+    const rawCust = localStorage.getItem('swastic_customer');
+    if (rawCust) {
+      const cust = JSON.parse(rawCust);
+      if (cust && (cust.firstName || cust.email)) {
+        userBtns.forEach(btn => {
+          btn.classList.add('has-logged-user');
+          btn.setAttribute('title', `Atelier Account: ${cust.firstName || 'Client'}`);
+        });
+      }
+    }
+  } catch(e) {}
+
+  userBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // If within a link that already targets /account, respect it
+      if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href') !== '#') {
+        return;
+      }
+      e.preventDefault();
+      // If Shopify environment
+      if (window.Shopify && window.Shopify.routes) {
+        window.location.href = (window.Shopify.routes.root || '/') + 'account';
+        return;
+      }
+      const rawCust = localStorage.getItem('swastic_customer');
+      if (rawCust) {
+        window.location.href = 'account.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+  });
 });
 

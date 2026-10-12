@@ -1,0 +1,413 @@
+{% comment %}
+  Shopify Template: customers/account.liquid
+  Atelier Client Portal & My Profile for Swastic Exports House of Natural Gemstones
+{% endcomment %}
+
+<div class="account-page-wrapper">
+  <div class="account-page-container">
+    <nav class="account-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span class="breadcrumb-current">My Atelier Profile</span>
+    </nav>
+
+    <!-- Top Account Banner -->
+    <div class="account-hero-bar">
+      <div class="account-hero-left">
+        <div class="account-avatar">
+          {% if customer.first_name != blank %}
+            {{ customer.first_name | slice: 0 | upcase }}{{ customer.last_name | slice: 0 | upcase }}
+          {% else %}
+            NB
+          {% endif %}
+        </div>
+        <div class="account-hero-info">
+          <div class="account-client-tier">
+            <span>✦</span> VIP PRIVATE COLLECTOR CIRCLE <span>✦</span>
+          </div>
+          <h1 class="account-client-name">
+            {% if customer.name != blank %}
+              {{ customer.name }}
+            {% else %}
+              Nishant Bacchani
+            {% endif %}
+          </h1>
+          <div class="account-client-meta">
+            <span>{{ customer.email | default: 'nishant@swasticexports.com' }}</span>
+            <span class="meta-sep">•</span>
+            <span>Client ID: #SE-CUST-{% if customer.id %}{{ customer.id }}{% else %}88421{% endif %}</span>
+            <span class="meta-sep">•</span>
+            <span class="account-tier-badge">Heritage Tier (30+ Yrs Provenance)</span>
+          </div>
+        </div>
+      </div>
+      <div class="account-hero-actions">
+        <a href="{{ routes.account_logout_url }}" class="account-logout-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Account Dashboard Grid -->
+    <div class="account-main-grid">
+      <!-- Left Navigation Bar -->
+      <aside class="account-sidebar-nav">
+        <button class="account-nav-tab active" data-tab="orders">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          Orders & Armored Shipments
+          <span class="tab-badge-counter">{{ customer.orders_count | default: 2 }}</span>
+        </button>
+
+        <button class="account-nav-tab" data-tab="profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Personal Profile & Atelier Details
+        </button>
+
+        <button class="account-nav-tab" data-tab="addresses">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          Delivery & Vault Addresses
+        </button>
+
+        <button class="account-nav-tab" data-tab="payments">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          Payment & Escrow Methods
+        </button>
+
+        <button class="account-nav-tab" data-tab="certificates">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <circle cx="12" cy="14" r="3"></circle>
+          </svg>
+          Digital GIA & IGI Certificates
+        </button>
+
+        <button class="account-nav-tab" data-tab="wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          Curated Wishlist
+        </button>
+
+        <button class="account-nav-tab" data-tab="security">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Security & Atelier Vault Access
+        </button>
+      </aside>
+
+      <!-- Right Tab Panels -->
+      <section class="account-content-pane">
+        <!-- 1. Orders & Armored Shipments -->
+        <div class="account-tab-card active" id="tab-orders">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Orders & Armored Consignments</h2>
+              <p class="tab-card-sub">Real-time status of bespoke gemstones with Malca-Amit & FedEx Priority Armored insurance tracking.</p>
+            </div>
+          </div>
+
+          {% if customer.orders.size > 0 %}
+            <div class="orders-list">
+              {% for order in customer.orders %}
+                <div class="order-card">
+                  <div class="order-card-top">
+                    <div>
+                      <span class="order-id">{{ order.name }}</span>
+                      <span class="order-date">Placed on {{ order.created_at | date: "%B %d, %Y" }}</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span class="order-status-badge">{{ order.fulfillment_status_label }}</span>
+                      <div class="order-total-price">{{ order.total_price | money }}</div>
+                    </div>
+                  </div>
+                  <div class="order-items-preview">
+                    {% for line_item in order.line_items %}
+                      <div class="order-gem-item">
+                        <div class="order-gem-info">
+                          <h4>{{ line_item.title }}</h4>
+                          <p>Qty: {{ line_item.quantity }} • {{ line_item.price | money }}</p>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <div class="order-actions-bar">
+                    <a href="{{ order.customer_url }}" class="order-action-btn primary">View Full Order Details</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <!-- Demo / Default Active Order Display -->
+            <div class="order-card">
+              <div class="order-card-top">
+                <div>
+                  <span class="order-id">#SE-2026-15684</span>
+                  <span class="order-date">Placed on October 10, 2026</span>
+                </div>
+                <div style="text-align: right;">
+                  <span class="order-status-badge badge-transit">In Armored Transit</span>
+                  <div class="order-total-price">$7,900.00 USD</div>
+                </div>
+              </div>
+
+              <!-- Interactive 5-Stage Live Armored Transit Timeline Tracker -->
+              <div class="order-timeline-box">
+                <div class="timeline-title-row">
+                  <span class="timeline-title">FedEx Priority Armored Tracking: <strong>#FDX-SE-8849-019</strong></span>
+                  <span class="timeline-est">Est. Delivery: <strong>October 14, 2026</strong></span>
+                </div>
+                <div class="order-timeline-steps">
+                  <div class="timeline-step step-complete">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-label">Atelier Verified</div>
+                    <div class="timeline-time">Oct 10, 09:30</div>
+                  </div>
+                  <div class="timeline-step step-complete">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-label">GIA Sealed & Vaulted</div>
+                    <div class="timeline-time">Oct 11, 14:15</div>
+                  </div>
+                  <div class="timeline-step step-active">
+                    <div class="timeline-dot">●</div>
+                    <div class="timeline-label">Armored International Flight</div>
+                    <div class="timeline-time">Oct 12, Live</div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="timeline-dot">○</div>
+                    <div class="timeline-label">Customs Clearance</div>
+                    <div class="timeline-time">Pending</div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="timeline-dot">○</div>
+                    <div class="timeline-label">Insured Hand Delivery</div>
+                    <div class="timeline-time">Oct 14</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-items-preview">
+                <div class="order-gem-item">
+                  <img src="{{ 'emerald-3.jpg' | asset_url }}" alt="Natural Zambian Emerald" class="order-gem-thumb" onerror="this.src='images/emerald-3.jpg'">
+                  <div class="order-gem-info">
+                    <h4>4.20ct Natural Royal Vivid Zambian Emerald</h4>
+                    <p>SKU: SE-EM-ZM-420 • Octagonal Step Cut • Minor Cedarwood Oil</p>
+                    <div class="order-gem-cert">GIA Dossier #2225894101 (Included)</div>
+                  </div>
+                  <div class="order-gem-price-cell">
+                    <span class="gem-price">$7,900.00</span>
+                    <span class="gem-qty">Qty: 1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- 2. Personal Profile -->
+        <div class="account-tab-card" id="tab-profile">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Personal Client Dossier</h2>
+              <p class="tab-card-sub">Manage your collector identity and preferred gemstone curations.</p>
+            </div>
+          </div>
+          <form class="account-edit-form" onsubmit="event.preventDefault(); alert('Profile details saved.');">
+            <div class="form-row-dual">
+              <div class="auth-form-group">
+                <label class="auth-form-label">First Name</label>
+                <input type="text" class="auth-form-input" value="{{ customer.first_name | default: 'Nishant' }}">
+              </div>
+              <div class="auth-form-group">
+                <label class="auth-form-label">Last Name</label>
+                <input type="text" class="auth-form-input" value="{{ customer.last_name | default: 'Bacchani' }}">
+              </div>
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-form-label">Email Address</label>
+              <input type="email" class="auth-form-input" value="{{ customer.email | default: 'nishant@swasticexports.com' }}" readonly style="background: #fdfdfd; opacity: 0.9;">
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-form-label">Contact Telephone</label>
+              <input type="tel" class="auth-form-input" value="{{ customer.phone | default: '+91 98200 12345' }}">
+            </div>
+            <button type="submit" class="auth-submit-btn" style="max-width: 240px; margin-top: 10px;">SAVE CHANGES</button>
+          </form>
+        </div>
+
+        <!-- 3. Addresses -->
+        <div class="account-tab-card" id="tab-addresses">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Vault & Delivery Addresses</h2>
+              <p class="tab-card-sub">Secure international delivery destinations and private vault consignments.</p>
+            </div>
+          </div>
+          <div class="address-grid">
+            <div class="address-card address-default">
+              <div class="address-card-badge">PRIMARY ATELIER VAULT</div>
+              <h3 class="address-name">{{ customer.name | default: 'Nishant Bacchani' }}</h3>
+              <p class="address-text">
+                Swastic Exports Corporate Suites, Bharat Diamond Bourse<br>
+                Bandra Kurla Complex, G-Block<br>
+                Mumbai, MH 400051<br>
+                India<br>
+                Phone: +91 98200 12345
+              </p>
+            </div>
+            <div class="address-card">
+              <div class="address-card-badge secondary">INTERNATIONAL VAULT</div>
+              <h3 class="address-name">{{ customer.name | default: 'Nishant Bacchani' }}</h3>
+              <p class="address-text">
+                DMCC Precious Metals Vault, Almas Tower<br>
+                Jumeirah Lakes Towers, Level 38<br>
+                Dubai, United Arab Emirates<br>
+                Phone: +971 4 424 0000
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Payment & Escrow -->
+        <div class="account-tab-card" id="tab-payments">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Payment & Escrow Methods</h2>
+              <p class="tab-card-sub">Manage saved credit tokens, UPI mandates, and private banking wire escrow instructions.</p>
+            </div>
+          </div>
+          <div class="address-grid">
+            <div class="address-card address-default">
+              <div class="address-card-badge">PRIMARY CARD</div>
+              <h3 class="address-name">Visa Infinite Private Client</h3>
+              <p class="address-text">
+                Card Number: •••• •••• •••• 4242<br>
+                Expiry: 08 / 2029<br>
+                Holder: {{ customer.name | default: 'Nishant Bacchani' }}
+              </p>
+            </div>
+            <div class="address-card">
+              <div class="address-card-badge secondary">PRIVATE ESCROW WIRE</div>
+              <h3 class="address-name">Swastic Exports Private Escrow</h3>
+              <p class="address-text">
+                Beneficiary: Swastic Exports Atelier Private Ltd.<br>
+                Bank: HDFC Bank / Standard Chartered International<br>
+                Routing / SWIFT: HDFCINBB400<br>
+                Status: Verified High-Limit Account
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Certificates -->
+        <div class="account-tab-card" id="tab-certificates">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Digital GIA & IGI Certificates</h2>
+              <p class="tab-card-sub">Download laboratory verification reports and inspect high-resolution spectroscopic scans.</p>
+            </div>
+          </div>
+          <div class="certificates-grid">
+            <div class="cert-card">
+              <div class="cert-card-header">
+                <span class="cert-lab-badge">GIA CERTIFIED</span>
+                <span class="cert-number">#2225894101</span>
+              </div>
+              <h3 class="cert-gem-title">4.20ct Natural Zambian Emerald</h3>
+              <p class="cert-meta">Minor Cedarwood Clarity Enhancement • Octagonal Step Cut • Intense Royal Green</p>
+              <div class="cert-actions">
+                <a href="https://www.gia.edu/report-check?reportno=2225894101" target="_blank" rel="noopener" class="cert-btn primary">Verify on GIA.edu</a>
+              </div>
+            </div>
+
+            <div class="cert-card">
+              <div class="cert-card-header">
+                <span class="cert-lab-badge">GIA CERTIFIED</span>
+                <span class="cert-number">#5192083921</span>
+              </div>
+              <h3 class="cert-gem-title">3.15ct Unheated Royal Blue Ceylon Sapphire</h3>
+              <p class="cert-meta">No Heat or Chemical Treatment Identified • Oval Brilliant Cut • Sri Lanka Provenance</p>
+              <div class="cert-actions">
+                <a href="https://www.gia.edu/report-check?reportno=5192083921" target="_blank" rel="noopener" class="cert-btn primary">Verify on GIA.edu</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Wishlist -->
+        <div class="account-tab-card" id="tab-wishlist">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Curated Wishlist</h2>
+              <p class="tab-card-sub">Rare natural gemstones reserved in your private favorites.</p>
+            </div>
+          </div>
+          <div class="wishlist-empty" style="text-align: center; padding: 40px 20px;">
+            <p style="color: #666; font-size: 15px; margin-bottom: 20px;">Review stones saved during your atelier sessions.</p>
+            <a href="{{ routes.root_url }}#collection-section" class="auth-submit-btn" style="display: inline-block; max-width: 250px;">EXPLORE NATURAL GEMS</a>
+          </div>
+        </div>
+
+        <!-- 7. Security -->
+        <div class="account-tab-card" id="tab-security">
+          <div class="tab-card-header">
+            <div>
+              <h2 class="tab-card-title">Security & Atelier Vault Access</h2>
+              <p class="tab-card-sub">Safeguard your high-value account with encrypted credentials and two-factor authorization.</p>
+            </div>
+          </div>
+          <form class="account-edit-form" onsubmit="event.preventDefault(); alert('Security settings updated.');">
+            <div class="auth-form-group">
+              <label class="auth-form-label">Current Password</label>
+              <input type="password" class="auth-form-input" placeholder="••••••••••••">
+            </div>
+            <div class="form-row-dual">
+              <div class="auth-form-group">
+                <label class="auth-form-label">New Password</label>
+                <input type="password" class="auth-form-input" placeholder="Min. 8 characters">
+              </div>
+              <div class="auth-form-group">
+                <label class="auth-form-label">Confirm New Password</label>
+                <input type="password" class="auth-form-input" placeholder="Repeat new password">
+              </div>
+            </div>
+            <button type="submit" class="auth-submit-btn" style="max-width: 240px; margin-top: 10px;">UPDATE PASSWORD</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Interactive Tab Switching
+  document.querySelectorAll('.account-nav-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.account-nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.account-tab-card').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const targetId = 'tab-' + this.getAttribute('data-tab');
+      const targetCard = document.getElementById(targetId);
+      if (targetCard) targetCard.classList.add('active');
+    });
+  });
+</script>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile &amp; Orders | SWASTIC EXPORTS Private Atelier</title>
+  <meta name="description" content="Manage your Swastic Exports private client profile, track insured armored gemstone shipments, access digital GIA dossiers, and view vault orders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header Notification Bar -->
+  <div class="top-notification-bar">
+    <p>✦ COMPLIMENTARY FULLY INSURED ARMORED COURIER DISPATCH ON ALL CERTIFIED GEMSTONES ✦</p>
+  </div>
+
+  <!-- Main Luxury Header -->
+  <header class="main-header" id="mainHeader">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-title">SWASTIC EXPORTS</span>
+          <span class="logo-sub">HOUSE OF GEMS</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <div class="search-pill-container" id="searchTrigger" onclick="window.location.href='index.html#diamond-products-section'">
+          <input type="text" placeholder="Search gems..." id="headerSearchInput" readonly>
+          <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        
+        <button class="nav-action-btn wishlist-btn" id="wishlistBtn" aria-label="Favorites" title="View Favorites">
+          <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="action-badge" id="wishlistBadgeCount"></span>
+        </button>
+
+        <button class="nav-action-btn user-btn active" id="userBtn" aria-label="Account" title="Client Account">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <button class="nav-action-btn cart-btn" id="cartBtn" aria-label="Shopping Bag" title="View Bag">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="action-badge" id="cartBadgeCount"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Bar -->
+    <nav class="main-navigation">
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
+        <li class="nav-item"><a href="shapes.html" class="nav-link">SHOP BY SHAPE</a></li>
+        <li class="nav-item"><a href="index.html#diamond-products-section" class="nav-link">GEMSTONES</a></li>
+        <li class="nav-item"><a href="promise.html" class="nav-link">PROMISE</a></li>
+        <li class="nav-item"><a href="index.html#stories-section" class="nav-link">STORIES</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">ABOUT</a></li>
+        <li class="nav-item"><a href="account.html" class="nav-link active highlight-menu">MY PROFILE</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Profile & Account Dashboard Main Wrapper -->
+  <main class="account-page-wrapper">
+    <div class="account-page-container">
+      <!-- Breadcrumb -->
+      <div class="account-breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="account.html">Client Account</a>
+        <span class="sep">/</span>
+        <span class="current">My Profile</span>
+      </div>
+
+      <!-- Hero Client Identification Card -->
+      <div class="account-hero-bar">
+        <div class="account-client-meta">
+          <div class="account-avatar-monogram" id="clientMonogram">NB</div>
+          <div class="account-client-details">
+            <span class="account-client-tier">✦ Private Atelier Collector • Tier I ✦</span>
+            <h2 id="clientFullName">Nishant Bacchani</h2>
+            <p class="account-client-contact">
+              <span id="clientEmail">nishant.bacchani@luxuryatelier.com</span> • 
+              <span id="clientPhone">+91 98765 43210</span> • 
+              <span>Member since Oct 2024</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="account-hero-actions">
+          <button type="button" class="account-action-outline-btn" onclick="window.location.href='index.html#diamond-products-section'">
+            EXPLORE GEMS
+          </button>
+          <button type="button" class="account-signout-btn" onclick="handleCustomerLogout()">
+            SIGN OUT
+          </button>
+        </div>
+      </div>
+
+      <!-- Main 2-Column Dashboard Grid -->
+      <div class="account-dashboard-grid">
+        <!-- Left: Navigation Sidebar -->
+        <aside class="account-sidebar-nav">
+          <div class="account-sidebar-nav-header">ATELIER DIRECTORY</div>
+          <nav class="account-nav-list" role="tablist">
+            <button type="button" class="account-nav-item-btn active" data-tab="orders" onclick="switchAccountTab('orders')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">📦</span>
+                <span>Orders &amp; Shipments</span>
+              </div>
+              <span class="account-nav-badge gold">1 Active</span>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="profile" onclick="switchAccountTab('profile')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">👤</span>
+                <span>Personal Profile</span>
+              </div>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="addresses" onclick="switchAccountTab('addresses')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">📍</span>
+                <span>Saved Addresses</span>
+              </div>
+              <span class="account-nav-badge" id="addressCountBadge">2</span>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="payments" onclick="switchAccountTab('payments')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">💳</span>
+                <span>Payment &amp; Escrow</span>
+              </div>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="wishlist" onclick="switchAccountTab('wishlist')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">💎</span>
+                <span>Curated Wishlist</span>
+              </div>
+              <span class="account-nav-badge" id="wishlistTabBadge">0</span>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="certificates" onclick="switchAccountTab('certificates')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">📜</span>
+                <span>GIA Dossier Vault</span>
+              </div>
+              <span class="account-nav-badge gold">2 Certs</span>
+            </button>
+
+            <button type="button" class="account-nav-item-btn" data-tab="security" onclick="switchAccountTab('security')">
+              <div class="account-nav-btn-label">
+                <span class="account-nav-icon">🔒</span>
+                <span>Security &amp; Settings</span>
+              </div>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Right: Tab Content Panels -->
+        <div class="account-content-panels">
+          
+          <!-- TAB 1: Orders & Shipments -->
+          <div class="account-tab-card" id="tabPaneOrders">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Acquisition Orders &amp; Armored Vault Deliveries</h3>
+                <p>Track live insured transit, view master gemologist laser inspection certificates, and download tax invoices.</p>
+              </div>
+            </div>
+
+            <!-- Active Order 1 -->
+            <div class="order-card">
+              <div class="order-card-header">
+                <div class="order-card-meta-row">
+                  <span class="order-card-id">ORDER #SE-2026-15684</span>
+                  <span class="order-card-date">Placed: October 12, 2026</span>
+                  <span class="order-card-status-pill in-transit">🚚 Armored Transit (FedEx Priority)</span>
+                </div>
+                <div class="order-card-price">
+                  <span style="font-family:var(--font-sans);font-weight:700;font-size:15px;color:#111;">$7,900.00</span>
+                </div>
+              </div>
+
+              <div class="order-card-body">
+                <div class="order-item-detail-row">
+                  <img src="images/pair-aquamarine-baguette.png" alt="Pastel Blue Aquamarine Pair" class="order-item-img">
+                  <div class="order-item-info">
+                    <h4 class="order-item-title">Pastel Blue Aquamarine 8.58ct Baguette Pair (Qty: 2)</h4>
+                    <p class="order-item-spec">Matched Pair • 8.58 CT • Unheated Emerald Baguette Cut • GIA Dossier #2225894101</p>
+                    <p class="order-item-price">$3,950.00 × 2 = $7,900.00 (Complimentary Armored Courier Included)</p>
+                  </div>
+                </div>
+
+                <!-- 5-Step Live Armored Transit Timeline -->
+                <div class="order-timeline-box">
+                  <div class="order-timeline-title">✦ LIVE ARMORED COURIER TELEMETRY &amp; CUSTODY CHAIN ✦</div>
+                  <div class="timeline-steps">
+                    <div class="timeline-step completed">
+                      <div class="timeline-dot">✓</div>
+                      <span class="timeline-label">Escrow Secured<br><small style="color:#888;">Oct 12, 10:15 AM</small></span>
+                    </div>
+                    <div class="timeline-step completed">
+                      <div class="timeline-dot">✓</div>
+                      <span class="timeline-label">GIA Verification<br><small style="color:#888;">Oct 12, 10:28 AM</small></span>
+                    </div>
+                    <div class="timeline-step completed">
+                      <div class="timeline-dot">✓</div>
+                      <span class="timeline-label">Vault Packed<br><small style="color:#888;">Oct 12, 10:45 AM</small></span>
+                    </div>
+                    <div class="timeline-step active">
+                      <div class="timeline-dot">🚚</div>
+                      <span class="timeline-label">In Armored Transit<br><small style="color:#b45309;font-weight:700;">Est: Oct 14</small></span>
+                    </div>
+                    <div class="timeline-step">
+                      <div class="timeline-dot">5</div>
+                      <span class="timeline-label">White-Glove Hand-Off<br><small style="color:#888;">Signature Required</small></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-card-actions">
+                <button type="button" class="order-action-btn" onclick="showTrackingModal('FDX-882940129')">TRACK COURIER (FDX-882940129)</button>
+                <button type="button" class="order-action-btn" onclick="switchAccountTab('certificates')">VIEW GIA DOSSIER</button>
+                <button type="button" class="order-action-btn primary" onclick="downloadInvoice('SE-2026-15684', 7900)">DOWNLOAD TAX INVOICE</button>
+              </div>
+            </div>
+
+            <!-- Past Order 2 -->
+            <div class="order-card">
+              <div class="order-card-header">
+                <div class="order-card-meta-row">
+                  <span class="order-card-id">ORDER #SE-2026-09412</span>
+                  <span class="order-card-date">Delivered: September 24, 2026</span>
+                  <span class="order-card-status-pill delivered">✓ Successfully Hand-Delivered</span>
+                </div>
+                <div class="order-card-price">
+                  <span style="font-family:var(--font-sans);font-weight:700;font-size:15px;color:#111;">$3,800.00</span>
+                </div>
+              </div>
+
+              <div class="order-card-body">
+                <div class="order-item-detail-row">
+                  <img src="images/product-gem-emerald.png" alt="Colombian Emerald" class="order-item-img">
+                  <div class="order-item-info">
+                    <h4 class="order-item-title">2.60 CT Colombian Emerald Cut Gemstone (Qty: 1)</h4>
+                    <p class="order-item-spec">Single Certified Loose Stone • Muzo Mine Provenance • GIA Report #5192083921</p>
+                    <p class="order-item-price">$3,800.00 • Delivered to Mumbai Residence</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order-card-actions">
+                <button type="button" class="order-action-btn" onclick="switchAccountTab('certificates')">VIEW GIA CERTIFICATE</button>
+                <button type="button" class="order-action-btn" onclick="window.location.href='shapes.html'">COMMISSION SETTING</button>
+                <button type="button" class="order-action-btn primary" onclick="downloadInvoice('SE-2026-09412', 3800)">TAX INVOICE</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: Personal Profile Information -->
+          <div class="account-tab-card" id="tabPaneProfile" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Client Profile &amp; Atelier Preferences</h3>
+                <p>Manage your personal identification, concierge contact liaison, and bespoke collecting interests.</p>
+              </div>
+            </div>
+
+            <form id="profileEditForm" onsubmit="saveProfileChanges(event)">
+              <div class="checkout-form-grid" style="margin-bottom:24px;">
+                <div class="form-group half-width">
+                  <label for="profFirstName">First Name</label>
+                  <input type="text" id="profFirstName" value="Nishant" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="profLastName">Last Name</label>
+                  <input type="text" id="profLastName" value="Bacchani" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="profEmail">Registered Email</label>
+                  <input type="email" id="profEmail" value="nishant.bacchani@luxuryatelier.com" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="profPhone">Mobile Number (Armored Courier Hand-Off)</label>
+                  <input type="tel" id="profPhone" value="+91 98765 43210" required>
+                </div>
+                <div class="form-group half-width">
+                  <label for="profCurrency">Default Atelier Currency</label>
+                  <select id="profCurrency">
+                    <option value="USD ($)" selected>USD ($) — United States Dollar</option>
+                    <option value="INR (₹)">INR (₹) — Indian Rupee</option>
+                    <option value="EUR (€)">EUR (€) — Euro</option>
+                    <option value="AED (د.إ)">AED (د.إ) — UAE Dirham</option>
+                    <option value="GBP (£)">GBP (£) — British Pound</option>
+                  </select>
+                </div>
+                <div class="form-group half-width">
+                  <label for="profAnniversary">Anniversary / Milestone Date (For Curated Vault Gifts)</label>
+                  <input type="date" id="profAnniversary" value="2026-11-20">
+                </div>
+                <div class="form-group full-width">
+                  <label for="profNotes">Bespoke Collecting Interests / Custom Requests</label>
+                  <input type="text" id="profNotes" value="Interested in unheated vivid green Colombian emeralds &amp; neon blue Paraiba tourmalines above 5 carats.">
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:flex-end;gap:12px;">
+                <button type="submit" class="auth-submit-btn" style="width:auto;padding:12px 28px;">SAVE PROFILE UPDATES</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 3: Saved Addresses -->
+          <div class="account-tab-card" id="tabPaneAddresses" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Delivery Address Book</h3>
+                <p>Registered armored courier delivery destinations and international free-port vault addresses.</p>
+              </div>
+            </div>
+
+            <div class="address-grid" id="addressesGrid">
+              <!-- Address 1 -->
+              <div class="address-card" id="addrCard1">
+                <div class="address-badge-row">
+                  <span class="address-type-tag default">Default Armored Delivery</span>
+                  <span style="font-size:11px;color:#15803d;font-weight:600;">✓ Verified</span>
+                </div>
+                <h4>Nishant Bacchani</h4>
+                <p>Penthouse 4B, Emerald Heights, Linking Road<br>Bandra West, Mumbai, Maharashtra 400050<br>India<br>Phone: +91 98765 43210</p>
+                <div class="address-card-actions">
+                  <button type="button" onclick="editAddressModal(1)">Edit Details</button>
+                  <button type="button" onclick="alert('Primary default address cannot be deleted. Please set another default first.')">Remove</button>
+                </div>
+              </div>
+
+              <!-- Address 2 -->
+              <div class="address-card" id="addrCard2">
+                <div class="address-badge-row">
+                  <span class="address-type-tag">International Free-Port Vault</span>
+                </div>
+                <h4>Swastic Exports Atelier Escrow</h4>
+                <p>Vault Suite 1402, Almas Tower, DMCC Free Zone<br>Jumeirah Lakes Towers, Dubai<br>United Arab Emirates<br>Liaison: +971 4 829 4019</p>
+                <div class="address-card-actions">
+                  <button type="button" onclick="editAddressModal(2)">Edit Details</button>
+                  <button type="button" onclick="removeAddress(2)">Remove</button>
+                </div>
+              </div>
+
+              <!-- Add New Address Card -->
+              <div class="add-new-address-card" onclick="openNewAddressModal()">
+                <div class="add-icon">＋</div>
+                <strong style="font-family:var(--font-sans);font-size:13px;color:#111;margin-bottom:4px;">Add New Delivery Address</strong>
+                <p style="font-family:var(--font-sans);font-size:11.5px;color:#777;margin:0;">Register an atelier, residence, or depository address</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: Payment Methods & Escrow -->
+          <div class="account-tab-card" id="tabPanePayments" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Payment Methods &amp; Atelier Escrow</h3>
+                <p>Manage encrypted payment tokens, international bank wire profiles, and high-value vault escrow.</p>
+              </div>
+            </div>
+
+            <div class="address-grid">
+              <div class="address-card">
+                <div class="address-badge-row">
+                  <span class="address-type-tag default">Primary Card</span>
+                  <span style="font-size:11px;color:#15803d;font-weight:600;">PCI-DSS Level 1</span>
+                </div>
+                <h4>Visa Infinite Corporate</h4>
+                <p>•••• •••• •••• 8892<br>Cardholder: NISHANT BACCHANI<br>Expires: 12 / 2028</p>
+                <div class="address-card-actions">
+                  <button type="button" onclick="alert('Card token verified securely.')">Manage</button>
+                </div>
+              </div>
+
+              <div class="address-card">
+                <div class="address-badge-row">
+                  <span class="address-type-tag">Instant UPI</span>
+                  <span style="font-size:11px;color:#15803d;font-weight:600;">Zero-Fee Settlement</span>
+                </div>
+                <h4>Virtual Payment Address (VPA)</h4>
+                <p>nishant@okhdfcbank<br>Linked to HDFC Private Banking<br>Status: Active for instant 1-click authorization</p>
+                <div class="address-card-actions">
+                  <button type="button" onclick="alert('UPI address verified.')">Manage</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wire-box-info" style="margin-top:24px;">
+              <h4>✦ SWASTIC EXPORTS PRIVATE WIRE ESCROW ✦</h4>
+              <p class="wire-desc">For acquisitions exceeding $50,000 USD, transactions are settled via our insured escrow facility at Standard Chartered Bank &amp; HDFC Private Banking with proforma invoices issued upon verification.</p>
+              <table class="wire-details-table">
+                <tr><td>Beneficiary:</td><td>Swastic Exports Gemological Atelier Ltd.</td></tr>
+                <tr><td>Bank:</td><td>Standard Chartered Bank / HDFC Private Wealth</td></tr>
+                <tr><td>SWIFT / BIC:</td><td>SCBLINBBXXX</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 5: Saved Gemstones & Wishlist -->
+          <div class="account-tab-card" id="tabPaneWishlist" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Curated Wishlist &amp; Vault Reserves</h3>
+                <p>Your privately bookmarked natural certified gemstones and custom high-jewelry ring mountings.</p>
+              </div>
+            </div>
+
+            <div id="accountWishlistContent">
+              <!-- Dynamically populated or fallback -->
+            </div>
+          </div>
+
+          <!-- TAB 6: GIA Dossiers & Certificates Vault -->
+          <div class="account-tab-card" id="tabPaneCertificates" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Digital GIA &amp; Gemological Laboratory Vault</h3>
+                <p>Official grading dossiers, laser inscription verification, and spectroscopic mine provenance certificates for all acquired stones.</p>
+              </div>
+            </div>
+
+            <div class="certificates-grid">
+              <!-- Cert 1 -->
+              <div class="cert-card">
+                <div class="cert-card-header">
+                  <span class="cert-gia-badge">GIA CERTIFIED</span>
+                  <span class="cert-report-num">Report #2225894101</span>
+                </div>
+                <div class="cert-card-body">
+                  <img src="images/pair-aquamarine-baguette.png" alt="Aquamarine Baguette" class="cert-thumb">
+                  <div class="cert-info">
+                    <strong>Natural Aquamarine Matched Pair</strong>
+                    <p>8.58 CT Total • Emerald Baguette Cut • Pastel Blue • Natural Earth-Mined (Unheated) • Laser Inscribed</p>
+                  </div>
+                </div>
+                <div class="cert-card-actions">
+                  <a href="https://www.gia.edu" target="_blank" rel="noopener" class="order-action-btn">VERIFY ON GIA.EDU ↗</a>
+                  <button type="button" class="order-action-btn primary" onclick="alert('Downloading high-resolution GIA digital grading certificate PDF #2225894101...')">DOWNLOAD PDF</button>
+                </div>
+              </div>
+
+              <!-- Cert 2 -->
+              <div class="cert-card">
+                <div class="cert-card-header">
+                  <span class="cert-gia-badge">GIA CERTIFIED</span>
+                  <span class="cert-report-num">Report #5192083921</span>
+                </div>
+                <div class="cert-card-body">
+                  <img src="images/product-gem-emerald.png" alt="Colombian Emerald" class="cert-thumb">
+                  <div class="cert-info">
+                    <strong>Natural Colombian Emerald</strong>
+                    <p>2.60 CT • Step Cut • Vivid Green • Muzo Mine Provenance • Minor Cedar Oil • GIA Color Grade Top Vivid</p>
+                  </div>
+                </div>
+                <div class="cert-card-actions">
+                  <a href="https://www.gia.edu" target="_blank" rel="noopener" class="order-action-btn">VERIFY ON GIA.EDU ↗</a>
+                  <button type="button" class="order-action-btn primary" onclick="alert('Downloading high-resolution GIA digital grading certificate PDF #5192083921...')">DOWNLOAD PDF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 7: Security & Settings -->
+          <div class="account-tab-card" id="tabPaneSecurity" style="display:none;">
+            <div class="account-tab-header">
+              <div class="account-tab-header-titles">
+                <h3>Security &amp; Atelier Session Management</h3>
+                <p>Manage two-factor authentication, change your account credentials, and inspect active authenticated sessions.</p>
+              </div>
+            </div>
+
+            <form onsubmit="handlePasswordChange(event)" style="max-width:520px;margin-bottom:30px;">
+              <h4 style="font-family:var(--font-serif);font-size:16px;color:#111;margin-bottom:14px;">CHANGE ACCOUNT PASSWORD</h4>
+              <div class="auth-form-group" style="margin-bottom:14px;">
+                <label class="auth-label">Current Password</label>
+                <input type="password" class="auth-input" placeholder="••••••••••••" required>
+              </div>
+              <div class="auth-form-group" style="margin-bottom:14px;">
+                <label class="auth-label">New Password (Min 8 characters)</label>
+                <input type="password" class="auth-input" placeholder="••••••••••••" required minlength="8">
+              </div>
+              <div class="auth-form-group" style="margin-bottom:18px;">
+                <label class="auth-label">Confirm New Password</label>
+                <input type="password" class="auth-input" placeholder="••••••••••••" required minlength="8">
+              </div>
+              <button type="submit" class="order-action-btn primary" style="padding:10px 24px;">UPDATE PASSWORD</button>
+            </form>
+
+            <div style="padding-top:20px;border-top:1px solid #eee;">
+              <h4 style="font-family:var(--font-serif);font-size:16px;color:#111;margin-bottom:10px;">TWO-FACTOR AUTHENTICATION (2FA)</h4>
+              <p style="font-family:var(--font-sans);font-size:12px;color:#666;line-height:1.5;margin-bottom:14px;">Two-factor authentication is active on this account via SMS &amp; biometric approval for all vault dispatches.</p>
+              <span style="display:inline-block;padding:4px 10px;background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;border-radius:3px;">● 2FA ENABLED &amp; ENCRYPTED</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add New Address Modal Dialog -->
+  <div class="checkout-modal-backdrop" id="newAddressModal">
+    <div class="checkout-modal-card" style="max-width:550px;">
+      <div class="checkout-modal-header">
+        <div class="checkout-brand-title">
+          <span class="checkout-eyebrow">✦ ATELIER ADDRESS BOOK ✦</span>
+          <h2>Register Delivery Address</h2>
+        </div>
+        <button class="modal-close-btn" onclick="closeNewAddressModal()">&times;</button>
+      </div>
+      <div class="checkout-modal-body" style="padding:26px;">
+        <form onsubmit="handleAddNewAddress(event)">
+          <div class="checkout-form-grid">
+            <div class="form-group full-width">
+              <label>Full Recipient Name</label>
+              <input type="text" id="newAddrName" placeholder="Nishant Bacchani" required>
+            </div>
+            <div class="form-group full-width">
+              <label>Street Address</label>
+              <input type="text" id="newAddrStreet" placeholder="Penthouse 4B, Linking Road" required>
+            </div>
+            <div class="form-group half-width">
+              <label>City</label>
+              <input type="text" id="newAddrCity" placeholder="Mumbai" required>
+            </div>
+            <div class="form-group half-width">
+              <label>Postal Code</label>
+              <input type="text" id="newAddrZip" placeholder="400050" required>
+            </div>
+            <div class="form-group full-width">
+              <label>Country / Region</label>
+              <select id="newAddrCountry">
+                <option value="India">India</option>
+                <option value="United States">United States</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Switzerland">Switzerland</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:20px;display:flex;justify-content:flex-end;gap:10px;">
+            <button type="button" class="order-action-btn" onclick="closeNewAddressModal()">Cancel</button>
+            <button type="submit" class="order-action-btn primary">SAVE ADDRESS</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-column brand-col">
+        <div class="footer-logo">SWASTIC EXPORTS</div>
+        <p class="footer-tagline">Mastering handcrafted fine gemstones and bespoke jewelry across generations.</p>
+        <div class="footer-certifications">
+          <span class="cert-badge">GIA CERTIFIED</span>
+          <span class="cert-badge">IGI CERTIFIED</span>
+          <span class="cert-badge">CONFLICT-FREE</span>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>FINE GEMSTONES</h4>
+        <ul>
+          <li><a href="shapes.html">Shop by Shape</a></li>
+          <li><a href="index.html#diamond-products-section">Loose Certified Gemstones</a></li>
+          <li><a href="index.html#new-arrivals-section">New Arrivals</a></li>
+          <li><a href="promise.html">The Swastic Promise</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>CLIENT SERVICES</h4>
+        <ul>
+          <li><a href="account.html">My Profile &amp; Orders</a></li>
+          <li><a href="login.html">Atelier Sign In</a></li>
+          <li><a href="signup.html">Create Account</a></li>
+          <li><a href="about.html">About Swastic Exports</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>CONCIERGE LIAISON</h4>
+        <p class="footer-contact-item"><strong>Direct Atelier:</strong> +91 98765 43210</p>
+        <p class="footer-contact-item"><strong>Email:</strong> client@swasticexports.com</p>
+        <p class="footer-contact-item"><strong>Hours:</strong> 24/7 Private Vault Support</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom-bar">
+      <p>&copy; 2026 SWASTIC EXPORTS. All rights reserved. Handcrafted with bespoke precision.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Tab Switcher
+    function switchAccountTab(tabName) {
+      document.querySelectorAll('.account-nav-item-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName);
+      });
+
+      const tabs = ['orders', 'profile', 'addresses', 'payments', 'wishlist', 'certificates', 'security'];
+      tabs.forEach(t => {
+        const pane = document.getElementById('tabPane' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (pane) {
+          pane.style.display = (t === tabName) ? 'block' : 'none';
+        }
+      });
+
+      if (tabName === 'wishlist') {
+        renderAccountWishlist();
+      }
+    }
+
+    // Customer Session Hydration
+    document.addEventListener('DOMContentLoaded', () => {
+      let cust = null;
+      try {
+        const raw = localStorage.getItem('swastic_customer');
+        if (raw) cust = JSON.parse(raw);
+      } catch(e) {}
+
+      if (!cust) {
+        // Set default VIP profile
+        cust = {
+          firstName: 'Nishant',
+          lastName: 'Bacchani',
+          email: 'nishant.bacchani@luxuryatelier.com',
+          phone: '+91 98765 43210',
+          tier: 'Private Atelier Collector • Tier I',
+          memberSince: 'October 2024',
+          currency: 'USD ($)',
+          preferredCut: 'Emerald & Cushion Cuts'
+        };
+        localStorage.setItem('swastic_customer', JSON.stringify(cust));
+      }
+
+      document.getElementById('clientFullName').textContent = `${cust.firstName} ${cust.lastName}`;
+      document.getElementById('clientEmail').textContent = cust.email;
+      document.getElementById('clientPhone').textContent = cust.phone;
+      document.getElementById('clientMonogram').textContent = (cust.firstName[0] || 'N') + (cust.lastName[0] || 'B');
+
+      if (document.getElementById('profFirstName')) document.getElementById('profFirstName').value = cust.firstName;
+      if (document.getElementById('profLastName')) document.getElementById('profLastName').value = cust.lastName;
+      if (document.getElementById('profEmail')) document.getElementById('profEmail').value = cust.email;
+      if (document.getElementById('profPhone')) document.getElementById('profPhone').value = cust.phone;
+
+      // Update wishlist count in tab
+      let favs = [];
+      try {
+        favs = JSON.parse(localStorage.getItem('swastic_favorites') || '[]');
+      } catch(e) {}
+      const wBadge = document.getElementById('wishlistTabBadge');
+      if (wBadge) wBadge.textContent = `${favs.length} Saved`;
+    });
+
+    function saveProfileChanges(e) {
+      e.preventDefault();
+      const updated = {
+        firstName: document.getElementById('profFirstName').value,
+        lastName: document.getElementById('profLastName').value,
+        email: document.getElementById('profEmail').value,
+        phone: document.getElementById('profPhone').value,
+        currency: document.getElementById('profCurrency').value,
+        notes: document.getElementById('profNotes').value,
+        tier: 'Private Atelier Collector • Tier I',
+        memberSince: 'October 2024'
+      };
+      localStorage.setItem('swastic_customer', JSON.stringify(updated));
+      document.getElementById('clientFullName').textContent = `${updated.firstName} ${updated.lastName}`;
+      document.getElementById('clientEmail').textContent = updated.email;
+      document.getElementById('clientPhone').textContent = updated.phone;
+      document.getElementById('clientMonogram').textContent = (updated.firstName[0] || 'N') + (updated.lastName[0] || 'B');
+      alert('✓ Profile updates saved to your Swastic Exports private account.');
+    }
+
+    function handleCustomerLogout() {
+      if (confirm('Are you sure you want to sign out from your atelier account?')) {
+        localStorage.removeItem('swastic_customer');
+        window.location.href = 'login.html';
+      }
+    }
+
+    function showTrackingModal(trackingNum) {
+      alert(`ARMORED COURIER TRACKING: ${trackingNum}\n\nCarrier: FedEx Priority Armored Transport\nOrigin: Swastic Exports Vault, Mumbai\nDestination: Bandra West, Mumbai\nCurrent Checkpoint: Regional Armored Depository Hub\nSecurity Seal: #SE-VAULT-9941\nEstimated Hand-Off: Tomorrow by 1:00 PM`);
+    }
+
+    function downloadInvoice(orderId, amount) {
+      alert(`GENERATING TAX INVOICE:\nOrder ID: ${orderId}\nTotal Amount: $${amount.toLocaleString()}.00 USD\n\nYour official digitally signed Proforma & Tax Invoice has been generated.`);
+      window.print();
+    }
+
+    function handlePasswordChange(e) {
+      e.preventDefault();
+      alert('✓ Account password updated successfully.');
+      e.target.reset();
+    }
+
+    function openNewAddressModal() {
+      document.getElementById('newAddressModal').classList.add('active');
+    }
+
+    function closeNewAddressModal() {
+      document.getElementById('newAddressModal').classList.remove('active');
+    }
+
+    function handleAddNewAddress(e) {
+      e.preventDefault();
+      const name = document.getElementById('newAddrName').value;
+      const street = document.getElementById('newAddrStreet').value;
+      const city = document.getElementById('newAddrCity').value;
+      const zip = document.getElementById('newAddrZip').value;
+      const country = document.getElementById('newAddrCountry').value;
+
+      const newCard = document.createElement('div');
+      newCard.className = 'address-card';
+      newCard.innerHTML = `
+        <div class="address-badge-row">
+          <span class="address-type-tag">Secondary Address</span>
+        </div>
+        <h4>${name}</h4>
+        <p>${street}<br>${city}, ${zip}<br>${country}</p>
+        <div class="address-card-actions">
+          <button type="button" onclick="this.closest('.address-card').remove()">Remove</button>
+        </div>
+      `;
+
+      const grid = document.getElementById('addressesGrid');
+      grid.insertBefore(newCard, grid.lastElementChild);
+      closeNewAddressModal();
+      alert('✓ New delivery address registered.');
+    }
+
+    function removeAddress(id) {
+      const card = document.getElementById('addrCard' + id);
+      if (card && confirm('Remove this address from your address book?')) {
+        card.remove();
+      }
+    }
+
+    function renderAccountWishlist() {
+      const container = document.getElementById('accountWishlistContent');
+      if (!container) return;
+
+      let favs = [];
+      try {
+        favs = JSON.parse(localStorage.getItem('swastic_favorites') || '[]');
+      } catch(e) {}
+
+      if (favs.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:50px 20px;">
+            <p style="font-family:var(--font-sans);font-size:14px;color:#777;margin-bottom:18px;">Your private wishlist is currently empty. Explore our loose gemstones to bookmark exceptional specimens.</p>
+            <button class="auth-submit-btn" style="width:auto;padding:12px 28px;" onclick="window.location.href='index.html#diamond-products-section'">EXPLORE LOOSE GEMSTONES</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="new-arrivals-grid" style="grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));gap:20px;">
+          ${favs.map((item, idx) => `
+            <div class="new-arrival-card">
+              <div class="new-arrival-media" style="padding:15px;">
+                <img src="${item.img}" alt="${item.title}">
+              </div>
+              <div class="new-arrival-meta" style="padding:14px 16px;">
+                <h4 style="font-family:var(--font-sans);font-size:13px;font-weight:600;margin-bottom:4px;">${item.title}</h4>
+                <p style="font-family:var(--font-sans);font-size:11px;color:#777;margin-bottom:10px;">${item.spec}</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
+                  <strong style="font-size:14px;">${item.price}</strong>
+                  <button class="arrival-add-btn" onclick="window.quickAddProduct('${item.id}', '${item.title}', '${item.spec}', ${parseInt(item.price.replace(/\D/g, '') || 2000)}, '${item.img}')">ADD TO BAG</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
