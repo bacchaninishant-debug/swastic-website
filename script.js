@@ -1447,22 +1447,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 6. Featured Diamond & Ring Products Filter & Actions
   window.filterProductCategory = (category) => {
+    const targetCat = (category === 'gems') ? 'gemstones' : category;
+
     document.querySelectorAll('.prod-tab-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tab === category);
+      const btnTab = btn.dataset.tab;
+      const isMatch = btnTab === targetCat || (targetCat === 'gemstones' && btnTab === 'gems');
+      btn.classList.toggle('active', isMatch);
     });
 
-    const cards = document.querySelectorAll('.product-item-card');
+    const cards = document.querySelectorAll('.diamond-products-grid .product-item-card, .product-item-card');
     cards.forEach(card => {
-      const cats = (card.dataset.category || '').split(' ');
-      if (category === 'all' || cats.includes(category)) {
+      const catAttr = (card.dataset.category || '').toLowerCase();
+      const cats = catAttr.split(/\s+/);
+      const isMatch = targetCat === 'all' ||
+                      cats.includes(targetCat) ||
+                      (targetCat === 'gemstones' && (cats.includes('gems') || cats.includes('gemstones'))) ||
+                      (targetCat === 'diamonds' && (cats.includes('diamond') || cats.includes('diamonds')));
+
+      if (isMatch) {
         card.style.display = 'flex';
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(8px)';
-        requestAnimationFrame(() => {
-          card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        });
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
       } else {
         card.style.display = 'none';
       }
@@ -1472,7 +1477,28 @@ document.addEventListener('DOMContentLoaded', () => {
   window.navigateToCategory = (category, event) => {
     if (event) {
       event.preventDefault();
+      event.stopPropagation();
     }
+
+    // Close any open navigation dropdowns
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(el => el.classList.remove('open'));
+    const navLink = document.getElementById('navGemsLink');
+    if (navLink) navLink.setAttribute('aria-expanded', 'false');
+
+    // Close mobile drawer if active
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+
+    const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
+
+    if (!isIndexPage) {
+      window.location.href = `index.html#diamond-products-section?cat=${category}`;
+      return;
+    }
+
     // Update active tab and filter items
     window.filterProductCategory(category);
     
@@ -1494,13 +1520,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Desktop & Mobile Navbar Gemstones Dropdown Toggle on Click
+  const navGemsItem = document.getElementById('navGemsItem');
+  const navGemsLink = document.getElementById('navGemsLink');
+  if (navGemsLink && navGemsItem) {
+    navGemsLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = navGemsItem.classList.contains('open');
+      if (!isOpen) {
+        // First click: drop down menu appears!
+        navGemsItem.classList.add('open');
+        navGemsLink.setAttribute('aria-expanded', 'true');
+      } else {
+        // Second click: close dropdown and view all products in the section
+        navGemsItem.classList.remove('open');
+        navGemsLink.setAttribute('aria-expanded', 'false');
+        window.navigateToCategory('all');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#navGemsItem')) {
+        navGemsItem.classList.remove('open');
+        navGemsLink.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        navGemsItem.classList.remove('open');
+        navGemsLink.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // Check URL hash on page load or back/forward navigation
   const checkHashCategory = () => {
     const hash = (window.location.hash || '').toLowerCase();
-    if (hash === '#gems' || hash.includes('gem')) {
-      setTimeout(() => window.navigateToCategory('gems'), 100);
-    } else if (hash === '#diamonds' || hash.includes('diamond')) {
-      setTimeout(() => window.navigateToCategory('diamonds'), 100);
+    if (hash.includes('gem')) {
+      setTimeout(() => window.navigateToCategory('gemstones'), 150);
+    } else if (hash.includes('diamond')) {
+      setTimeout(() => window.navigateToCategory('diamonds'), 150);
+    } else if (hash.includes('jewelry')) {
+      setTimeout(() => window.navigateToCategory('jewelry'), 150);
+    } else if (hash.includes('pair')) {
+      setTimeout(() => window.navigateToCategory('pairs'), 150);
     }
   };
 
@@ -1935,7 +2000,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul class="mobile-drawer-links">
           <li class="mobile-drawer-link-item"><a href="index.html"><span>Home</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="shapes.html"><span>Shop by Shape</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="index.html#diamond-products-section"><span>Natural Gemstones</span><span class="link-arrow">→</span></a></li>
+          
+          <!-- Gemstones & Diamonds Accordion -->
+          <li class="mobile-drawer-accordion-item" id="mobileGemAccordion">
+            <div class="mobile-drawer-accordion-header" id="mobileGemToggle">
+              <span>💎 GEMSTONES &amp; DIAMONDS</span>
+              <span class="accordion-arrow">▼</span>
+            </div>
+            <div class="mobile-drawer-accordion-content">
+              <a href="#diamond-products-section" class="mobile-gem-sublink" data-cat="gemstones">✦ Natural Loose Gemstones (10 Gems)</a>
+              <a href="#diamond-products-section" class="mobile-gem-sublink" data-cat="diamonds">✦ Certified Diamond Cuts (8 Cuts)</a>
+              <a href="#diamond-products-section" class="mobile-gem-sublink" data-cat="jewelry">✦ Fine Jewelry &amp; Rings (4)</a>
+              <a href="#diamond-products-section" class="mobile-gem-sublink" data-cat="pairs">✦ Rare Matched Pairs (4)</a>
+              <a href="#diamond-products-section" class="mobile-gem-sublink" data-cat="all" style="font-weight:700;color:#dfba87;">✦ View All 26 Creations &rarr;</a>
+            </div>
+          </li>
+
           <li class="mobile-drawer-link-item"><a href="promise.html"><span>The Swastic Promise</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="index.html#stories-section"><span>Exhibitions &amp; Stories</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="about.html"><span>About Atelier</span><span class="link-arrow">→</span></a></li>
@@ -1957,6 +2037,28 @@ document.addEventListener('DOMContentLoaded', () => {
       const closeBtn = drawer.querySelector('#mobileDrawerClose');
       if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
       backdrop.addEventListener('click', closeDrawer);
+
+      // Mobile Drawer Gemstones Accordion Toggle
+      const gemAccordion = drawer.querySelector('#mobileGemAccordion');
+      const gemToggle = drawer.querySelector('#mobileGemToggle');
+      if (gemToggle && gemAccordion) {
+        gemToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          gemAccordion.classList.toggle('active');
+          const arrow = gemToggle.querySelector('.accordion-arrow');
+          if (arrow) {
+            arrow.textContent = gemAccordion.classList.contains('active') ? '▲' : '▼';
+          }
+        });
+      }
+
+      drawer.querySelectorAll('.mobile-gem-sublink').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const cat = link.dataset.cat || 'all';
+          window.navigateToCategory(cat, e);
+        });
+      });
 
       const drawerSearchBtn = drawer.querySelector('#mobileDrawerSearchBtn');
       if (drawerSearchBtn) {

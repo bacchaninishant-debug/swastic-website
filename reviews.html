@@ -80,7 +80,57 @@
       <ul class="nav-menu">
         <li class="nav-item"><a href="index.html#heroSection" class="nav-link">HOME</a></li>
         <li class="nav-item"><a href="shapes.html" class="nav-link">SHOP BY SHAPE</a></li>
-        <li class="nav-item"><a href="index.html#diamond-products-section" class="nav-link">GEMSTONES</a></li>
+                <li class="nav-item has-dropdown" id="navGemsItem">
+          <a href="index.html#diamond-products-section" class="nav-link nav-link-dropdown" id="navGemsLink" aria-haspopup="true" aria-expanded="false">
+            <span>GEMSTONES</span>
+            <svg class="dropdown-chevron" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="nav-luxury-dropdown" id="gemsDropdownMenu">
+            <div class="nav-dropdown-inner">
+              <div class="nav-drop-col">
+                <span class="nav-drop-heading">
+                  <span class="drop-icon">💎</span> NATURAL LOOSE GEMS
+                </span>
+                <ul class="nav-drop-list">
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)">Colombian &amp; Zambian Emeralds</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)">Burma Pigeon Blood Rubies</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)">Royal Ceylon Blue Sapphires</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)">Santa Maria Aquamarines</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)">Rare Red Beryl &amp; Heliodor</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=gemstones" onclick="navigateToCategory('gemstones', event)" class="nav-drop-view-all">View All 10 Natural Gemstones &rarr;</a></li>
+                </ul>
+              </div>
+
+              <div class="nav-drop-col">
+                <span class="nav-drop-heading">
+                  <span class="drop-icon">✨</span> CERTIFIED DIAMOND CUTS
+                </span>
+                <ul class="nav-drop-list">
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)">Round Brilliant Cut (57 Facets)</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)">Emerald Cut (Hall of Mirrors)</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)">Royal Oval &amp; Cushion Cuts</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)">Pear Teardrop &amp; Marquise</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)">Princess &amp; Heart Cuts</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=diamonds" onclick="navigateToCategory('diamonds', event)" class="nav-drop-view-all">View All 8 Diamond Shapes &rarr;</a></li>
+                </ul>
+              </div>
+
+              <div class="nav-drop-col">
+                <span class="nav-drop-heading">
+                  <span class="drop-icon">💍</span> FINE JEWELRY &amp; PAIRS
+                </span>
+                <ul class="nav-drop-list">
+                  <li><a href="index.html#diamond-products-section?cat=jewelry" onclick="navigateToCategory('jewelry', event)">Emerald Solitaire &amp; Platinum Rings</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=jewelry" onclick="navigateToCategory('jewelry', event)">Full Eternity French Pavé Bands</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=jewelry" onclick="navigateToCategory('jewelry', event)">Natural Emerald Tennis Bracelets</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=pairs" onclick="navigateToCategory('pairs', event)">Neon Paraiba &amp; Chrome Tourmaline Pairs</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=pairs" onclick="navigateToCategory('pairs', event)">Mandarin Spessartite Garnet Pairs</a></li>
+                  <li><a href="index.html#diamond-products-section?cat=all" onclick="navigateToCategory('all', event)" class="nav-drop-highlight-cta">✦ VIEW ALL PRODUCTS (26+) &rarr;</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
         <li class="nav-item"><a href="promise.html" class="nav-link">PROMISE</a></li>
         <li class="nav-item"><a href="reviews.html" class="nav-link active highlight-menu">STORIES</a></li>
         <li class="nav-item"><a href="about.html" class="nav-link">ABOUT</a></li>

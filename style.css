@@ -368,6 +368,215 @@ img {
   width: 100%;
 }
 
+/* ==========================================================================
+   NAVIGATION DROPDOWN MENU (Luxury Mega-Menu for GEMSTONES)
+   ========================================================================== */
+.nav-item.has-dropdown {
+  position: relative;
+}
+
+.nav-link.nav-link-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-chevron {
+  transition: transform 0.25s ease;
+  vertical-align: middle;
+}
+
+.nav-item.has-dropdown:hover .dropdown-chevron,
+.nav-item.has-dropdown.open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-luxury-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(14px);
+  width: 780px;
+  max-width: 90vw;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 24px 28px;
+  z-index: 1005;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+  text-align: left;
+}
+
+/* Invisible bridge so mouse hover doesn't break when moving into dropdown */
+.nav-luxury-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 20px;
+}
+
+.nav-item.has-dropdown:hover .nav-luxury-dropdown,
+.nav-item.has-dropdown.open .nav-luxury-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.site-header.scrolled .nav-luxury-dropdown {
+  background: #0f1318;
+  color: #ffffff;
+  border-color: rgba(223, 186, 135, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(223, 186, 135, 0.15);
+}
+
+.nav-dropdown-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.nav-drop-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-drop-heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0f172a;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+}
+
+.site-header.scrolled .nav-drop-heading {
+  color: #dfba87;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.drop-icon {
+  font-size: 13px;
+}
+
+.nav-drop-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.nav-drop-list li a {
+  font-size: 12.5px;
+  color: #475569;
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.35;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.site-header.scrolled .nav-drop-list li a {
+  color: #cbd5e1;
+}
+
+.nav-drop-list li a:hover {
+  color: #0f172a;
+  transform: translateX(3px);
+}
+
+.site-header.scrolled .nav-drop-list li a:hover {
+  color: #dfba87;
+}
+
+.nav-drop-view-all {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin-top: 4px;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 8px;
+}
+
+.site-header.scrolled .nav-drop-view-all {
+  color: #dfba87 !important;
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-drop-highlight-cta {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #b45309 !important;
+  background: #fef3c7;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-top: 4px;
+  display: inline-block;
+  text-align: center;
+}
+
+.site-header.scrolled .nav-drop-highlight-cta {
+  color: #0f1318 !important;
+  background: #dfba87 !important;
+}
+
+/* Mobile Drawer Accordion for Gemstones */
+.mobile-drawer-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-drawer-accordion-header .accordion-arrow {
+  font-size: 16px;
+  color: #dfba87;
+  transition: transform 0.25s ease;
+}
+
+.mobile-drawer-accordion-item.active .mobile-drawer-accordion-header .accordion-arrow {
+  transform: rotate(45deg);
+}
+
+.mobile-drawer-accordion-content {
+  display: none;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 6px 0 10px 24px;
+}
+
+.mobile-drawer-accordion-item.active .mobile-drawer-accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-drawer-accordion-content a {
+  font-size: 13px !important;
+  color: #dfba87 !important;
+  padding: 6px 12px;
+  display: block;
+}
+
 /* Mobile Menu Hamburger Button (Hidden on Desktop) */
 .mobile-menu-btn {
   display: none;
