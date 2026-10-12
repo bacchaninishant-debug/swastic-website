@@ -1447,30 +1447,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 6. Featured Diamond & Ring Products Filter & Actions
   window.filterProductCategory = (category) => {
-    const targetCat = (category === 'gems') ? 'gemstones' : category;
+    const targetCat = (category === 'gems' || category === 'gemstones') ? 'diamonds' : category;
 
     document.querySelectorAll('.prod-tab-btn').forEach(btn => {
       const btnTab = btn.dataset.tab;
-      const isMatch = btnTab === targetCat || (targetCat === 'gemstones' && btnTab === 'gems');
+      const isMatch = (targetCat === 'all' && btnTab === 'all') || (targetCat === 'diamonds' && btnTab === 'diamonds');
       btn.classList.toggle('active', isMatch);
     });
 
     const cards = document.querySelectorAll('.diamond-products-grid .product-item-card, .product-item-card');
     cards.forEach(card => {
-      const catAttr = (card.dataset.category || '').toLowerCase();
-      const cats = catAttr.split(/\s+/);
-      const isMatch = targetCat === 'all' ||
-                      cats.includes(targetCat) ||
-                      (targetCat === 'gemstones' && (cats.includes('gems') || cats.includes('gemstones'))) ||
-                      (targetCat === 'diamonds' && (cats.includes('diamond') || cats.includes('diamonds')));
-
-      if (isMatch) {
-        card.style.display = 'flex';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      } else {
-        card.style.display = 'none';
-      }
+      card.style.display = 'flex';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
     });
   };
 
@@ -1495,7 +1484,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
 
     if (!isIndexPage) {
-      window.location.href = `index.html#diamond-products-section?cat=${category}`;
+      window.location.href = `index.html#diamond-products-section`;
       return;
     }
 
@@ -1503,7 +1492,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.filterProductCategory(category);
     
     // Smooth scroll to product collection
-    const targetSection = document.getElementById('diamond-products-section');
+    let targetSection = document.getElementById('diamond-products-section');
+    if (category === 'diamonds' && document.getElementById('diamond-shape-section')) {
+      targetSection = document.getElementById('diamond-shape-section');
+    }
     if (targetSection) {
       const header = document.getElementById('siteHeader');
       const headerHeight = header ? header.offsetHeight : 80;
