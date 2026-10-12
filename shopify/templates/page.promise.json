@@ -1,0 +1,16 @@
+{
+  "name": "The SWASTIC EXPORTS Promise",
+  "sections": {
+    "main_promise": {
+      "type": "promise-content",
+      "settings": {
+        "eyebrow": "OUR TIMELESS COMMITMENT",
+        "heading": "The SWASTIC EXPORTS Promise",
+        "lead": "A promise that what you hold is not just rare and beautiful — but rarest, clearest, brightest version of what nature intended."
+      }
+    }
+  },
+  "order": [
+    "main_promise"
+  ]
+}

@@ -1,0 +1,98 @@
+<div class="shapes-page-body">
+  <div class="promise-breadcrumb-wrapper">
+    <div class="promise-container">
+      <nav class="breadcrumb-nav">
+        <a href="/">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ page.title | default: "Shop by Shape" }}</span>
+      </nav>
+    </div>
+  </div>
+
+  <section class="shop-by-shape-section" id="shopByShapeSection">
+    <div class="shapes-container">
+      <div class="shape-heading-block">
+        <h1 class="shape-main-title">{{ section.settings.title | default: "Shop by Shape" }}</h1>
+        <p class="shape-subtitle">{{ section.settings.subtitle | default: "Find the shape that matches your style" }}</p>
+      </div>
+
+      <div class="shapes-interactive-row" id="shapesGridRow">
+        <button class="shape-select-item" data-shape="round" onclick="selectShapePageCut('round')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-round.png' | asset_url }}" alt="Round Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Round</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="oval" onclick="selectShapePageCut('oval')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-oval.png' | asset_url }}" alt="Oval Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Oval</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="pear" onclick="selectShapePageCut('pear')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-pear.png' | asset_url }}" alt="Pear Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Pear</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="emerald" onclick="selectShapePageCut('emerald')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-emerald.png' | asset_url }}" alt="Emerald Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Emerald</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="radiant" onclick="selectShapePageCut('radiant')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-radiant.png' | asset_url }}" alt="Radiant Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Radiant</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="princess" onclick="selectShapePageCut('princess')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-princess.png' | asset_url }}" alt="Princess Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Princess</span>
+        </button>
+
+        <button class="shape-select-item" data-shape="marquise" onclick="selectShapePageCut('marquise')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-marquise.png' | asset_url }}" alt="Marquise Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Marquise</span>
+        </button>
+
+        <button class="shape-select-item active" data-shape="heart" onclick="selectShapePageCut('heart')">
+          <div class="shape-thumb-box">
+            <img src="{{ 'shape-heart.png' | asset_url }}" alt="Heart Cut Diamond" class="shape-diamond-img">
+          </div>
+          <span class="shape-name">Heart</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by Shape",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by Shape"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find the shape that matches your style"
+    }
+  ]
+}
+{% endschema %}

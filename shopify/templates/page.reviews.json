@@ -1,0 +1,15 @@
+{
+  "name": "Velora Stories Reviews",
+  "sections": {
+    "main_stories": {
+      "type": "velora-stories",
+      "settings": {
+        "title": "Velora Stories",
+        "subtitle": "Cherished moments, heirloom proposals, and reviews from our global clientele"
+      }
+    }
+  },
+  "order": [
+    "main_stories"
+  ]
+}

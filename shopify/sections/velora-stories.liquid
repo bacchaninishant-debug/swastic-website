@@ -1,0 +1,91 @@
+<section class="velora-stories-section" id="stories-section">
+  <div class="stories-container">
+    <div class="stories-header">
+      <h2 class="stories-main-title">{{ section.settings.title | default: "Velora Stories" }}</h2>
+      <p class="stories-subtitle">{{ section.settings.subtitle | default: "Cherished moments, heirloom proposals, and reviews from our global clientele" }}</p>
+    </div>
+
+    <div class="stories-carousel-wrapper">
+      <button class="stories-nav-btn prev-btn" id="storiesPrevBtn" aria-label="Previous Review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="stories-cards-track" id="storiesCardsTrack">
+        {% for block in section.blocks %}
+          <div class="story-review-card">
+            <div class="story-quote-content">
+              <p>“{{ block.settings.quote }}”</p>
+            </div>
+            <div class="story-rating-stars">★★★★★</div>
+            <div class="story-author-row">
+              <span class="author-name">{{ block.settings.author }}</span>
+              <span class="verified-badge" title="Verified Buyer">✓</span>
+            </div>
+            <div class="story-product-tag">{{ block.settings.product }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <button class="stories-nav-btn next-btn" id="storiesNextBtn" aria-label="Next Review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- Over 1900+ Reviews & Counting Showcase (Exact match for Image 1) -->
+    <div class="reviews-counting-block">
+      <h3 class="reviews-counting-title">Over 1900+ Reviews &amp; Counting</h3>
+      <div class="reviews-counting-stars">
+        <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="star-svg" viewBox="0 0 24 24"><defs><linearGradient id="halfStarGradCountingShopify"><stop offset="85%" stop-color="#f59e0b"/><stop offset="85%" stop-color="#ffffff"/></linearGradient></defs><path fill="url(#halfStarGradCountingShopify)" stroke="#f59e0b" stroke-width="1.2" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      </div>
+      <p class="reviews-counting-sub">Rated <strong>4.9</strong> based on <strong>1,966 reviews</strong></p>
+      <a href="/pages/reviews" class="read-all-reviews-btn" id="openReviewsModalBtn">Read All Reviews</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velora Stories Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Velora Stories"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Cherished moments, heirloom proposals, and reviews from our global clientele"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "Review Card",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Quote"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name"
+        },
+        {
+          "type": "text",
+          "id": "product",
+          "label": "Product Tag"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

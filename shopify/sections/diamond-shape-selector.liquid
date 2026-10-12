@@ -1,0 +1,113 @@
+{% comment %}
+  Shopify Section: Diamond Shape Ring Selector
+  Diamondère style dynamic diamond shape switching
+{% endcomment %}
+
+<section class="diamond-shape-selector-section" id="diamond-shape-section-{{ section.id }}">
+  <div class="shape-selector-header">
+    <h2 class="section-title">{{ section.settings.heading | default: 'Shop Natural OR Lab Diamonds by Shape' }}</h2>
+    <p class="section-subtitle">
+      {{ section.settings.subheading | default: 'Browse our selection of GIA-certified natural diamond rings and IGI-certified lab diamond rings by selecting your favorite diamond shape.' }}
+    </p>
+  </div>
+
+  <div class="shape-ring-stage">
+    <div class="ring-display-container">
+      <img src="{{ 'diamond-blue-heart.jpg' | asset_url }}" alt="Fancy Light Blue Diamond" id="activeRingImage" class="active-ring-preview">
+      <div class="ring-spec-overlay">
+        <span class="diamond-spec-pill" id="currentCutBadge">HEART-CUT FANCY LIGHT BLUE DIAMOND</span>
+        <span class="diamond-spec-sub" id="currentCaratBadge">2.05 CT • Natural Light Blue • VVS1 • GIA Certified</span>
+      </div>
+    </div>
+    <p class="selector-instructions">Click the diamond shape below</p>
+  </div>
+
+  <div class="diamond-shapes-nav">
+    {% for block in section.blocks %}
+      <button class="diamond-shape-btn {% if forloop.first %}active{% endif %}" 
+              data-shape="{{ block.settings.shape_id }}" 
+              data-img="{{ block.settings.ring_image | image_url: width: 800 }}" 
+              data-name="{{ block.settings.title }}" 
+              data-spec="{{ block.settings.specs }}">
+        <div class="shape-icon-wrapper">
+          {% if block.settings.shape_icon != blank %}
+            <img src="{{ block.settings.shape_icon | image_url: width: 60 }}" alt="{{ block.settings.title }}">
+          {% else %}
+            <!-- Diamond Facet Vector -->
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <polygon points="50,15 85,38 72,85 28,85 15,38" fill="none" stroke="#222" stroke-width="2.5" />
+              <line x1="50" y1="15" x2="50" y2="85" stroke="#555" stroke-width="1.2" />
+            </svg>
+          {% endif %}
+        </div>
+        <span class="shape-label">{{ block.settings.title }}</span>
+      </button>
+    {% endfor %}
+  </div>
+
+  <div class="shape-action-row">
+    <button class="shape-action-btn primary" id="customizeRingBtn">CUSTOMIZE IN THIS SHAPE</button>
+    <button class="shape-action-btn secondary" id="viewSpecsBtn">VIEW CERTIFIED DIAMOND SPECS</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Diamond Shape Selector",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop Natural OR Lab Diamonds by Shape"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse our selection of GIA-certified natural diamond rings and IGI-certified lab diamond rings by selecting your favorite diamond shape."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diamond_shape",
+      "name": "Diamond Shape",
+      "settings": [
+        {
+          "type": "text",
+          "id": "shape_id",
+          "label": "Shape ID",
+          "default": "heart"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Shape Label",
+          "default": "HEART-CUT"
+        },
+        {
+          "type": "text",
+          "id": "specs",
+          "label": "Diamond Specifications",
+          "default": "2.05 CT • Platinum 950 • Ideal Cut"
+        },
+        {
+          "type": "image_picker",
+          "id": "ring_image",
+          "label": "Ring Image for this Cut"
+        },
+        {
+          "type": "image_picker",
+          "id": "shape_icon",
+          "label": "Cut Icon / Vector"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamond Shape Selector"
+    }
+  ]
+}
+{% endschema %}

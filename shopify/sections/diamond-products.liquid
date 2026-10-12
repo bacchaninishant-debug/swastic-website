@@ -1,0 +1,156 @@
+{% comment %}
+  Shopify Section: Velora Diamond Products Grid
+  Supports dynamic category filters, wishlist heart, and quick add-to-bag
+{% endcomment %}
+
+<section class="diamond-products-section" id="featuredDiamondProducts">
+  <div class="products-header">
+    <span class="section-tag">{{ section.settings.tag | default: 'HANDCRAFTED PERFECTION' }}</span>
+    <h2 class="section-title">{{ section.settings.title | default: 'Velora Signature Diamond Collection' }}</h2>
+    <p class="section-subtitle">{{ section.settings.subtitle | default: 'Each piece is precision crafted with hand-selected GIA natural and IGI lab diamonds set in solid platinum and 18K gold.' }}</p>
+
+    <div class="product-filter-tabs">
+      <button class="filter-tab active" data-category="all">All Diamonds</button>
+      <button class="filter-tab" data-category="natural">Natural Diamonds</button>
+      <button class="filter-tab" data-category="lab">Lab Grown</button>
+      <button class="filter-tab" data-category="bands">Eternity Bands</button>
+    </div>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    {% for block in section.blocks %}
+      <div class="product-item-card" data-category="{{ block.settings.category }}" data-id="{{ block.id }}" {{ block.shopify_attributes }}>
+        <div class="product-thumbnail-box">
+          {% if block.settings.badge != blank %}
+            <span class="product-badge {% if block.settings.category == 'lab' %}lab-badge{% endif %}">{{ block.settings.badge }}</span>
+          {% endif %}
+          <button class="product-heart-btn" onclick="toggleProductFavorite('{{ block.id }}', '{{ block.settings.title | escape }}', '{{ block.settings.specs | escape }}', '{{ block.settings.price | escape }}', '{{ block.settings.image | image_url: width: 600 }}', event)" title="Add to Wishlist">
+            <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+          
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" class="prod-img">
+          {% else %}
+            <img src="{{ block.settings.default_asset | asset_url }}" alt="{{ block.settings.title }}" class="prod-img">
+          {% endif %}
+          
+          <button class="quick-add-btn" onclick="quickAddProduct('{{ block.id }}', '{{ block.settings.title | escape }}', '{{ block.settings.specs | escape }}', {{ block.settings.price_number | default: 2950 }}, '{{ block.settings.default_asset | asset_url }}')">ADD TO BAG</button>
+        </div>
+        <div class="product-info-box">
+          <span class="prod-category-label">{{ block.settings.category_label }}</span>
+          <h4 class="prod-title">{{ block.settings.title }}</h4>
+          <p class="prod-specs">{{ block.settings.specs }}</p>
+          <div class="prod-price-row">
+            <span class="prod-price">{{ block.settings.price }}</span>
+            <span class="prod-rating">★ {{ block.settings.rating | default: '4.9' }}</span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Diamond Products Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Sub Tagline",
+      "default": "HANDCRAFTED PERFECTION"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Velora Signature Diamond Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Each piece is precision crafted with hand-selected GIA natural and IGI lab diamonds set in solid platinum and 18K gold."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diamond_product",
+      "name": "Diamond Product",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Category Filter",
+          "options": [
+            { "value": "natural", "label": "Natural Diamonds" },
+            { "value": "lab", "label": "Lab Grown" },
+            { "value": "bands", "label": "Eternity Bands" }
+          ],
+          "default": "natural"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Product Badge",
+          "default": "BESTSELLER"
+        },
+        {
+          "type": "text",
+          "id": "category_label",
+          "label": "Category Label",
+          "default": "NATURAL DIAMOND"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "The Royal Round Solitaire"
+        },
+        {
+          "type": "text",
+          "id": "specs",
+          "label": "Specs / Carats",
+          "default": "2.00 CT • Platinum 950 • GIA Certified"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Display Price",
+          "default": "$3,250.00"
+        },
+        {
+          "type": "number",
+          "id": "price_number",
+          "label": "Price Value (Numeric)",
+          "default": 3250
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating Text",
+          "default": "4.9 (128)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "default_asset",
+          "label": "Default Asset Name",
+          "default": "ring-round.jpg"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamond Products Grid"
+    }
+  ]
+}
+{% endschema %}

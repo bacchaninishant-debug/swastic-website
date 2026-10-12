@@ -1,0 +1,81 @@
+{% comment %}
+  Shopify Section: Diamond Shape Guide & Anatomy
+  Matches Reference Images 1, 2, 3: Full 12-Shape Guide & Master Chart
+{% endcomment %}
+
+<section class="diamond-shape-guide-section" id="shape-guide-{{ section.id }}">
+  <div class="guide-header">
+    <span class="section-tag">{{ section.settings.tag | default: 'EDUCATION & ANATOMY' }}</span>
+    <h2 class="section-title">{{ section.settings.title | default: 'Different Shapes of Diamonds' }}</h2>
+    <p class="section-subtitle">{{ section.settings.subtitle | default: 'Explore each cut’s unique geometry, brilliance index, and facet arrangement. From timeless round brilliant to architectural emerald cuts.' }}</p>
+  </div>
+
+  <div class="master-chart-banner">
+    {% if section.settings.chart_img != blank %}
+      <img src="{{ section.settings.chart_img | image_url: width: 1600 }}" alt="Different shapes of diamonds" class="master-chart-img">
+    {% else %}
+      <img src="{{ 'diamond-shapes-chart.png' | asset_url }}" alt="Different shapes of diamonds" class="master-chart-img">
+    {% endif %}
+  </div>
+
+  <div class="shapes-cards-grid">
+    {% for block in section.blocks %}
+      <div class="shape-detail-card" {{ block.shopify_attributes }}>
+        <div class="shape-diamond-avatar shape-sprite-{{ block.settings.cut_slug }}"></div>
+        <h4>{{ block.settings.title }}</h4>
+        <span class="shape-motto">{{ block.settings.motto }}</span>
+        <p class="shape-desc">{{ block.settings.description }}</p>
+        <button class="shape-filter-btn" onclick="filterDiamondsByCut('{{ block.settings.cut_name }}')">View {{ block.settings.cut_name }} Diamonds</button>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Diamond Shape Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Section Tag",
+      "default": "EDUCATION & ANATOMY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Different Shapes of Diamonds"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Explore each cut’s unique geometry, brilliance index, and facet arrangement. From timeless round brilliant to architectural emerald cuts."
+    },
+    {
+      "type": "image_picker",
+      "id": "chart_img",
+      "label": "Master Comparison Chart"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diamond_shape",
+      "name": "Shape Card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Cut Name", "default": "Round Brilliant" },
+        { "type": "text", "id": "cut_name", "label": "Cut Filter Name", "default": "Round" },
+        { "type": "text", "id": "cut_slug", "label": "Sprite Slug", "default": "round" },
+        { "type": "text", "id": "motto", "label": "Characteristic Motto", "default": "Timeless brilliance" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "57 expertly angled facets designed for maximum light refraction, fire, and scintillation." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamond Shape Guide"
+    }
+  ]
+}
+{% endschema %}

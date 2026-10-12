@@ -1,0 +1,82 @@
+{
+  "name": "VELORA Homepage",
+  "sections": {
+    "hero": {
+      "type": "hero-heirloom",
+      "settings": {
+        "eyebrow": "Certified Natural Gemstones",
+        "heading": "Find Your Perfect<br><span class=\"hero-title-accent\">Gemstone.</span>",
+        "btn_text": "EXPLORE COLLECTION"
+      }
+    },
+    "collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "item_1": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Precious Color Gemstones",
+            "default_asset": "collection-color-gems.jpg"
+          }
+        },
+        "item_2": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Rare Ceylon & Aquamarine Gems",
+            "default_asset": "collection-aquamarine.jpg"
+          }
+        },
+        "item_3": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Master Cut Diamonds",
+            "default_asset": "collection-bracelet.jpg"
+          }
+        },
+        "item_4": {
+          "type": "collection_card",
+          "settings": {
+            "title": "GLOW Natural Emeralds",
+            "default_asset": "collection-glow-emeralds.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ]
+    },
+    "story": {
+      "type": "legacy-story",
+      "settings": {
+        "heading": "Remembering<br>Romance since 1890",
+        "description": "From whispered Victorian love letters to the quiet thrill of today's proposals, a single family legacy has endured across seven generations. The same hands that once adorned royals now guide our artisans—passing down cherished tools, ancestral techniques, and an unwavering devotion.",
+        "btn_text": "DISCOVER OUR LEGACY"
+      }
+    },
+    "diamond_shapes": {
+      "type": "diamond-shape-selector",
+      "settings": {
+        "title": "Shop Natural OR Lab Diamonds<br>by Shape",
+        "subtitle": "Browse our selection of GIA-certified natural diamond rings and IGI-certified lab diamond rings by selecting your favorite diamond shape."
+      }
+    },
+    "lab_diamonds": {
+      "type": "lab-diamonds",
+      "settings": {
+        "heading": "Lab Diamond Rings",
+        "description": "Lab diamond rings larger than 1 carat are IGI-certified and make for exquisite gifts that last a lifetime. Browse our selection of timeless Lab Diamond Rings.",
+        "btn_text": "SEE LAB DIAMOND RINGS"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "collections",
+    "story",
+    "diamond_shapes",
+    "lab_diamonds"
+  ]
+}

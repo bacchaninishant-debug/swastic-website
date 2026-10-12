@@ -1,0 +1,65 @@
+{% comment %}
+  Shopify Section: Site Footer
+  Diamondère style fine jewelry footer
+{% endcomment %}
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-column brand-col">
+      <div class="footer-logo">{{ shop.name | default: 'DIAMONDÈRE' }}</div>
+      <p class="footer-tagline">Mastering handcrafted fine jewelry across seven generations since 1890.</p>
+      <div class="footer-certifications">
+        <span class="cert-badge">GIA CERTIFIED</span>
+        <span class="cert-badge">IGI CERTIFIED</span>
+        <span class="cert-badge">CONFLICT-FREE</span>
+      </div>
+    </div>
+
+    <div class="footer-column">
+      <h4>FINE JEWELRY</h4>
+      <ul>
+        <li><a href="#diamond-shape-section">Engagement Rings</a></li>
+        <li><a href="#collection-section">Wedding Bands</a></li>
+        <li><a href="#collection-section">Eternity Rings</a></li>
+        <li><a href="#diamond-shape-section">Lab Grown Diamonds</a></li>
+        <li><a href="#collection-section">Men's Wedding Rings</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>SERVICES</h4>
+      <ul>
+        <li><a href="#">Custom Jewelry Design</a></li>
+        <li><a href="#">Complimentary Ring Resizing</a></li>
+        <li><a href="#">Lifetime Warranty</a></li>
+        <li><a href="#">Free Insured Shipping</a></li>
+        <li><a href="#">30-Day Returns</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>CONTACT & CONCIERGE</h4>
+      <p class="footer-contact-item"><strong>Toll Free:</strong> {{ section.settings.phone | default: '1.844.400.0065' }}</p>
+      <p class="footer-contact-item"><strong>Email:</strong> {{ shop.email | default: 'support@diamondere.com' }}</p>
+      <p class="footer-contact-item"><strong>Concierge:</strong> Available 24/7</p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom-bar">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Diamondère' }} Inc. All rights reserved. Handcrafted with bespoke precision.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Site Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Support",
+      "default": "1.844.400.0065"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,118 @@
+{% comment %}
+  Shopify Section: The Velora Promise
+  Matches Reference Image 4: Royal Blue Box, Ribbon, and Sacred Commitments
+{% endcomment %}
+
+<section class="velora-promise-section" id="promise-{{ section.id }}">
+  <div class="promise-container">
+    <div class="promise-visual-col">
+      <div class="promise-hero-card">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.heading }}" class="promise-box-img">
+        {% else %}
+          <img src="{{ 'velora-promise-hero.png' | asset_url }}" alt="Velora Diamond Promise - Royal Blue Box and Ribbon" class="promise-box-img">
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="promise-content-col">
+      <div class="promise-text-wrap">
+        <span class="promise-eyebrow">{{ section.settings.eyebrow | default: 'OUR SACRED COMMITMENT' }}</span>
+        <h2 class="promise-title">{{ section.settings.heading | default: 'Promise' }}</h2>
+        <p class="promise-lead">
+          {{ section.settings.lead | default: 'A promise that what you hold is not just rare and beautiful — <strong>but rarest, clearest, brightest version of what nature intended.</strong>' }}
+        </p>
+
+        <div class="promise-pillars-list">
+          {% for block in section.blocks %}
+            <div class="promise-pillar-item" {{ block.shopify_attributes }}>
+              <span class="pillar-check">✦</span>
+              <div class="pillar-info">
+                <h4>{{ block.settings.title }}</h4>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="promise-actions-row">
+          <a href="{{ section.settings.btn_link | default: '#featuredDiamondsSection' }}" class="hero-cta-btn dark-cta">{{ section.settings.btn_text | default: 'BROWSE CERTIFIED DIAMONDS' }}</a>
+          <button class="hero-cta-btn" onclick="openCertVerifier()">VERIFY GIA / IGI REPORT</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "The Velora Promise",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "OUR SACRED COMMITMENT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Promise"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead Statement",
+      "default": "A promise that what you hold is not just rare and beautiful — but rarest, clearest, brightest version of what nature intended."
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "BROWSE CERTIFIED DIAMONDS"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Promise Hero Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Promise Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pillar Title",
+          "default": "100% Natural, Ethical & Trusted"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Pillar Description",
+          "default": "Conflict-free certification following the strictest Kimberley Process."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Velora Promise",
+      "blocks": [
+        { "type": "pillar", "settings": { "title": "100% Natural, Ethical & Trusted", "description": "Conflict-free certification following the strictest Kimberley Process." } },
+        { "type": "pillar", "settings": { "title": "100% Pure Origin", "description": "Hand-picked from the top 1% of earth-mined and master lab crystal formations." } },
+        { "type": "pillar", "settings": { "title": "Integrity of Clarity", "description": "Triple-blind gemological grading certified by GIA & IGI laboratories." } },
+        { "type": "pillar", "settings": { "title": "Crafted Beyond Conviction", "description": "Cut to mathematical precision with supreme light refraction and fire." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

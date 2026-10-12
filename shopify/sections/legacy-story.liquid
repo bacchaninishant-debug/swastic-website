@@ -1,0 +1,68 @@
+{% comment %}
+  Shopify Section: Legacy Story (Romance Since 1890)
+  Screenshot 3: Steinway Piano & Couple's Hands with Emerald Ring
+{% endcomment %}
+
+<section class="story-legacy-section" id="story-{{ section.id }}">
+  <div class="story-container">
+    <div class="story-content-left">
+      <div class="story-inner-text">
+        <h2 class="story-heading">{{ section.settings.heading | default: 'Emerald Mines &amp;<br>Fine Gemstones Legacy' }}</h2>
+        <p class="story-description">
+          {{ section.settings.description | default: "From premier global gemstone exhibitions to the quiet thrill of custom heirloom commissions, our heritage endures across generations. Sourcing the world's rarest Colombian emeralds, natural diamonds, and royal sapphires directly for discerning collectors and luxury connoisseurs." }}
+        </p>
+        <a href="{{ section.settings.btn_link | default: '#diamond-shape-section' }}" class="story-cta-btn">
+          {{ section.settings.btn_text | default: 'DISCOVER OUR LEGACY' }}
+        </a>
+      </div>
+    </div>
+    <div class="story-media-right">
+      {% if section.settings.image != blank %}
+        <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading }}" class="story-image">
+      {% else %}
+        <img src="{{ 'emerald-mines-booth.jpg' | asset_url }}" alt="Emerald Mines Fine Gemstones Exhibition Showcase" class="story-image">
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Legacy Romance Story",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Remembering<br>Romance since 1890"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "From whispered Victorian love letters to the quiet thrill of today's proposals, a single family legacy has endured across seven generations. The same hands that once adorned royals now guide our artisans—passing down cherished tools, ancestral techniques, and an unwavering devotion."
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "DISCOVER OUR LEGACY"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Legacy Romance Story"
+    }
+  ]
+}
+{% endschema %}

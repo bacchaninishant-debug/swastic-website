@@ -1,0 +1,69 @@
+{% comment %}
+  Shopify Section: Lab Diamond Rings
+  Screenshot 5: Model hand with swirl diamond ring & warm glint
+{% endcomment %}
+
+<section class="lab-diamonds-section emerald-mines-feature-section" id="emerald-mines-{{ section.id }}">
+  <div class="lab-split-container">
+    <div class="lab-media-left">
+      {% if section.settings.image != blank %}
+        <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading }}" class="lab-hero-image emerald-fair-img">
+      {% else %}
+        <img src="{{ 'emerald-mines-fair.jpg' | asset_url }}" alt="Emerald Mines at 74th BGJF" class="lab-hero-image emerald-fair-img">
+      {% endif %}
+    </div>
+    <div class="lab-content-right">
+      <div class="lab-inner-content">
+        <span class="mine-eyebrow-badge">DIRECT MINE SOURCING • 74TH BGJF EXHIBITOR</span>
+        <h2 class="lab-heading">{{ section.settings.heading | default: 'From Zambia’s Mines to the Global Stage' }}</h2>
+        <p class="lab-description">
+          {{ section.settings.description | default: 'No middlemen. No inflated retail markups. Just pure, uncompromised mine-to-market authenticity. From hand-selecting rough parcels at our premier Zambian emerald mines to exhibiting certified collector lots at the 74th Bangkok Gems & Jewelry Fair (BGJF)—we know the true origin and real value of every stone we sell.' }}
+        </p>
+        <a href="{{ section.settings.btn_link | default: '#diamond-products-section' }}" class="lab-cta-btn">
+          {{ section.settings.btn_text | default: 'EXPLORE NATURAL GEMSTONES' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lab Diamond Rings",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lab Diamond Rings"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Lab diamond rings larger than 1 carat are IGI-certified and make for exquisite gifts that last a lifetime. Browse our selection of timeless Lab Diamond Rings."
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "SEE LAB DIAMOND RINGS"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lab Diamond Rings"
+    }
+  ]
+}
+{% endschema %}

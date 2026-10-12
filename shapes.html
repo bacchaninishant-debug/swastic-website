@@ -1,0 +1,758 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop by Shape | SWASTIC EXPORTS House of Gems</title>
+  <meta name="description" content="Shop handcrafted certified natural gemstones by shape. Emerald, Oval, Pear, Round, Princess, Radiant, Cushion, and Heart cuts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="shapes-page-body">
+
+  <!-- Top Announcement Bar (Above Header) -->
+  <div class="top-announcement-bar">
+    <div class="announcement-content">
+      <span class="sparkle-icon">✦</span>
+      <span>COMPLIMENTARY INSURED WORLDWIDE SHIPPING &amp; 30-DAY BESPOKE RETURNS</span>
+      <span class="sparkle-icon">✦</span>
+    </div>
+  </div>
+
+  <!-- Top Header Navigation -->
+  <header class="site-header" id="siteHeader">
+    <div class="top-nav-bar">
+      <div class="header-left"></div>
+
+      <div class="header-logo-container">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-title">SWASTIC EXPORTS</span>
+          <span class="logo-sub">HOUSE OF GEMS</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <div class="search-pill-container" id="searchTrigger">
+          <input type="text" placeholder="Search" id="headerSearchInput" readonly>
+          <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        
+        <!-- Wishlist / Favorites Button -->
+        <button class="nav-action-btn wishlist-btn" id="wishlistBtn" aria-label="Favorites" title="View Favorites">
+          <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="action-badge" id="wishlistBadgeCount"></span>
+        </button>
+
+        <button class="nav-action-btn user-btn" id="userBtn" aria-label="Account">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+        <button class="nav-action-btn cart-btn" id="cartBtn" aria-label="Shopping Bag">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="action-badge" id="cartBadgeCount"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Bar -->
+    <nav class="main-navigation">
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html#heroSection" class="nav-link">HOME</a></li>
+        <li class="nav-item"><a href="shapes.html" class="nav-link active highlight-menu">SHOP BY SHAPE</a></li>
+        <li class="nav-item"><a href="index.html#diamond-products-section" class="nav-link">GEMSTONES</a></li>
+        <li class="nav-item"><a href="promise.html" class="nav-link">PROMISE</a></li>
+        <li class="nav-item"><a href="reviews.html" class="nav-link">STORIES</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">ABOUT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="shapes-main-wrapper">
+    
+    <!-- Breadcrumb -->
+    <div class="promise-breadcrumb-wrapper">
+      <div class="promise-container">
+        <nav class="breadcrumb-nav">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Shop by Shape</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Interactive Gemstone By Shape Section: Live Dynamic Loose Gemstone Switching -->
+    <section class="diamond-shape-selector-section" id="diamond-shape-section" style="padding-top: 20px;">
+      <div class="shape-selector-header">
+        <h1 class="section-title">GIA Certified Gemstones<br>by Shape</h1>
+        <p class="section-subtitle">
+          Browse our rare selection of <a href="#gia" class="text-link">GIA-certified natural loose gemstones</a> across eight signature precision cuts. 100% loose natural gemstones with exceptional fire &amp; brilliance.
+        </p>
+      </div>
+
+      <!-- Main Stage Gemstone Showcase (Dynamically updates upon selecting gemstone shapes) -->
+      <div class="shape-ring-stage">
+        <div class="ring-display-container">
+          <img src="images/diamond-blue-heart.jpg" alt="Certified Natural Heart Gemstone" id="activeRingImage" class="active-ring-preview">
+          
+          <button class="stage-favorite-btn" id="stageFavBtn" title="Add to Favorites" aria-label="Favorite">
+            <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+
+          <div class="ring-spec-overlay">
+            <span class="diamond-spec-pill" id="currentCutBadge">HEART-CUT GIA CERTIFIED GEMSTONE</span>
+            <span class="diamond-spec-sub" id="currentCaratBadge">2.05 CT • Natural Certified • VVS1 • GIA Certified</span>
+          </div>
+        </div>
+
+        <p class="selector-instructions">Click the gemstone shape below</p>
+      </div>
+
+      <!-- Interactive Diamond Shapes Bar -->
+      <div class="diamond-shapes-nav">
+        <!-- 1. HEART-CUT -->
+        <button class="diamond-shape-btn active" data-shape="heart" data-img="images/diamond-blue-heart.jpg" data-name="HEART-CUT" data-spec="2.05 CT • Natural Certified • VVS1 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <path class="facet-outline" d="M50 88 C20 65, 8 48, 8 30 A20 20 0 0 1 48 24 L50 27 L52 24 A20 20 0 0 1 92 30 C92 48, 80 65, 50 88 Z" fill="none" stroke="#222" stroke-width="2.5" />
+              <path class="facet-line" d="M50 27 L50 88" stroke="#555" stroke-width="1.2" />
+              <path class="facet-line" d="M28 20 L50 48 L72 20" stroke="#555" stroke-width="1.2" fill="none" />
+              <path class="facet-line" d="M50 48 L22 55 L50 88 L78 55 Z" stroke="#666" stroke-width="1" fill="none" />
+              <path class="facet-line" d="M12 36 L22 55 M88 36 L78 55" stroke="#777" stroke-width="1" />
+              <polygon points="50,48 40,32 60,32" fill="rgba(240,240,250,0.5)" stroke="#777" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">HEART-CUT</span>
+        </button>
+
+        <!-- 2. PEAR-CUT -->
+        <button class="diamond-shape-btn" data-shape="pear" data-img="images/diamond-blue-pear.jpg" data-name="PEAR-CUT" data-spec="2.20 CT • Natural Certified • VVS2 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <path class="facet-outline" d="M50 12 C30 38, 16 56, 16 70 A34 34 0 0 0 84 70 C84 56, 70 38, 50 12 Z" fill="none" stroke="#222" stroke-width="2.5" />
+              <path class="facet-line" d="M50 12 L50 96" stroke="#555" stroke-width="1.2" />
+              <path class="facet-line" d="M50 32 L26 62 L50 78 L74 62 Z" stroke="#666" stroke-width="1" fill="none" />
+              <path class="facet-line" d="M50 12 L26 62 M50 12 L74 62" stroke="#777" stroke-width="1" />
+              <path class="facet-line" d="M26 62 L16 70 M74 62 L84 70" stroke="#888" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">PEAR-CUT</span>
+        </button>
+
+        <!-- 3. PRINCESS-CUT -->
+        <button class="diamond-shape-btn" data-shape="princess" data-img="images/diamond-blue-princess.jpg" data-name="PRINCESS-CUT" data-spec="2.03 CT • Natural Certified • VS1 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <rect class="facet-outline" x="15" y="15" width="70" height="70" fill="none" stroke="#222" stroke-width="2.5" />
+              <rect class="facet-line" x="32" y="32" width="36" height="36" fill="none" stroke="#555" stroke-width="1.2" />
+              <line class="facet-line" x1="15" y1="15" x2="32" y2="32" stroke="#666" stroke-width="1.2" />
+              <line class="facet-line" x1="85" y1="15" x2="68" y2="32" stroke="#666" stroke-width="1.2" />
+              <line class="facet-line" x1="15" y1="85" x2="32" y2="68" stroke="#666" stroke-width="1.2" />
+              <line class="facet-line" x1="85" y1="85" x2="68" y2="68" stroke="#666" stroke-width="1.2" />
+              <line class="facet-line" x1="50" y1="32" x2="50" y2="68" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="32" y1="50" x2="68" y2="50" stroke="#777" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">PRINCESS-CUT</span>
+        </button>
+
+        <!-- 4. EMERALD-CUT -->
+        <button class="diamond-shape-btn" data-shape="emerald" data-img="images/diamond-blue-emerald.jpg" data-name="EMERALD-CUT" data-spec="2.45 CT • Natural Certified • VVS1 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <polygon class="facet-outline" points="26,12 74,12 88,26 88,74 74,88 26,88 12,74 12,26" fill="none" stroke="#222" stroke-width="2.5" />
+              <polygon class="facet-line" points="32,22 68,22 78,32 78,68 68,78 32,78 22,68 22,32" fill="none" stroke="#555" stroke-width="1.2" />
+              <polygon class="facet-line" points="38,32 62,32 70,40 70,60 62,68 38,68 30,60 30,40" fill="none" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="26" y1="12" x2="38" y2="32" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="74" y1="12" x2="62" y2="32" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="26" y1="88" x2="38" y2="68" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="74" y1="88" x2="62" y2="68" stroke="#777" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">EMERALD-CUT</span>
+        </button>
+
+        <!-- 5. ROUND-CUT -->
+        <button class="diamond-shape-btn" data-shape="round" data-img="images/diamond-blue-round.jpg" data-name="ROUND-CUT" data-spec="2.00 CT • Natural Certified • IF Clarity • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <circle class="facet-outline" cx="50" cy="50" r="38" fill="none" stroke="#222" stroke-width="2.5" />
+              <polygon points="50,22 69,31 78,50 69,69 50,78 31,69 22,50 31,31" fill="none" stroke="#555" stroke-width="1.2" />
+              <polygon points="50,32 63,37 68,50 63,63 50,68 37,63 32,50 37,37" fill="none" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="50" y1="12" x2="50" y2="22" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="50" y1="78" x2="50" y2="88" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="12" y1="50" x2="22" y2="50" stroke="#777" stroke-width="1" />
+              <line class="facet-line" x1="78" y1="50" x2="88" y2="50" stroke="#777" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">ROUND-CUT</span>
+        </button>
+
+        <!-- 6. OVAL-CUT -->
+        <button class="diamond-shape-btn" data-shape="oval" data-img="images/diamond-blue-oval.jpg" data-name="OVAL-CUT" data-spec="2.15 CT • Natural Certified • VVS1 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <ellipse class="facet-outline" cx="50" cy="50" rx="30" ry="40" fill="none" stroke="#222" stroke-width="2.5" />
+              <ellipse class="facet-line" cx="50" cy="50" rx="18" ry="26" fill="none" stroke="#555" stroke-width="1.2" />
+              <line class="facet-line" x1="50" y1="10" x2="50" y2="24" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="50" y1="76" x2="50" y2="90" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="20" y1="50" x2="32" y2="50" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="68" y1="50" x2="80" y2="50" stroke="#666" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">OVAL-CUT</span>
+        </button>
+
+        <!-- 7. CUSHION-CUT -->
+        <button class="diamond-shape-btn" data-shape="cushion" data-img="images/diamond-blue-cushion.jpg" data-name="CUSHION-CUT" data-spec="2.25 CT • Natural Certified • VS1 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <rect class="facet-outline" x="18" y="18" width="64" height="64" rx="20" ry="20" fill="none" stroke="#222" stroke-width="2.5" />
+              <rect class="facet-line" x="30" y="30" width="40" height="40" rx="12" ry="12" fill="none" stroke="#555" stroke-width="1.2" />
+              <line class="facet-line" x1="18" y1="50" x2="30" y2="50" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="70" y1="50" x2="82" y2="50" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="50" y1="18" x2="50" y2="30" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="50" y1="70" x2="50" y2="82" stroke="#666" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">CUSHION-CUT</span>
+        </button>
+
+        <!-- 8. MARQUISE-CUT -->
+        <button class="diamond-shape-btn" data-shape="marquise" data-img="images/diamond-blue-marquise.jpg" data-name="MARQUISE-CUT" data-spec="2.10 CT • Natural Certified • VVS2 • GIA Certified">
+          <div class="shape-icon-wrapper">
+            <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+              <path class="facet-outline" d="M50 10 C24 35, 24 65, 50 90 C76 65, 76 35, 50 10 Z" fill="none" stroke="#222" stroke-width="2.5" />
+              <path class="facet-line" d="M50 26 C34 42, 34 58, 50 74 C66 58, 66 42, 50 26 Z" fill="none" stroke="#555" stroke-width="1.2" />
+              <line class="facet-line" x1="50" y1="10" x2="50" y2="90" stroke="#666" stroke-width="1" />
+              <line class="facet-line" x1="25" y1="50" x2="75" y2="50" stroke="#666" stroke-width="1" />
+            </svg>
+          </div>
+          <span class="shape-label">MARQUISE-CUT</span>
+        </button>
+      </div>
+
+      <!-- Action buttons under shape selector -->
+      <div class="shape-action-row">
+        <button class="shape-action-btn primary" id="customizeRingBtn">SELECT THIS CERTIFIED GEMSTONE</button>
+        <button class="shape-action-btn secondary" id="viewSpecsBtn">VIEW CERTIFIED GIA SPECS</button>
+      </div>
+    </section>
+
+    <!-- Signature Certified Loose Gemstone Collection Grid -->
+    <section class="featured-diamond-products-section" id="diamond-products-section">
+      <div class="products-section-container">
+        
+        <div class="products-section-header">
+          <span class="products-eyebrow">HANDCRAFTED HEIRLOOMS &amp; CERTIFIED STONES</span>
+          <h2 class="products-main-title">Swastic Exports Signature Certified Loose Gemstone Collection</h2>
+          <p class="products-subtitle">
+            Explore individually certified GIA loose gemstones in our signature heirloom cuts.
+          </p>
+
+          <!-- Filter Tabs -->
+          <div class="product-category-tabs">
+            <button class="prod-tab-btn active" data-tab="all" onclick="filterProductCategory('all')">ALL CREATIONS</button>
+            <button class="prod-tab-btn" data-tab="diamonds" onclick="filterProductCategory('diamonds')">LOOSE CERTIFIED GEMSTONES</button>
+          </div>
+        </div>
+
+        <!-- Product Grid: 8 GIA Certified Loose Gemstones & Diamonds -->
+        <div class="diamond-products-grid" id="diamondProductsGrid">
+          
+          <!-- 1. Green Beryl -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-green-beryl.png" alt="2.35 CT Green Beryl Emerald Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-green-beryl', '2.35 CT Green Beryl Emerald Cut Gemstone', 1850, 'GIA • Mint Green • VVS1 • Heirloom Cut', 'images/product-gem-green-beryl.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">2.35 CT • MINT GREEN • VVS1 • GIA</span>
+              <h3 class="product-title">Green Beryl Emerald Cut Loose Gemstone</h3>
+              <p class="product-price">$1,850</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-green-beryl', '2.35 CT Green Beryl Emerald Cut Gemstone', 1850, 'GIA • Mint Green • VVS1 • Heirloom Cut', 'images/product-gem-green-beryl.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 2. Emerald -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-emerald.png" alt="2.60 CT Colombian Emerald Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-emerald', '2.60 CT Colombian Emerald Cut Gemstone', 3800, 'GIA • Vivid Green • VVS • Royal Provenance', 'images/product-gem-emerald.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">2.60 CT • VIVID GREEN • VVS • GIA</span>
+              <h3 class="product-title">Colombian Emerald Cut Loose Gemstone</h3>
+              <p class="product-price">$3,800</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-emerald', '2.60 CT Colombian Emerald Cut Gemstone', 3800, 'GIA • Vivid Green • VVS • Royal Provenance', 'images/product-gem-emerald.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 3. Aquamarine -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-aquamarine.png" alt="3.15 CT Aquamarine Cushion Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-aquamarine', '3.15 CT Aquamarine Cushion Cut Gemstone', 2100, 'GIA • Santa Maria Cyan • VVS1 • Radiant Cut', 'images/product-gem-aquamarine.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">3.15 CT • SANTA MARIA CYAN • VVS1 • GIA</span>
+              <h3 class="product-title">Aquamarine Cushion Cut Loose Gemstone</h3>
+              <p class="product-price">$2,100</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-aquamarine', '3.15 CT Aquamarine Cushion Cut Gemstone', 2100, 'GIA • Santa Maria Cyan • VVS1 • Radiant Cut', 'images/product-gem-aquamarine.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 4. Maxixe -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-maxixe.png" alt="2.80 CT Maxixe Oval Brilliant Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-maxixe', '2.80 CT Maxixe Oval Brilliant Cut Gemstone', 2950, 'GIA • Royal Cobalt Blue • VVS1 • Rare Specimen', 'images/product-gem-maxixe.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">2.80 CT • ROYAL BLUE • VVS1 • GIA</span>
+              <h3 class="product-title">Maxixe Brilliant Oval Cut Loose Gemstone</h3>
+              <p class="product-price">$2,950</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-maxixe', '2.80 CT Maxixe Oval Brilliant Cut Gemstone', 2950, 'GIA • Royal Cobalt Blue • VVS1 • Rare Specimen', 'images/product-gem-maxixe.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 5. Red Beryl -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-red-beryl.png" alt="1.90 CT Red Beryl Step Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-red-beryl', '1.90 CT Red Beryl Step Cut Gemstone', 4500, 'GIA • Vivid Raspberry Red • VVS2 • Extremely Rare', 'images/product-gem-red-beryl.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">1.90 CT • VIVID CRIMSON RED • VVS2 • GIA</span>
+              <h3 class="product-title">Red Beryl Step Cut Loose Gemstone</h3>
+              <p class="product-price">$4,500</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-red-beryl', '1.90 CT Red Beryl Step Cut Gemstone', 4500, 'GIA • Vivid Raspberry Red • VVS2 • Extremely Rare', 'images/product-gem-red-beryl.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 6. Morganite -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-morganite.png" alt="3.40 CT Morganite Pear Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-morganite', '3.40 CT Morganite Pear Cut Gemstone', 1950, 'GIA • Blush Peach Pink • VVS1 • Heirloom Cut', 'images/product-gem-morganite.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">3.40 CT • BLUSH PEACH • VVS1 • GIA</span>
+              <h3 class="product-title">Morganite Pear Cut Loose Gemstone</h3>
+              <p class="product-price">$1,950</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-morganite', '3.40 CT Morganite Pear Cut Gemstone', 1950, 'GIA • Blush Peach Pink • VVS1 • Heirloom Cut', 'images/product-gem-morganite.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 7. Goshenite (Pure Diamond Brilliant) -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-goshenite-diamond.png" alt="2.75 CT Goshenite Oval Brilliant Loose Diamond Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-goshenite-diamond', '2.75 CT Goshenite Brilliant Diamond Gemstone', 3200, 'GIA • D Color • VVS1 • Triple Excellent Fire', 'images/product-gem-goshenite-diamond.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">2.75 CT • D COLOR • VVS1 • TRIPLE EXCELLENT</span>
+              <h3 class="product-title">Goshenite Oval Cut Diamond Gemstone</h3>
+              <p class="product-price">$3,200</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-goshenite-diamond', '2.75 CT Goshenite Brilliant Diamond Gemstone', 3200, 'GIA • D Color • VVS1 • Triple Excellent Fire', 'images/product-gem-goshenite-diamond.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+          <!-- 8. Heliodor -->
+          <div class="product-item-card" data-category="diamonds">
+            <div class="product-thumb-holder loose-diamond-holder">
+              <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+              <img src="images/product-gem-heliodor.png" alt="3.20 CT Heliodor Golden Step Cut Loose Gemstone" class="product-img">
+              <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-heliodor', '3.20 CT Heliodor Golden Step Cut Gemstone', 1750, 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut', 'images/product-gem-heliodor.png')" title="Save to Favorites" aria-label="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+            <div class="product-card-details">
+              <span class="product-spec-tag">3.20 CT • GOLDEN YELLOW • VVS1 • GIA</span>
+              <h3 class="product-title">Heliodor Golden Step Cut Loose Gemstone</h3>
+              <p class="product-price">$1,750</p>
+              <button class="product-card-add-btn" onclick="addProductToBag('gem-heliodor', '3.20 CT Heliodor Golden Step Cut Gemstone', 1750, 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut', 'images/product-gem-heliodor.png')">ADD TO BAG</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="products-view-all-row">
+          <a href="index.html" class="hero-cta-btn dark-cta">← RETURN TO HOME</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why Choose Swastic Exports Section (Deep Emerald Green Theme) -->
+    <section class="why-choose-section" id="why-choose-section">
+      <div class="why-choose-container">
+        <div class="why-choose-header">
+          <span class="why-choose-eyebrow">✦ SWASTIC EXPORTS • HOUSE OF GEMS ✦</span>
+          <h2 class="why-choose-main-title">Why Choose Swastic Exports?</h2>
+          <p class="why-choose-subtitle">
+            Discover over 30 years of certified gemstone mastery, direct mine provenance, and ethical trust.
+          </p>
+        </div>
+
+        <div class="why-choose-grid">
+          <div class="why-choose-card">
+            <div class="why-choose-media">
+              <img src="images/why-choose-1.png" alt="Why Choose Swastic Exports" class="why-choose-img" loading="lazy">
+            </div>
+          </div>
+          <div class="why-choose-card">
+            <div class="why-choose-media">
+              <img src="images/why-choose-2.png" alt="30+ Years of Industry Trust & Calibrated Sizes" class="why-choose-img" loading="lazy">
+            </div>
+          </div>
+          <div class="why-choose-card">
+            <div class="why-choose-media">
+              <img src="images/why-choose-3.png" alt="International Certification & Guaranteed Authenticity" class="why-choose-img" loading="lazy">
+            </div>
+          </div>
+          <div class="why-choose-card">
+            <div class="why-choose-media">
+              <img src="images/why-choose-4.png" alt="Layouts, Bulk Orders & Personal Guidance" class="why-choose-img" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Choose Your Shape: Native Video Reel & Atelier Craftsmanship Section -->
+    <section class="shapes-reel-section" id="shapes-reel-section">
+      <div class="shapes-reel-container">
+        <div class="shapes-reel-grid">
+
+          <!-- Left Column: Native Luxury Video Player (No Instagram Header, Auto-Replay, Direct Link Button) -->
+          <div class="reel-player-column">
+            <div class="reel-phone-frame" id="reelPhoneFrame">
+              
+              <!-- Video Container with Native Loop Player -->
+              <div class="reel-video-container">
+                <video id="chooseShapeNativeVideo" 
+                       class="reel-native-video" 
+                       src="videos/choose-shape-reel.mp4" 
+                       poster="images/insta-reel-poster.jpg" 
+                       autoplay 
+                       loop 
+                       muted 
+                       playsinline 
+                       preload="auto">
+                  Your browser does not support HTML5 video.
+                </video>
+
+                <!-- Floating Replay & Audio Controls -->
+                <div class="reel-video-floating-controls">
+                  <button type="button" class="reel-control-btn" id="reelReplayBtn" title="Replay Video" aria-label="Replay Video">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                      <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.77 20 14.44 20 13c0-4.42-3.58-8-8-8zm-6 8c0-1.01.25-1.97.7-2.8L5.24 8.74C4.46 10.23 4 11.56 4 13c0 4.42 3.58 8 8 8v4l5-5-5-5v4c-3.31 0-6-2.69-6-6z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="reel-control-btn" id="reelMuteToggleBtn" title="Toggle Sound" aria-label="Toggle Sound">
+                    <svg id="reelMuteIcon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.73 4.73H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="reel-frame-watermark">
+                  <span>✦ SWASTIC EXPORTS</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Dedicated Instagram Action Button: Navigates to Instagram ONLY when clicked -->
+            <div class="reel-external-action-row">
+              <a href="https://www.instagram.com/reel/DcK3jwlPQYi/" target="_blank" rel="noopener noreferrer" class="reel-watch-insta-btn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                <span>WATCH FULL REEL ON INSTAGRAM ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Replaced with Elegant Editorial Storytelling Text (As Requested: "right m y jo lagya h vo hata de basss kuch likh de") -->
+          <div class="reel-content-column">
+            
+            <div class="reel-content-header">
+              <span class="reel-eyebrow">✦ SWASTIC EXPORTS • HOUSE OF GEMS ✦</span>
+              <h2 class="reel-main-title">Choose Your Shape: <span class="title-accent">Certified Zambian Emeralds</span></h2>
+              <p class="reel-main-desc">
+                Every silhouette tells an extraordinary story of geological wonder, royal heritage, and lapidary precision. From deep crystalline fire to timeless geometric silhouettes, explore master-cut emeralds tailored for bespoke rings and heirloom jewelry.
+              </p>
+            </div>
+
+            <!-- Poetic Quote Banner -->
+            <div class="reel-quote-banner">
+              <p class="reel-poetic-quote">
+                “Each emerald is cut to celebrate its innate crystalline spirit — preserving vivid color saturation, intense brilliance, and heirloom eternity.”
+              </p>
+            </div>
+
+            <!-- Clean Editorial Features List -->
+            <div class="reel-features-list">
+              <div class="reel-feature-item">
+                <div class="feature-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#dfba87" stroke-width="1.8" width="22" height="22"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>
+                </div>
+                <div class="feature-text-box">
+                  <h4>Master-Lapidary Proportions</h4>
+                  <p>Each facet is angled to maximize crystalline reflection and the signature "jardin" fire found only in premium natural beryl.</p>
+                </div>
+              </div>
+
+              <div class="reel-feature-item">
+                <div class="feature-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#dfba87" stroke-width="1.8" width="22" height="22"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a15 15 0 0 1 0 18"></path><path d="M3 12h18"></path></svg>
+                </div>
+                <div class="feature-text-box">
+                  <h4>Direct Mine Provenance</h4>
+                  <p>Sourced ethically and directly from world-renowned Zambian & Colombian emerald belts without middle-tier markups.</p>
+                </div>
+              </div>
+
+              <div class="reel-feature-item">
+                <div class="feature-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#dfba87" stroke-width="1.8" width="22" height="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                </div>
+                <div class="feature-text-box">
+                  <h4>Certified Authenticity & Custom Cuts</h4>
+                  <p>Every stone is independently certified with full origin and treatment disclosure, available in Emerald, Oval, Pear, Round, and Cushion cuts.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call to Action Buttons -->
+            <div class="reel-editorial-actions">
+              <a href="index.html#diamond-products-section" class="reel-primary-cta">EXPLORE GEMSTONE SHAPES →</a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Cut Education & Philosophy -->
+    <section class="shape-education-section">
+      <div class="shapes-container narrow">
+        <div class="education-header">
+          <h3>The Art of Proportion & Facet Geometry</h3>
+          <p>Every gemstone cut is calibrated to maximize optical performance. Whether you are drawn to the fiery dispersion of a Round Brilliant, the mirror-like reflections of an Emerald cut, or the distinctive contours of an Oval, our master gemstone setters hand-forge each prong setting specifically for your stone.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SWASTIC EXPORTS Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-column brand-col">
+        <div class="footer-logo">SWASTIC EXPORTS</div>
+        <p class="footer-tagline">Mastering handcrafted fine gemstones across seven generations since 1890.</p>
+        <div class="footer-certifications">
+          <span class="cert-badge">GIA CERTIFIED</span>
+          <span class="cert-badge">IGI CERTIFIED</span>
+          <span class="cert-badge">CONFLICT-FREE</span>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>FINE JEWELRY</h4>
+        <ul>
+          <li><a href="shapes.html">Shop by Shape</a></li>
+          <li><a href="index.html#diamond-products-section">Loose Certified Gemstones</a></li>
+          <li><a href="index.html#emerald-mines-section">Direct Mine Gemstones</a></li>
+          <li><a href="index.html#emerald-mines-section">Zambian Emerald Collection</a></li>
+          <li><a href="index.html#lab-diamonds">Lab Grown Gemstones</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>SERVICES</h4>
+        <ul>
+          <li><a href="promise.html">The Swastic Exports Promise</a></li>
+          <li><a href="shapes.html">Custom Jewelry Design</a></li>
+          <li><a href="#">Bespoke Stone Setting</a></li>
+          <li><a href="#">Lifetime Warranty</a></li>
+          <li><a href="#">Free Insured Shipping</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>CONTACT & CONCIERGE</h4>
+        <p class="footer-contact-item"><strong>Toll Free:</strong> 1.844.400.0065</p>
+        <p class="footer-contact-item"><strong>Email:</strong> support@swasticexports.com</p>
+        <p class="footer-contact-item"><strong>Concierge:</strong> Available 24/7</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom-bar">
+      <p>&copy; 2026 SWASTIC EXPORTS Inc. All rights reserved. Handcrafted with bespoke precision.</p>
+    </div>
+  </footer>
+
+  <!-- Floating Concierge Widget -->
+  <div class="concierge-floating-widget" id="conciergeWidget">
+    <div class="concierge-badge-card" id="conciergeTrigger">
+      <svg class="concierge-bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+      <span class="concierge-badge-text">MAY WE ASSIST YOU?</span>
+    </div>
+
+    <div class="concierge-panel" id="conciergePanel">
+      <div class="concierge-panel-header">
+        <div class="concierge-avatar">S</div>
+        <div class="concierge-title-box">
+          <h4>Swastic Exports Concierge</h4>
+          <span class="status-online">● Online & Ready to help</span>
+        </div>
+        <button class="concierge-close" id="conciergeClose">&times;</button>
+      </div>
+      <div class="concierge-body">
+        <p class="concierge-greeting">Hello! Need guidance finding the ideal gemstone cut for your hand proportions or budget? We are happy to help.</p>
+        <div class="concierge-options">
+          <button class="concierge-chip" onclick="handleConciergeTopic('diamond-guide')">Gemstone Shape Recommendation</button>
+          <button class="concierge-chip" onclick="handleConciergeTopic('lab-vs-natural')">Natural vs Lab Gemstones</button>
+          <button class="concierge-chip" onclick="handleConciergeTopic('custom-ring')">Bespoke Ring Setting</button>
+        </div>
+        <div class="concierge-input-wrap">
+          <input type="text" placeholder="Type your question..." id="conciergeInput">
+          <button id="conciergeSendBtn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Favorites / Wishlist Slide Drawer -->
+  <div class="cart-drawer-backdrop" id="wishlistBackdrop"></div>
+  <aside class="cart-drawer" id="wishlistDrawer">
+    <div class="cart-drawer-header">
+      <h3>YOUR FAVORITES (<span id="wishlistDrawerCount">0</span>)</h3>
+      <button class="close-drawer-btn" id="closeWishlistBtn">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="wishlistDrawerBody">
+      <div class="empty-cart-view" id="emptyWishlistView">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-bag-icon">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <p>You have not saved any favorite jewelry pieces yet.</p>
+        <a href="shapes.html" class="hero-cta-btn dark-cta">EXPLORE SHAPES</a>
+      </div>
+      <div class="cart-items-list" id="wishlistItemsList" style="display:none;"></div>
+    </div>
+  </aside>
+
+  <!-- Shopping Cart Slide Drawer -->
+  <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h3>YOUR SHOPPING BAG (<span id="drawerCount">0</span>)</h3>
+      <button class="close-drawer-btn" id="closeCartBtn">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cartDrawerBody">
+      <div class="empty-cart-view" id="emptyCartView">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-bag-icon">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+        </svg>
+        <p>Your shopping bag is currently empty.</p>
+        <a href="shapes.html" class="hero-cta-btn dark-cta">CONTINUE BROWSING</a>
+      </div>
+      <div class="cart-items-list" id="cartItemsList" style="display:none;"></div>
+    </div>
+    <div class="cart-drawer-footer" id="cartDrawerFooter" style="display:none;">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <span id="cartSubtotalValue">$0.00</span>
+      </div>
+      <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+      <p class="cart-shipping-note">Complimentary insured shipping & 30-day returns included.</p>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+  <script>
+    // Handlers for Shape Action Buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      const customizeBtn = document.getElementById('customizeRingBtn');
+      const viewSpecsBtn = document.getElementById('viewSpecsBtn');
+
+      if (customizeBtn) {
+        customizeBtn.addEventListener('click', () => {
+          const activeBtn = document.querySelector('.diamond-shape-btn.active');
+          const shape = activeBtn ? activeBtn.dataset.shape : 'heart';
+          const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+          const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified';
+          const img = activeBtn ? activeBtn.dataset.img : 'images/diamond-blue-heart.jpg';
+          
+          if (typeof window.addToCart === 'function') {
+            window.addToCart({
+              id: 'shape-' + shape,
+              title: 'SWASTIC EXPORTS ' + name + ' Certified Gemstone',
+              spec: spec,
+              price: 3850,
+              img: img
+            });
+          }
+        });
+      }
+
+      if (viewSpecsBtn) {
+        viewSpecsBtn.addEventListener('click', () => {
+          const target = document.getElementById('diamond-products-section');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{% comment %}
+  Shopify Section: Velora Loose Certified Diamonds Grid
+  Displays loose certified diamonds replacing ring products
+{% endcomment %}
+
+<section class="diamond-products-section" id="featuredDiamondsSection">
+  <div class="products-header">
+    <span class="section-tag">{{ section.settings.tag | default: 'LOOSE CERTIFIED DIAMONDS' }}</span>
+    <h2 class="section-title">{{ section.settings.title | default: 'Velora Signature Real Diamond Collection' }}</h2>
+    <p class="section-subtitle">{{ section.settings.subtitle | default: 'Hand-selected natural and lab-created loose diamonds. Each stone is certified by GIA / IGI with complete laser-inscribed provenance and optical grading.' }}</p>
+
+    <div class="product-filter-tabs">
+      <button class="filter-tab active" data-category="all">All Diamonds</button>
+      <button class="filter-tab" data-category="brilliant">Brilliant Cuts</button>
+      <button class="filter-tab" data-category="step">Step Cuts</button>
+      <button class="filter-tab" data-category="fancy">Fancy Shapes</button>
+      <button class="filter-tab" data-category="natural">GIA Natural</button>
+      <button class="filter-tab" data-category="lab">IGI Lab Grown</button>
+    </div>
+  </div>
+
+  <div class="products-grid" id="looseDiamondsGrid">
+    {% for block in section.blocks %}
+      <div class="product-item-card" data-category="{{ block.settings.category }}" data-cut="{{ block.settings.cut_name }}" data-id="{{ block.id }}" {{ block.shopify_attributes }}>
+        <div class="product-thumbnail-box">
+          <span class="product-badge {% if block.settings.is_lab %}lab-badge{% endif %}">{{ block.settings.badge }}</span>
+          <button class="product-heart-btn" onclick="toggleDiamondFavorite('{{ block.id }}', '{{ block.settings.title | escape }}', '{{ block.settings.specs | escape }}', '{{ block.settings.price | escape }}', '{{ block.settings.cut_name }}', event)" title="Add to Wishlist">
+            <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+          
+          <div class="loose-diamond-display shape-sprite-{{ block.settings.cut_slug }}"></div>
+          
+          <button class="quick-add-btn" onclick="quickAddLooseDiamond('{{ block.id }}', '{{ block.settings.title | escape }}', '{{ block.settings.specs | escape }}', {{ block.settings.price_num | default: 4850 }}, '{{ block.settings.cut_name }}')">ADD DIAMOND TO BAG</button>
+        </div>
+        <div class="product-info-box">
+          <span class="prod-category-label">{{ block.settings.origin_label }} • {{ block.settings.cert_number }}</span>
+          <h4 class="prod-title">{{ block.settings.title }}</h4>
+          <div class="diamond-4c-specs">
+            <span><strong>Cut:</strong> {{ block.settings.cut_grade }}</span>
+            <span><strong>Color:</strong> {{ block.settings.color_grade }}</span>
+            <span><strong>Clarity:</strong> {{ block.settings.clarity_grade }}</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">{{ block.settings.price }}</span>
+            <button class="inspect-btn" onclick="viewDiamondCert('{{ block.settings.cut_name }}', '{{ block.settings.carat }}', '{{ block.settings.color_grade }}', '{{ block.settings.clarity_grade }}', '{{ block.settings.cut_grade }}', '{{ block.settings.cert_number }}')">Cert View</button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Loose Diamonds Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tagline",
+      "default": "LOOSE CERTIFIED DIAMONDS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Velora Signature Real Diamond Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Hand-selected natural and lab-created loose diamonds. Each stone is certified by GIA / IGI with complete laser-inscribed provenance and optical grading."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "diamond_item",
+      "name": "Certified Diamond",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "2.05 CT Round Brilliant Diamond" },
+        { "type": "text", "id": "cut_name", "label": "Cut Name", "default": "Round" },
+        { "type": "text", "id": "cut_slug", "label": "Sprite Slug", "default": "round" },
+        { "type": "text", "id": "category", "label": "Categories (space separated)", "default": "brilliant natural" },
+        { "type": "boolean", "id": "is_lab", "label": "Is Lab Grown?", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "GIA CERTIFIED" },
+        { "type": "text", "id": "origin_label", "label": "Origin", "default": "NATURAL" },
+        { "type": "text", "id": "cert_number", "label": "Certificate Number", "default": "GIA 24589102" },
+        { "type": "text", "id": "carat", "label": "Carat Weight", "default": "2.05 CT" },
+        { "type": "text", "id": "cut_grade", "label": "Cut Grade", "default": "Ideal" },
+        { "type": "text", "id": "color_grade", "label": "Color Grade", "default": "D" },
+        { "type": "text", "id": "clarity_grade", "label": "Clarity Grade", "default": "VVS1" },
+        { "type": "text", "id": "specs", "label": "Summary Specs", "default": "Color D • Clarity VVS1 • GIA Certified" },
+        { "type": "text", "id": "price", "label": "Display Price", "default": "$4,850.00" },
+        { "type": "number", "id": "price_num", "label": "Price Value (Number)", "default": 4850 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loose Diamonds Grid"
+    }
+  ]
+}
+{% endschema %}
