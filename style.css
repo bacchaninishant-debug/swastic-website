@@ -7313,4 +7313,237 @@ img {
   box-shadow: 0 0 6px rgba(197, 168, 128, 0.9);
 }
 
+/* ==========================================================================
+   MULTI-DEVICE FLUID RESPONSIVE SYSTEM
+   Optimized across:
+   - Extra-compact mobile: 320px - 360px (iPhone SE, Galaxy Z Flip cover)
+   - Standard modern mobile: 375px - 414px (iPhone 12-16, Pixel, Galaxy S series)
+   - Large mobile & phablets: 415px - 600px (iPhone Plus/Pro Max, Galaxy Ultra)
+   - Mini tablets & foldables: 601px - 768px (iPad Mini, Surface, Fold unfolded)
+   - Tablets & landscape: 769px - 1024px (iPad 10th/Air/Pro)
+   ========================================================================== */
+
+/* Universal Mobile Safety (Applies to all devices <= 768px) */
+@media (max-width: 768px) {
+  html, body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+
+  section, header, footer, main, article {
+    max-width: 100vw !important;
+    overflow-x: clip !important;
+  }
+
+  img, video, iframe {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Concierge Chat Widget Safe Sizing */
+  .concierge-panel {
+    width: min(320px, calc(100vw - 28px)) !important;
+    right: 0 !important;
+    bottom: 60px !important;
+  }
+  
+  .concierge-floating-badge {
+    bottom: 14px !important;
+    right: 14px !important;
+  }
+
+  /* Universal Section Padding Comfort */
+  .hero-section,
+  .new-arrivals-section,
+  .gem-variety-strip-section,
+  .reels-showcase-section,
+  .why-choose-section,
+  .stories-section,
+  .reviews-counting-block,
+  .footer-inner {
+    padding-left: clamp(14px, 4vw, 24px) !important;
+    padding-right: clamp(14px, 4vw, 24px) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hero Fluid Typography & Actions */
+  .hero-main-title {
+    font-size: clamp(28px, 7.5vw, 42px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .hero-subtext {
+    font-size: clamp(13px, 3.5vw, 15px) !important;
+    line-height: 1.65 !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-action-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 13px 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-trust-badges {
+    flex-wrap: wrap !important;
+    gap: 10px 16px !important;
+    justify-content: center !important;
+  }
+
+  /* Reel Phone Video Frame Scaling */
+  .reel-player-column {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .reel-phone-frame {
+    width: 100% !important;
+    max-width: min(320px, 100%) !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Medium Phones & Below (<= 520px) */
+@media (max-width: 520px) {
+  /* Grids to 2 Columns or 1 Column */
+  .gem-variety-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .gem-variety-item {
+    padding: 14px 8px !important;
+  }
+
+  .gem-variety-thumb {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .gem-variety-name {
+    font-size: 11.5px !important;
+    margin-top: 10px !important;
+  }
+
+  .new-arrivals-grid,
+  .why-choose-grid,
+  .reels-grid-4 {
+    grid-template-columns: 1fr !important;
+    max-width: 350px !important;
+    margin: 0 auto !important;
+    gap: 20px !important;
+  }
+
+  /* Auth & Account Cards */
+  .auth-card {
+    padding: 26px 18px !important;
+    border-radius: 4px !important;
+  }
+
+  .auth-title {
+    font-size: 24px !important;
+  }
+
+  .account-hero-bar {
+    padding: 18px 16px !important;
+  }
+
+  .account-hero-left {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .account-client-name {
+    font-size: 20px !important;
+  }
+
+  .order-card-header,
+  .order-card-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .order-gem-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .order-gem-price-cell {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+}
+
+/* Compact Phones: iPhone SE, Galaxy Z Flip cover (<= 360px) */
+@media (max-width: 360px) {
+  .logo-title {
+    font-size: 13px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .logo-sub {
+    font-size: 6px !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  .top-nav-bar {
+    padding: 8px 10px !important;
+  }
+
+  .header-right {
+    gap: 6px !important;
+  }
+
+  .mobile-menu-btn,
+  .search-pill-container,
+  .nav-action-btn {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .mobile-menu-btn .hamburger-icon,
+  .search-pill-container .search-icon,
+  .nav-action-btn .icon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .main-navigation {
+    padding: 6px 8px 8px !important;
+  }
+
+  .nav-menu {
+    gap: 12px !important;
+  }
+
+  .nav-link {
+    font-size: 10px !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .hero-main-title {
+    font-size: 26px !important;
+  }
+
+  .trust-badge-item {
+    font-size: 10px !important;
+  }
+}
+
 
