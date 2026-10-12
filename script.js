@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="swastic-search-results-view" id="swasticSearchResultsView" style="display: none;">
               <div class="swastic-results-header-bar">
                 <span class="swastic-results-count" id="swasticResultsCount">Showing results</span>
-                <button type="button" class="swastic-reset-search-btn" id="swasticResetSearchBtn">Clear & View Gemstone Guide</button>
+                <button type="button" class="swastic-reset-search-btn" id="swasticResetSearchBtn">✕ Clear</button>
               </div>
               <div class="swastic-search-results-grid" id="swasticSearchResultsGrid"></div>
               <div class="swastic-search-empty" id="swasticSearchEmpty" style="display: none;">
@@ -1231,24 +1231,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('swasticSearchEmpty');
     const resetBtn = document.getElementById('swasticResetSearchBtn');
 
-    // Render Product Card Helper
+    // Render Clean Luxury Product Card Helper (Single action row, no cramped duplicate buttons)
     const createProductCardHtml = (prod) => {
+      const specParts = prod.spec.split('•').map(s => s.trim()).filter(Boolean);
+      const shortSpec = specParts.slice(0, 2).join(' • ') || prod.spec;
+
       return `
-        <article class="swastic-product-card" data-product-id="${prod.id}">
+        <article class="swastic-product-card" data-product-id="${prod.id}" role="button" tabindex="0" title="Click to view details of ${prod.title.replace(/"/g, '&quot;')}">
           <div class="prod-thumb-box">
             <span class="prod-badge">${prod.badge}</span>
             <img src="${prod.img}" alt="${prod.title}" loading="lazy">
           </div>
           <div class="prod-info-box">
-            <span class="prod-spec-text">${prod.spec}</span>
+            <span class="prod-spec-text">${shortSpec}</span>
             <h4 class="prod-name-title">${prod.title}</h4>
-            <p class="prod-price-tag">${prod.priceStr}</p>
-            <div class="prod-actions-row">
-              <button type="button" class="prod-add-bag-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}" data-price="${prod.price}" data-spec="${prod.spec.replace(/"/g, '&quot;')}" data-img="${prod.img}">
-                ADD TO BAG
-              </button>
-              <button type="button" class="prod-view-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}">
-                DETAILS
+            <div class="prod-card-bottom-row">
+              <span class="prod-price-tag">${prod.priceStr}</span>
+              <button type="button" class="prod-add-bag-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}" data-price="${prod.price}" data-spec="${prod.spec.replace(/"/g, '&quot;')}" data-img="${prod.img}" aria-label="Add to bag">
+                + BAG
               </button>
             </div>
           </div>
@@ -1259,6 +1259,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach Action Listeners to Product Cards
     const bindProductCardEvents = (container) => {
       if (!container) return;
+
+      // Click card to view details
+      container.querySelectorAll('.swastic-product-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.prod-add-bag-btn')) return;
+          closeModal();
+          if (window.location.pathname.includes('shapes.html')) {
+            const el = document.getElementById('diamond-products-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.location.href = 'shapes.html#diamond-products-section';
+          }
+        });
+      });
+
+      // Quick add to bag button
       container.querySelectorAll('.prod-add-bag-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -1272,21 +1288,8 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.textContent = 'ADDED ✓';
           setTimeout(() => {
             btn.classList.remove('added-success');
-            btn.textContent = 'ADD TO BAG';
+            btn.textContent = '+ BAG';
           }, 1800);
-        });
-      });
-
-      container.querySelectorAll('.prod-view-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          closeModal();
-          if (window.location.pathname.includes('shapes.html')) {
-            const el = document.getElementById('diamond-products-section');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.location.href = 'shapes.html#diamond-products-section';
-          }
         });
       });
     };
@@ -1298,14 +1301,14 @@ document.addEventListener('DOMContentLoaded', () => {
       bindProductCardEvents(featuredGrid);
     }
 
-    // Open Modal Function
+    // Open Modal Function (Rock-solid focus with preventScroll: true to avoid mobile page jump)
     const openModal = (keyword = '') => {
       modal.classList.add('active');
       modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('swastic-search-active');
       setTimeout(() => {
         if (input) {
-          input.focus();
+          input.focus({ preventScroll: true });
           if (keyword) {
             input.value = keyword;
             handleSearch(keyword);
@@ -1318,7 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = () => {
       modal.classList.remove('active');
       modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      document.body.classList.remove('swastic-search-active');
       if (input) input.blur();
     };
 
@@ -1348,12 +1351,12 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsGrid.style.display = 'grid';
         resultsGrid.innerHTML = matchedProducts.map(createProductCardHtml).join('');
         bindProductCardEvents(resultsGrid);
-        resultsCount.innerHTML = `Found <strong>${matchedProducts.length}</strong> matching gemstone${matchedProducts.length === 1 ? '' : 's'} for "<strong>${rawQuery}</strong>"`;
+        resultsCount.innerHTML = `<strong>${matchedProducts.length}</strong> Gemstones for "<strong>${rawQuery}</strong>"`;
       } else {
         resultsGrid.style.display = 'none';
         resultsGrid.innerHTML = '';
         emptyState.style.display = 'block';
-        resultsCount.innerHTML = `0 results found for "<strong>${rawQuery}</strong>"`;
+        resultsCount.innerHTML = `0 results for "<strong>${rawQuery}</strong>"`;
       }
     };
 
