@@ -2019,6 +2019,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Universal Section Smooth Scroll Handler (Matches Netlify & Localhost)
+  const initSmoothSectionScroll = () => {
+    const handleScrollToTarget = (targetId) => {
+      if (!targetId) return false;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
+        const headerOffset = header ? header.offsetHeight + 10 : 75;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        // Update active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+          const href = link.getAttribute('href') || '';
+          if (href.includes(targetId)) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+        return true;
+      }
+      return false;
+    };
+
+    // Intercept clicks on links pointing to section IDs
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href*="#"]');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      const hashIndex = href.indexOf('#');
+      if (hashIndex === -1) return;
+      const targetId = href.substring(hashIndex + 1);
+      if (!targetId) return;
+
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        handleScrollToTarget(targetId);
+
+        // Close mobile drawer if open
+        const drawer = document.querySelector('.mobile-nav-drawer');
+        const backdrop = document.querySelector('.mobile-nav-backdrop');
+        if (drawer && drawer.classList.contains('active')) {
+          drawer.classList.remove('active');
+          if (backdrop) backdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+
+    // Handle hash on page load
+    if (window.location.hash) {
+      const hashId = window.location.hash.substring(1);
+      setTimeout(() => {
+        handleScrollToTarget(hashId);
+      }, 400);
+    }
+  };
+
+  initSmoothSectionScroll();
   initMobileNavDrawer();
 });
 
