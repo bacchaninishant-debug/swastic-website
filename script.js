@@ -1958,8 +1958,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <ul class="mobile-drawer-links">
           <li class="mobile-drawer-link-item"><a href="index.html"><span>Home</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="shapes.html"><span>Shop by Shape</span><span class="link-arrow">→</span></a></li>
-          
           <li class="mobile-drawer-link-item"><a href="gemstones.html"><span>Gemstones</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="promise.html"><span>The Swastic Promise</span><span class="link-arrow">→</span></a></li>
           <li class="mobile-drawer-link-item"><a href="index.html#stories-section"><span>Exhibitions &amp; Stories</span><span class="link-arrow">→</span></a></li>
