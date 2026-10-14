@@ -1,0 +1,34 @@
+{% comment %}
+  Renders pagination for collections and search
+{% endcomment %}
+{% if paginate.pages > 1 %}
+  <nav class="pagination-wrapper" role="navigation" aria-label="Pagination">
+    <ul class="pagination-list">
+      {% if paginate.previous %}
+        <li class="pagination-item">
+          <a href="{{ paginate.previous.url }}" class="pagination-btn prev-btn" aria-label="Previous Page">← PREV</a>
+        </li>
+      {% endif %}
+
+      {% for part in paginate.parts %}
+        <li class="pagination-item">
+          {% if part.is_link %}
+            <a href="{{ part.url }}" class="pagination-link">{{ part.title }}</a>
+          {% else %}
+            {% if part.title == paginate.current_page %}
+              <span class="pagination-link active" aria-current="page">{{ part.title }}</span>
+            {% else %}
+              <span class="pagination-link ellipsis">{{ part.title }}</span>
+            {% endif %}
+          {% endif %}
+        </li>
+      {% endfor %}
+
+      {% if paginate.next %}
+        <li class="pagination-item">
+          <a href="{{ paginate.next.url }}" class="pagination-btn next-btn" aria-label="Next Page">NEXT →</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

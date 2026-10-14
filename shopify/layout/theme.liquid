@@ -4,26 +4,252 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ page_title }} | {{ shop.name }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    
+    {% if settings.favicon != blank %}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {% endif %}
+
+    <title>
+      {{ page_title }}
+      {% if current_tags %}&ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}
+      {% if current_page != 1 %}&ndash; Page {{ current_page }}{% endif %}
+      {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+    </title>
+
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
+    {% else %}
+      <meta name="description" content="SWASTIC EXPORTS — House of Certified Natural Gemstones, Fine Emeralds, and Heirloom Craftsmanship since 1980.">
     {% endif %}
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Theme Stylesheet -->
     {{ 'style.css' | asset_url | stylesheet_tag }}
+
     {{ content_for_header }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.ShopifyTheme = window.ShopifyTheme || {};
+      window.ShopifyTheme.routes = {
+        cart_url: '{{ routes.cart_url }}',
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_clear_url: '{{ routes.cart_clear_url }}',
+        search_url: '{{ routes.search_url }}'
+      };
+      window.ShopifyTheme.assetUrlBase = "{{ 'script.js' | asset_url }}".split('script.js')[0];
+      window.ShopifyTheme.strings = {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }}
+      };
+
+      // Interactive Page View Switcher & Smooth Section Opener
+      window.showPageView = function(pageName, event) {
+        if (event) {
+          if (event.preventDefault) event.preventDefault();
+          if (event.stopPropagation) event.stopPropagation();
+        }
+
+        var mainContent = document.getElementById('MainContent');
+        var aboutView = document.getElementById('dynamicAboutView');
+        var promiseView = document.getElementById('dynamicPromiseView');
+        var gemstonesView = document.getElementById('dynamicGemstonesView');
+        var shapesView = document.getElementById('dynamicShapesView');
+        var storiesView = document.getElementById('dynamicStoriesView');
+        var root = (window.ShopifyTheme && window.ShopifyTheme.routes && window.ShopifyTheme.routes.root_url) ? window.ShopifyTheme.routes.root_url : '/';
+        var isHomepage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname === root;
+
+        if (!aboutView || !promiseView || !gemstonesView || !shapesView || !storiesView || !isHomepage) {
+          // Navigating from a standalone page
+          if (pageName === 'about') {
+            window.location.href = root + '#about';
+          } else if (pageName === 'promise') {
+            window.location.href = root + '#promise';
+          } else if (pageName === 'gemstones') {
+            window.location.href = root + '#gemstones';
+          } else if (pageName === 'shapes') {
+            window.location.href = root + '#shapes';
+          } else if (pageName === 'stories') {
+            window.location.href = root + '#stories';
+          } else {
+            window.location.href = root;
+          }
+          return false;
+        }
+
+        if (pageName === 'about') {
+          if (mainContent) mainContent.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'none';
+          if (aboutView) aboutView.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, '#about');
+        } else if (pageName === 'promise') {
+          if (mainContent) mainContent.style.display = 'none';
+          if (aboutView) aboutView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, '#promise');
+        } else if (pageName === 'gemstones') {
+          if (mainContent) mainContent.style.display = 'none';
+          if (aboutView) aboutView.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, '#gemstones');
+        } else if (pageName === 'shapes') {
+          if (mainContent) mainContent.style.display = 'none';
+          if (aboutView) aboutView.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, '#shapes');
+        } else if (pageName === 'stories') {
+          if (mainContent) mainContent.style.display = 'none';
+          if (aboutView) aboutView.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, '#stories');
+        } else {
+          // Home
+          if (aboutView) aboutView.style.display = 'none';
+          if (promiseView) promiseView.style.display = 'none';
+          if (gemstonesView) gemstonesView.style.display = 'none';
+          if (shapesView) shapesView.style.display = 'none';
+          if (storiesView) storiesView.style.display = 'none';
+          if (mainContent) mainContent.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history && window.history.pushState) window.history.pushState(null, null, root);
+        }
+
+        // Highlight active nav item
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+          var target = link.getAttribute('data-target') || (link.getAttribute('href') || '').replace(/.*#/, '');
+          var isMatch = (target === pageName) ||
+                        (pageName === 'gemstones' && (target === 'gemstones' || target === 'diamond-products-section')) ||
+                        (pageName === 'shapes' && (target === 'shapes' || target === 'diamond-shape-section')) ||
+                        (pageName === 'home' && (target === 'home' || target === 'heroSection')) ||
+                        (pageName === 'stories' && (target === 'stories' || target === 'stories-section')) ||
+                        (pageName === 'about' && target === 'about') ||
+                        (pageName === 'promise' && target === 'promise');
+          link.classList.toggle('active', isMatch);
+        });
+
+        // Close mobile menu drawer if open
+        var drawer = document.getElementById('mobileNavDrawer') || document.querySelector('.mobile-nav-drawer');
+        var backdrop = document.getElementById('mobileNavBackdrop') || document.querySelector('.mobile-nav-backdrop');
+        if (drawer && drawer.classList.contains('active')) {
+          drawer.classList.remove('active');
+          if (backdrop) backdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+
+        return false;
+      };
+
+      // Compatibility scrollToSection alias
+      window.scrollToSection = function(sectionId, event) {
+        if (!sectionId) return true;
+        sectionId = sectionId.replace(/.*#/, '');
+        if (sectionId === 'about') return window.showPageView('about', event);
+        if (sectionId === 'promise' || sectionId === 'why-choose-section') return window.showPageView('promise', event);
+        if (sectionId === 'diamond-products-section') return window.showPageView('gemstones', event);
+        if (sectionId === 'diamond-shape-section') return window.showPageView('shapes', event);
+        if (sectionId === 'stories-section') return window.showPageView('stories', event);
+        if (sectionId === 'heroSection') return window.showPageView('home', event);
+
+        var targetEl = document.getElementById(sectionId);
+        if (targetEl) {
+          if (event) {
+            if (event.preventDefault) event.preventDefault();
+            if (event.stopPropagation) event.stopPropagation();
+          }
+          var header = document.getElementById('siteHeader') || document.querySelector('.site-header');
+          var headerOffset = header ? header.offsetHeight + 10 : 75;
+          window.scrollTo({
+            top: targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset,
+            behavior: 'smooth'
+          });
+          return false;
+        }
+        return true;
+      };
+
+      // URL Hash auto-router on page load and hashchange
+      function checkPageHashRoute() {
+        var hash = (window.location.hash || '').toLowerCase();
+        if (hash === '#about') window.showPageView('about');
+        else if (hash === '#promise') window.showPageView('promise');
+        else if (hash === '#gemstones' || hash === '#diamond-products-section') window.showPageView('gemstones');
+        else if (hash === '#shapes' || hash === '#diamond-shape-section') window.showPageView('shapes');
+        else if (hash === '#stories' || hash === '#stories-section') window.showPageView('stories');
+        else if (hash === '#home' || hash === '#herosection') window.showPageView('home');
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(checkPageHashRoute, 120);
+      });
+      window.addEventListener('hashchange', checkPageHashRoute);
+    </script>
   </head>
-  <body>
+
+  <body class="swastic-luxury-theme template-{{ template.name | handle }}">
+    <a class="skip-to-content-link visually-hidden" href="#MainContent">Skip to content</a>
+
+    {% section 'announcement-bar' %}
     {% section 'header' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
+    {% if template.name == 'index' %}
+      <div id="dynamicAboutView" class="dynamic-page-view" style="display:none;">
+        {% section 'about-content' %}
+      </div>
+      <div id="dynamicPromiseView" class="dynamic-page-view" style="display:none;">
+        {% section 'promise-content' %}
+      </div>
+      <div id="dynamicGemstonesView" class="dynamic-page-view" style="display:none;">
+        {% section 'gemstones-page-view' %}
+      </div>
+      <div id="dynamicShapesView" class="dynamic-page-view" style="display:none;">
+        {% section 'shapes-page-view' %}
+      </div>
+      <div id="dynamicStoriesView" class="dynamic-page-view" style="display:none;">
+        {% section 'stories-page-view' %}
+      </div>
+    {% endif %}
+
     {% section 'footer' %}
 
-    {{ 'script.js' | asset_url | script_tag }}
+    <!-- Global Drawers & Modals -->
+    {% render 'cart-drawer' %}
+    {% render 'wishlist-drawer' %}
+    {% render 'concierge-widget' %}
+    {% render 'reviews-modal' %}
+    {% render 'specs-modal' %}
+
+    <!-- Theme Scripts -->
+    <script src="{{ 'script.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

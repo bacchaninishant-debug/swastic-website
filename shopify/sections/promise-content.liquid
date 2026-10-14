@@ -1,29 +1,32 @@
-<div class="promise-page-body">
+<div class="promise-page-main" id="promisePageContent">
+  <!-- Breadcrumb -->
   <div class="promise-breadcrumb-wrapper">
     <div class="promise-container">
       <nav class="breadcrumb-nav">
-        <a href="/">Home</a>
+        <a href="#heroSection" onclick="return window.showPageView ? window.showPageView('home', event) : true;">Home</a>
         <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-current">{{ page.title | default: "The SWASTIC EXPORTS Promise" }}</span>
+        <span class="breadcrumb-current">The Swastic Exports Promise</span>
       </nav>
     </div>
   </div>
 
+  <!-- Promise Hero Showcase Image (Exact Branded Flat Lay with Swastic Exports box & letter) -->
   <section class="promise-hero-showcase-section">
     <div class="promise-container">
       <div class="promise-banner-card">
-        <img src="{{ 'velora-promise.png' | asset_url }}" alt="The SWASTIC EXPORTS Promise" class="promise-banner-img">
+        <img src="{{ 'velora-promise.png' | asset_url }}" alt="The Swastic Exports Promise - Luxury Gift Box and Letter of Assurance" class="promise-banner-img" width="1200" height="600" loading="eager">
       </div>
     </div>
   </section>
 
+  <!-- Editorial Promise Narrative Section -->
   <section class="promise-narrative-section">
     <div class="promise-container narrow">
       <div class="promise-header-block">
-        <span class="promise-eyebrow">{{ section.settings.eyebrow | default: "OUR TIMELESS COMMITMENT" }}</span>
-        <h1 class="promise-main-title">{{ section.settings.heading | default: "The SWASTIC EXPORTS Promise" }}</h1>
+        <span class="promise-eyebrow">OUR TIMELESS COMMITMENT</span>
+        <h1 class="promise-main-title">The Swastic Exports Promise</h1>
         <p class="promise-lead-statement">
-          {{ section.settings.lead | default: "A promise that what you hold is not just rare and beautiful — but rarest, clearest, brightest version of what nature intended." }}
+          A promise that what you hold is not just rare and beautiful — but <strong>rarest, clearest, brightest</strong> version of what nature intended.
         </p>
       </div>
 
@@ -31,12 +34,14 @@
         <span class="divider-gem">✦</span>
       </div>
 
+      <!-- 4 Sacred Pillars (As seen on official Swastic Exports assurance) -->
       <div class="promise-pillars-grid">
+        
         <div class="pillar-card">
           <div class="pillar-number">01</div>
           <h3 class="pillar-title">100% Natural. Ethical. Trusted.</h3>
           <p class="pillar-body">
-            Every single SWASTIC EXPORTS natural gemstone is ethically sourced in accordance with the Kimberley Process certification scheme and United Nations resolutions. Direct-from-mine origins in Zambia, Sri Lanka, and Mozambique.
+            Every gemstone is ethically sourced in accordance with United Nations resolutions. Procured directly from responsible artisanal mining origins in Zambia, Sri Lanka, and Mozambique.
           </p>
         </div>
 
@@ -44,7 +49,7 @@
           <div class="pillar-number">02</div>
           <h3 class="pillar-title">100% Pure</h3>
           <p class="pillar-body">
-            Pure crystalline gemstone treasures created by earth over millions of years. We never sell treated, synthetic-filled, resin-infused, or fracture-filled stones. Authentic mine-to-market provenance.
+            Pure crystalline gemstone treasures formed by earth over millions of years. We never sell treated, synthetic-filled, resin-infused, or fracture-filled stones — only pure natural brilliance.
           </p>
         </div>
 
@@ -52,7 +57,7 @@
           <div class="pillar-number">03</div>
           <h3 class="pillar-title">Integrity of Clarity</h3>
           <p class="pillar-body">
-            Every precious gemstone and diamond is independently authenticated and graded by premier international gemological institutions including the Gemological Institute of America (GIA), International Gemological Institute (IGI), and GRS Swisslab.
+            Every precious gemstone is independently authenticated and graded by premier international gemological institutions including IIGJ LAB, GIA, and IGI with verifiable certificate reports.
           </p>
         </div>
 
@@ -60,55 +65,59 @@
           <div class="pillar-number">04</div>
           <h3 class="pillar-title">Crafted Beyond Conviction</h3>
           <p class="pillar-body">
-            True luxury is not manufactured; it is sculpted. Backed by over 30 years of master lapidary cutting, faceting, and bespoke goldsmithing since 1994, our master artisans dedicate between 30 to 60 meticulous hours hand-crafting each piece.
+            Master lapidary cutting, bespoke calibration, and four decades of Jaipur heritage ensure micrometer precision and optimal light performance for bespoke luxury jewelry settings.
           </p>
         </div>
+
       </div>
 
+      <!-- Guarantees & Certifications Strip -->
       <div class="promise-guarantees-panel">
         <div class="guarantee-item">
+          <div class="guarantee-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
           <h4>Lifetime Warranty</h4>
           <p>Complimentary annual prong inspection, prong re-tipping, and rhodium polishing.</p>
         </div>
+
         <div class="guarantee-item">
+          <div class="guarantee-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+          </div>
           <h4>Free Insured Shipping</h4>
           <p>Discreet luxury delivery via armored express courier, fully insured until signed in hand.</p>
         </div>
+
         <div class="guarantee-item">
+          <div class="guarantee-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 6v6l4 2"></path>
+            </svg>
+          </div>
           <h4>30-Day Bespoke Returns</h4>
           <p>Peace of mind guarantee. Exchange or return your piece with 100% full refund.</p>
         </div>
       </div>
 
+      <!-- Call to Action Row -->
       <div class="promise-cta-container">
-        <a href="/#diamond-shape-section" class="hero-cta-btn dark-cta">BROWSE HEIRLOOM GEMSTONES</a>
+        <a href="#diamond-shape-section" class="hero-cta-btn dark-cta" onclick="return window.showPageView ? window.showPageView('shapes', event) : true;">BROWSE HEIRLOOM GEMSTONES</a>
+        <button type="button" class="hero-cta-btn outline-cta" onclick="const p = document.getElementById('conciergePanel'); if (p) p.classList.add('open');">CONSULT A GEMSTONE SPECIALIST</button>
       </div>
+
     </div>
   </section>
 </div>
 
 {% schema %}
 {
-  "name": "Swastic Promise Content",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow Text",
-      "default": "OUR TIMELESS COMMITMENT"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "The SWASTIC EXPORTS Promise"
-    },
-    {
-      "type": "textarea",
-      "id": "lead",
-      "label": "Lead Statement",
-      "default": "A promise that what you hold is not just rare and beautiful — but rarest, clearest, brightest version of what nature intended."
-    }
-  ]
+  "name": "Promise Content",
+  "settings": []
 }
 {% endschema %}

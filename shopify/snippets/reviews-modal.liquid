@@ -1,0 +1,710 @@
+  <!-- Customer Reviews Interactive Modal (Exact match for Image 2) -->
+  <div class="customer-reviews-modal-backdrop" id="customerReviewsModalBackdrop">
+    <div class="customer-reviews-modal-card">
+      <div class="reviews-modal-header">
+        <h2>Customer Reviews</h2>
+        <span class="reviews-breadcrumb-text">Home / Reviews</span>
+        <button class="reviews-modal-close-btn" id="closeReviewsModalBtn" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="customer-reviews-layout">
+        <!-- Left: Overall Rating & Breakdown -->
+        <aside class="customer-reviews-sidebar">
+          <div class="sidebar-score-num">4.9</div>
+          <div class="sidebar-stars">
+            <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <div class="sidebar-count-label">1,966 reviews</div>
+
+          <div class="rating-breakdown-list">
+            <!-- 5 Stars -->
+            <div class="breakdown-row">
+              <span class="star-level">5</span>
+              <div class="bar-track-wrap">
+                <div class="bar-track-fill" style="width: 95.4%;"></div>
+              </div>
+              <span class="count-val">1876</span>
+            </div>
+
+            <!-- 4 Stars -->
+            <div class="breakdown-row">
+              <span class="star-level">4</span>
+              <div class="bar-track-wrap">
+                <div class="bar-track-fill" style="width: 3.6%;"></div>
+              </div>
+              <span class="count-val">70</span>
+            </div>
+
+            <!-- 3 Stars -->
+            <div class="breakdown-row">
+              <span class="star-level">3</span>
+              <div class="bar-track-wrap">
+                <div class="bar-track-fill" style="width: 0.7%;"></div>
+              </div>
+              <span class="count-val">14</span>
+            </div>
+
+            <!-- 2 Stars -->
+            <div class="breakdown-row">
+              <span class="star-level">2</span>
+              <div class="bar-track-wrap">
+                <div class="bar-track-fill" style="width: 0.2%;"></div>
+              </div>
+              <span class="count-val">3</span>
+            </div>
+
+            <!-- 1 Star -->
+            <div class="breakdown-row">
+              <span class="star-level">1</span>
+              <div class="bar-track-wrap">
+                <div class="bar-track-fill" style="width: 0.2%;"></div>
+              </div>
+              <span class="count-val">3</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right: Reviews List -->
+        <main class="customer-reviews-feed" id="customerReviewsFeed">
+          <!-- Category Filter Bar -->
+          <div class="reviews-filter-bar" id="reviewsFilterBar">
+            <button type="button" class="review-filter-chip active" data-filter="all">All Reviews (1,966)</button>
+            <button type="button" class="review-filter-chip" data-filter="emeralds">Zambian Emeralds (620)</button>
+            <button type="button" class="review-filter-chip" data-filter="sapphires">Ceylon Sapphires (540)</button>
+            <button type="button" class="review-filter-chip" data-filter="rubies">Burmese Rubies (310)</button>
+            <button type="button" class="review-filter-chip" data-filter="fancy">Precious Gems (496)</button>
+          </div>
+
+          <!-- Review 1: Evelyne Baum -->
+          <article class="review-item-row" data-category="fancy">
+            <div class="review-avatar-circle">EB</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Evelyne Baum</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Sep 23, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The clarity and natural vivid olive tone on this untreated peridot is exceptional! Swastic Exports provided rapid express dispatch and the GIA laboratory certification was fully authenticated. Outstanding natural stones!</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-cyan-cushion.jpg' | asset_url }}" alt="Lime Green Natural Peridot" class="purchased-thumb">
+                <span class="purchased-title">Lime Green Natural Peridot 4.44ct - Untreated Cushion</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 2: Katie Reynolds -->
+          <article class="review-item-row" data-category="sapphires">
+            <div class="review-avatar-circle">KR</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Katie Reynolds</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Aug 15, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Wow, this Royal Blue Ceylon sapphire is breathtaking in person! The optical brilliance under sunlight reveals velvety cornflower depths with zero heat treatment. Swastic Exports' gemology team was very patient and helpful throughout selection. Thanks so much!</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Natural Ceylon Royal Blue Sapphire" class="purchased-thumb">
+                <span class="purchased-title">3.15 CT Natural Ceylon Royal Blue Sapphire • Oval Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 3: Dr. Jennifer Adams -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">JA</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Dr. Jennifer Adams</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jul 19, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Pure perfection. I purchased a 2.80ct natural Zambian emerald for an heirloom bespoke engagement ring. The natural garden inclusions ('jardin') are subtle and clear proof of authentic earth-mined origin. Swastic Exports is our family's trusted gemstone house.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-emerald-hd.jpg' | asset_url }}" alt="Zambian Natural Emerald" class="purchased-thumb">
+                <span class="purchased-title">2.80 CT Zambian Natural Emerald • Octagon Step Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 4: Michael Thorne -->
+          <article class="review-item-row" data-category="rubies">
+            <div class="review-avatar-circle">MT</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Michael Thorne</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jun 28, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Unbelievable pigeon blood saturation! The ruby arrived with complete origin documentation and laboratory certification. Verified laser inscription and natural red fluorescence with my master appraiser. Swastic Exports exceeded expectations.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-red-ruby.jpg' | asset_url }}" alt="Natural Burmese Pigeon Blood Ruby" class="purchased-thumb">
+                <span class="purchased-title">2.45 CT Natural Burmese Pigeon Blood Ruby • Certified</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 5: Aarav Singhania -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">AS</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Aarav Singhania</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jun 12, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Exceptional cutting and unenhanced vivid green luster. When ordering rare natural gemstones online, trust is everything—Swastic Exports provides full video inspections, GIA reports, and prompt insured delivery to Mumbai.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-oval-hd.jpg' | asset_url }}" alt="Vivid Green Zambian Emerald" class="purchased-thumb">
+                <span class="purchased-title">4.10 CT Vivid Green Zambian Emerald • Oval Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 6: Claire Dubois -->
+          <article class="review-item-row" data-category="fancy">
+            <div class="review-avatar-circle">CD</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Claire Dubois</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• May 30, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The delicate blush hue of this natural unheated pink sapphire catches the light magnificently. Swastic Exports crafted a custom platinum bezel setting that accentuates the stone’s brilliance. Flawless craftsmanship.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-pink-sapphire.jpg' | asset_url }}" alt="Natural Pink Sapphire" class="purchased-thumb">
+                <span class="purchased-title">2.20 CT Natural Pink Sapphire • Cushion Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 7: Marcus Vance -->
+          <article class="review-item-row" data-category="sapphires">
+            <div class="review-avatar-circle">MV</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Marcus Vance</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• May 14, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Sourced a matching pair of Ceylon cornflower sapphires for bespoke earrings. Color matching in natural unheated gemstones is famously difficult, but Swastic Exports matched hue, tone, and luster down to the millimeter.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Matching Pair Ceylon Sapphires" class="purchased-thumb">
+                <span class="purchased-title">Matching Pair 3.80 CT Ceylon Sapphires • Unheated</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 8: Priyah Venkatesh -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">PV</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Priyah Venkatesh</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Apr 28, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Stunning heart-shaped natural emerald with rich crystalline clarity. You can immediately feel the weight, authentic earth-mined warmth, and royal luster. Swastic Exports represents true natural luxury.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-heart-hd.jpg' | asset_url }}" alt="Natural Heart Cut Emerald" class="purchased-thumb">
+                <span class="purchased-title">1.95 CT Natural Heart Cut Emerald • Zambian</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 9: Alexander Wright -->
+          <article class="review-item-row" data-category="rubies">
+            <div class="review-avatar-circle">AW</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Alexander Wright</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Apr 09, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Finding genuine unheated natural rubies with vibrant red pleochroism is notoriously difficult. Swastic Exports offered complete transparency on origin and mine-to-market traceability. Arrived securely in London within 4 days.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-red-ruby.jpg' | asset_url }}" alt="Natural Cushion Cut Ruby" class="purchased-thumb">
+                <span class="purchased-title">3.05 CT Natural Cushion Cut Ruby • Unheated</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 10: Elena Rostova -->
+          <article class="review-item-row" data-category="fancy">
+            <div class="review-avatar-circle">ER</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Elena Rostova</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Mar 22, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The oceanic crystalline transparency of this natural Santa Maria aquamarine is mesmerizing. Swastic Exports' master lapidaries preserve maximum carat weight while unleashing breathtaking fire and scintillation.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Natural Aquamarine" class="purchased-thumb">
+                <span class="purchased-title">5.60 CT Natural Aquamarine • Emerald Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 11: Devendra Mehta -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">DM</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Devendra Mehta</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Mar 11, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">We have sourced natural emeralds for our jewelry retail business for over 15 years. Swastic Exports consistently delivers the finest deep green Zambian rough and precision-faceted stones at direct-mine wholesale transparency.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-round-hd.jpg' | asset_url }}" alt="Zambian Emerald Round Brilliant" class="purchased-thumb">
+                <span class="purchased-title">3.50 CT Zambian Emerald • Round Brilliant</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 12: Sophia Lindqvist -->
+          <article class="review-item-row" data-category="sapphires">
+            <div class="review-avatar-circle">SL</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Sophia Lindqvist</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Feb 26, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Such a mesmerizing velvety blue stone. Tested by our Swiss gemological laboratory and confirmed 100% natural, unheated with zero glass filling or enhancements. Swastic Exports is synonymous with genuine integrity.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Royal Blue Natural Sapphire" class="purchased-thumb">
+                <span class="purchased-title">2.90 CT Royal Blue Natural Sapphire • Oval Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 13: Kavita Ramanathan -->
+          <article class="review-item-row" data-category="fancy">
+            <div class="review-avatar-circle">KR</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Kavita Ramanathan</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Feb 14, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Bought for our 25th anniversary heirloom necklace. The fire and scintillation of this natural certified gemstone is beyond words. Swastic Exports provides an experience worthy of royal gemstone collectors.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-cyan-cushion.jpg' | asset_url }}" alt="Natural Certified Gemstone" class="purchased-thumb">
+                <span class="purchased-title">4.25 CT Natural Certified Gemstone • Cushion Brilliant</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 14: David Sterling -->
+          <article class="review-item-row" data-category="rubies">
+            <div class="review-avatar-circle">DS</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">David Sterling</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jan 30, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The deep scarlet red with fiery crimson flashes in daylight is breathtaking. Swastic Exports provided an HD 360-degree microscope inspection before shipping to New York. 5-star service!</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-red-ruby.jpg' | asset_url }}" alt="Natural Oval Pigeon Blood Ruby" class="purchased-thumb">
+                <span class="purchased-title">2.10 CT Natural Oval Pigeon Blood Ruby • GIA Dossier</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 15: Ananya Deshmukh -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">AD</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Ananya Deshmukh</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jan 18, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The classic octagonal step cut Zambian emerald is utterly magnificent. Glowing vivid saturation with royal heritage presence. Swastic Exports' certificate dossier is comprehensive and trustworthy.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-emerald-hd.jpg' | asset_url }}" alt="Royal Zambian Emerald" class="purchased-thumb">
+                <span class="purchased-title">3.12 CT Royal Zambian Emerald • Step Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 16: Tariq Al-Mansoor -->
+          <article class="review-item-row" data-category="sapphires">
+            <div class="review-avatar-circle">TM</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Tariq Al-Mansoor</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Jan 05, 2026</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Ordered directly to Dubai. The untreated Ceylon blue sapphire is top tier investment grade. The natural silk inclusions reflect genuine provenance. Swastic Exports is world class.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Natural Cushion Sapphire" class="purchased-thumb">
+                <span class="purchased-title">4.80 CT Natural Cushion Sapphire • Untreated Ceylon</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 17: Isabella Rossi -->
+          <article class="review-item-row" data-category="fancy">
+            <div class="review-avatar-circle">IR</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Isabella Rossi</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Dec 21, 2025</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">The vibrant hot pink luminescence of this natural tourmaline gemstone stopped everyone in their tracks at our gala. Natural earth colors simply cannot be replicated by synthetics.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-pink-sapphire.jpg' | asset_url }}" alt="Natural Pink Gemstone" class="purchased-thumb">
+                <span class="purchased-title">3.40 CT Natural Pink Tourmaline / Sapphire</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 18: Vikramaditya Rathore -->
+          <article class="review-item-row" data-category="emeralds">
+            <div class="review-avatar-circle">VR</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Vikramaditya Rathore</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Dec 08, 2025</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">A collector's treasure. 5.20 carats of unadorned Zambian natural emerald with deep jungle green saturation. Swastic Exports' lineage and direct mine sourcing gives complete confidence.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'gem-emerald-emerald-hd.jpg' | asset_url }}" alt="Collector's Zambian Emerald" class="purchased-thumb">
+                <span class="purchased-title">5.20 CT Collector's Zambian Emerald • Heritage Grade</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 19: Charlotte Bennett -->
+          <article class="review-item-row" data-category="rubies">
+            <div class="review-avatar-circle">CB</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Charlotte Bennett</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Nov 24, 2025</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Rich crimson hue with extraordinary clarity. The custom ring setting Swastic Exports paired with this ruby is truly an heirloom to cherish for generations.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-red-ruby.jpg' | asset_url }}" alt="Natural Burmese Ruby" class="purchased-thumb">
+                <span class="purchased-title">2.75 CT Natural Burmese Ruby • Cushion Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 20: Hiroshi Tanaka -->
+          <article class="review-item-row" data-category="sapphires">
+            <div class="review-avatar-circle">HT</div>
+            <div class="review-item-content">
+              <div class="review-item-meta">
+                <span class="review-buyer-name">Hiroshi Tanaka</span>
+                <span class="review-verified-badge">Verified buyer</span>
+                <span class="review-item-date">• Nov 10, 2025</span>
+              </div>
+              <div class="review-item-stars">
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="review-item-text">Received in Tokyo in perfect condition. The velvety royal blue hue and precision optical symmetry exceeded my expectations. Swastic Exports is our premier supplier for natural gemstones.</p>
+              <div class="review-purchased-badge">
+                <img src="{{ 'product-gem-blue-aquamarine.jpg' | asset_url }}" alt="Natural Untreated Blue Sapphire" class="purchased-thumb">
+                <span class="purchased-title">3.65 CT Natural Untreated Blue Sapphire • Precision Cut</span>
+                <div class="purchased-stars">
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Interactive Load More Reviews Block -->
+          <div class="reviews-load-more-row">
+            <button type="button" class="reviews-load-more-btn" id="reviewsLoadMoreBtn">LOAD MORE REVIEWS</button>
+            <p class="reviews-counter-note" id="reviewsCounterNote" style="margin-top: 10px; font-size: 13px; color: #64748b;">Showing 20 of 1,966 verified client reviews</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>

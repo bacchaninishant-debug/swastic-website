@@ -8,6 +8,114 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Shopify Asset URL Resolver Helper
+  const getThemeAssetUrl = (path) => {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('//')) return path;
+    const filename = path.replace(/^(images|videos|assets)\//, '');
+    if (window.ShopifyTheme && window.ShopifyTheme.assetUrlBase) {
+      return window.ShopifyTheme.assetUrlBase + filename;
+    }
+    return path;
+  };
+
+  // Format money helper
+  const formatMoney = (cents) => {
+    if (typeof cents !== 'number') return '$' + cents;
+    return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  // Real Shopify Ajax Cart API Helper
+  window.fetchShopifyCart = async () => {
+    try {
+      const res = await fetch('/cart.js');
+      if (!res.ok) return;
+      const cartData = await res.json();
+      
+      const count = cartData.item_count || 0;
+      if (count === 0 && typeof cart !== 'undefined' && cart.length > 0) {
+        updateCartUI();
+        return;
+      }
+
+      if (cartBadgeCount) {
+        cartBadgeCount.textContent = count;
+        cartBadgeCount.classList.toggle('has-items', count > 0);
+      }
+      if (drawerCount) drawerCount.textContent = count;
+
+      if (count === 0) {
+        if (emptyCartView) emptyCartView.style.display = 'block';
+        if (cartItemsList) cartItemsList.style.display = 'none';
+        if (cartDrawerFooter) cartDrawerFooter.style.display = 'none';
+      } else {
+        if (emptyCartView) emptyCartView.style.display = 'none';
+        if (cartItemsList) cartItemsList.style.display = 'block';
+        if (cartDrawerFooter) cartDrawerFooter.style.display = 'block';
+
+        if (cartItemsList) {
+          cartItemsList.innerHTML = cartData.items.map(item => `
+            <div class="cart-item-row" data-line-key="${item.key}">
+              <img src="${item.featured_image ? item.featured_image.url : (item.image || getThemeAssetUrl('swastic-gems-hero.png'))}" alt="${item.title}" class="cart-item-img">
+              <div class="cart-item-details">
+                <div class="cart-item-title">${item.product_title || item.title}</div>
+                ${item.variant_title && !item.variant_title.includes('Default') ? `<div class="cart-item-meta">${item.variant_title}</div>` : ''}
+                <div class="cart-item-price-row">
+                  <span class="cart-item-price">${formatMoney(item.final_line_price)}</span>
+                  ${item.quantity > 1 ? `<span class="cart-item-unit-note">(${formatMoney(item.final_price)} each)</span>` : ''}
+                </div>
+                <div class="cart-qty-wrapper">
+                  <div class="cart-qty-btn-group">
+                    <button type="button" class="cart-qty-btn" onclick="updateShopifyCartQty('${item.key}', ${item.quantity - 1})" aria-label="Decrease quantity">−</button>
+                    <span class="cart-qty-val">${item.quantity}</span>
+                    <button type="button" class="cart-qty-btn" onclick="updateShopifyCartQty('${item.key}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
+                  </div>
+                  <button type="button" class="cart-item-remove-link" onclick="updateShopifyCartQty('${item.key}', 0)">Remove</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        if (cartSubtotalValue) {
+          cartSubtotalValue.textContent = formatMoney(cartData.total_price);
+        }
+      }
+    } catch(e) {
+      console.log('Shopify cart sync note:', e);
+    }
+  };
+
+  window.updateShopifyCartQty = async (key, qty) => {
+    try {
+      await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: Math.max(0, parseInt(qty)) })
+      });
+      await window.fetchShopifyCart();
+    } catch(e) {
+      console.error('Cart change error:', e);
+    }
+  };
+
+  window.addShopifyVariantToBag = async (variantId, quantity = 1, properties = {}) => {
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: quantity, properties: properties })
+      });
+      if (res.ok) {
+        await window.fetchShopifyCart();
+        openCart();
+        return true;
+      }
+    } catch(e) {
+      console.log('Shopify variant add fallback:', e);
+    }
+    return false;
+  };
   // 1. Sticky Header Color Transition
   const siteHeader = document.getElementById('siteHeader');
   
@@ -37,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$3,850',
       priceNum: 3850,
       fullTitle: 'SWASTIC EXPORTS Heart Cut Certified Gemstone',
-      img: 'images/diamond-blue-heart.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-heart.jpg')
     },
     pear: {
       title: 'PEAR-CUT GIA CERTIFIED GEMSTONE',
@@ -45,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$4,100',
       priceNum: 4100,
       fullTitle: 'SWASTIC EXPORTS Pear Cut Certified Gemstone',
-      img: 'images/diamond-blue-pear.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-pear.jpg')
     },
     princess: {
       title: 'PRINCESS-CUT GIA CERTIFIED GEMSTONE',
@@ -53,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$3,950',
       priceNum: 3950,
       fullTitle: 'SWASTIC EXPORTS Princess Cut Certified Gemstone',
-      img: 'images/diamond-blue-princess.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-princess.jpg')
     },
     emerald: {
       title: 'EMERALD-CUT GIA CERTIFIED GEMSTONE',
@@ -61,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$4,400',
       priceNum: 4400,
       fullTitle: 'SWASTIC EXPORTS Emerald Cut Certified Gemstone',
-      img: 'images/diamond-blue-emerald.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-emerald.jpg')
     },
     round: {
       title: 'ROUND-CUT GIA CERTIFIED GEMSTONE',
@@ -69,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$4,250',
       priceNum: 4250,
       fullTitle: 'SWASTIC EXPORTS Round Brilliant Certified Gemstone',
-      img: 'images/diamond-blue-round.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-round.jpg')
     },
     oval: {
       title: 'OVAL-CUT GIA CERTIFIED GEMSTONE',
@@ -77,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$4,050',
       priceNum: 4050,
       fullTitle: 'SWASTIC EXPORTS Oval Cut Certified Gemstone',
-      img: 'images/diamond-blue-oval.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-oval.jpg')
     },
     cushion: {
       title: 'CUSHION-CUT GIA CERTIFIED GEMSTONE',
@@ -85,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$3,980',
       priceNum: 3980,
       fullTitle: 'SWASTIC EXPORTS Cushion Cut Certified Gemstone',
-      img: 'images/diamond-blue-cushion.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-cushion.jpg')
     },
     marquise: {
       title: 'MARQUISE-CUT GIA CERTIFIED GEMSTONE',
@@ -93,46 +201,56 @@ document.addEventListener('DOMContentLoaded', () => {
       price: '$4,180',
       priceNum: 4180,
       fullTitle: 'SWASTIC EXPORTS Marquise Cut Certified Gemstone',
-      img: 'images/diamond-blue-marquise.jpg'
+      img: getThemeAssetUrl('images/diamond-blue-marquise.jpg')
     }
   };
 
   let currentSelectedShape = 'heart';
 
-  shapeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      shapeButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      
-      const shape = btn.dataset.shape;
-      const targetImgSrc = btn.dataset.img;
-      const info = diamondData[shape];
+  // Delegated shape button listener (works on homepage, dynamic view, and dynamically loaded elements)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.diamond-shape-btn');
+    if (!btn) return;
+    e.preventDefault();
 
-      currentSelectedShape = shape;
+    const shape = btn.dataset.shape;
+    const targetImgSrc = btn.dataset.img;
+    const info = diamondData[shape];
+    if (!info) return;
 
-      if (stageFavBtn) {
-        stageFavBtn.classList.toggle('favorited', isItemInFavorites(`shape-${shape}`));
-      }
+    currentSelectedShape = shape;
 
-      // Smooth transition animation
-      activeRingImg.classList.add('switching');
-      
+    // Highlight active buttons
+    document.querySelectorAll('.diamond-shape-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.shape === shape);
+    });
+
+    // Update all stage preview images across homepage and dynamic views
+    document.querySelectorAll('.active-ring-preview, #activeRingImage, #shapesViewRingImage').forEach(img => {
+      img.classList.add('switching');
       setTimeout(() => {
-        activeRingImg.src = targetImgSrc;
-        activeRingImg.alt = info.fullTitle;
-        currentCutBadge.textContent = info.title;
-        currentCaratBadge.textContent = info.spec;
-        
-        activeRingImg.onload = () => {
-          activeRingImg.classList.remove('switching');
-        };
-        setTimeout(() => activeRingImg.classList.remove('switching'), 150);
+        img.src = getThemeAssetUrl(targetImgSrc);
+        img.alt = info.fullTitle;
+        img.onload = () => img.classList.remove('switching');
+        setTimeout(() => img.classList.remove('switching'), 150);
       }, 150);
+    });
 
-      // Sync the top Shop by Shape row
-      document.querySelectorAll('.shape-select-item').forEach(el => {
-        el.classList.toggle('active', el.dataset.shape === shape);
-      });
+    document.querySelectorAll('#currentCutBadge, #shapesViewCutBadge, .diamond-spec-pill').forEach(badge => {
+      badge.textContent = info.title;
+    });
+
+    document.querySelectorAll('#currentCaratBadge, #shapesViewCaratBadge, .diamond-spec-sub').forEach(badge => {
+      badge.textContent = info.spec;
+    });
+
+    document.querySelectorAll('#stageFavBtn, #shapesViewStageFavBtn, .stage-favorite-btn').forEach(fav => {
+      fav.classList.toggle('favorited', isItemInFavorites(`shape-${shape}`));
+    });
+
+    // Sync the top Shop by Shape row if present
+    document.querySelectorAll('.shape-select-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.shape === shape);
     });
   });
 
@@ -158,6 +276,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Favorites / Wishlist Management
   let favorites = [];
+  try {
+    const savedFav = localStorage.getItem('swastic_gem_wishlist');
+    if (savedFav) favorites = JSON.parse(savedFav);
+  } catch(e) {}
+
+  const saveWishlist = () => {
+    try {
+      localStorage.setItem('swastic_gem_wishlist', JSON.stringify(favorites));
+    } catch(e) {}
+  };
+
   const wishlistBtn = document.getElementById('wishlistBtn');
   const closeWishlistBtn = document.getElementById('closeWishlistBtn');
   const wishlistDrawer = document.getElementById('wishlistDrawer');
@@ -168,88 +297,121 @@ document.addEventListener('DOMContentLoaded', () => {
   const wishlistItemsList = document.getElementById('wishlistItemsList');
 
   function isItemInFavorites(id) {
-    return favorites.some(item => item.id === id);
+    return favorites.some(item => String(item.id) === String(id));
   }
 
   window.toggleProductFavorite = (id, title, spec, price, img, e) => {
-    if (e) {
+    if (e && e.stopPropagation) {
       e.stopPropagation();
-      const heartBtn = e.currentTarget;
-      heartBtn.classList.toggle('active');
     }
 
-    const index = favorites.findIndex(item => item.id === id);
+    const index = favorites.findIndex(item => String(item.id) === String(id));
     if (index > -1) {
       favorites.splice(index, 1);
     } else {
       favorites.push({ id, title, spec, price, img });
     }
 
+    saveWishlist();
     updateWishlistUI();
   };
 
   function updateWishlistUI() {
     const count = favorites.length;
-    if (wishlistBadgeCount) {
-      wishlistBadgeCount.textContent = count;
-      wishlistBadgeCount.classList.toggle('has-items', count > 0);
+    const badge = document.getElementById('wishlistBadgeCount') || wishlistBadgeCount;
+    const drawerCounter = document.getElementById('wishlistDrawerCount') || wishlistDrawerCount;
+    const emptyView = document.getElementById('emptyWishlistView') || emptyWishlistView;
+    const itemsList = document.getElementById('wishlistItemsList') || wishlistItemsList;
+
+    if (badge) {
+      badge.textContent = count;
+      badge.classList.toggle('has-items', count > 0);
     }
-    if (wishlistDrawerCount) wishlistDrawerCount.textContent = count;
+    if (drawerCounter) drawerCounter.textContent = count;
 
-    if (stageFavBtn) {
-      stageFavBtn.classList.toggle('favorited', isItemInFavorites(`shape-${currentSelectedShape}`));
+    if (typeof stageFavBtn !== 'undefined' && stageFavBtn) {
+      stageFavBtn.classList.toggle('favorited', isItemInFavorites(`shape-${typeof currentSelectedShape !== 'undefined' ? currentSelectedShape : 'emerald'}`));
     }
 
-    if (count === 0) {
-      emptyWishlistView.style.display = 'block';
-      wishlistItemsList.style.display = 'none';
-    } else {
-      emptyWishlistView.style.display = 'none';
-      wishlistItemsList.style.display = 'block';
+    // Sync all product cards heart buttons on the page
+    document.querySelectorAll('.product-fav-btn').forEach(btn => {
+      const onclickAttr = btn.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/toggleProductFav\([^,]+,\s*'([^']+)'/);
+      if (match && match[1]) {
+        btn.classList.toggle('favorited', isItemInFavorites(match[1]));
+      }
+    });
 
-      wishlistItemsList.innerHTML = favorites.map((item, idx) => `
-        <div class="cart-item-row">
-          <img src="${item.img}" alt="${item.title}" class="cart-item-img">
-          <div class="cart-item-details">
-            <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-meta">${item.spec}</div>
-            <div class="cart-item-price">${item.price}</div>
-            <div style="display:flex; gap:12px; margin-top:6px;">
-              <button class="hero-cta-btn dark-cta" style="padding:6px 12px !important; font-size:10px !important;" onclick="moveFavoriteToBag(${idx})">MOVE TO BAG</button>
-              <div class="cart-item-remove" onclick="removeFavoriteItem(${idx})">Remove</div>
+    if (emptyView && itemsList) {
+      if (count === 0) {
+        emptyView.style.display = 'block';
+        itemsList.style.display = 'none';
+      } else {
+        emptyView.style.display = 'none';
+        itemsList.style.display = 'block';
+
+        itemsList.innerHTML = favorites.map((item, idx) => `
+          <div class="cart-item-row" data-fav-id="${item.id}">
+            <img src="${getThemeAssetUrl(item.img)}" alt="${item.title}" class="cart-item-img">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-meta">${item.spec}</div>
+              <div class="cart-item-price-row">
+                <span class="cart-item-price">${item.price}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+                <button type="button" class="hero-cta-btn dark-cta" style="padding:7px 14px !important; font-size:11px !important; letter-spacing:0.04em; border-radius:3px;" onclick="moveFavoriteToBag(${idx})">MOVE TO BAG</button>
+                <button type="button" class="cart-item-remove-link" onclick="removeFavoriteItem(${idx})">Remove</button>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
     }
   }
 
   window.removeFavoriteItem = (idx) => {
     favorites.splice(idx, 1);
+    saveWishlist();
     updateWishlistUI();
   };
 
   window.moveFavoriteToBag = (idx) => {
     const fav = favorites[idx];
-    const priceNum = parseInt(fav.price.replace(/[^0-9]/g, '')) || 2950;
+    if (!fav) return;
+    const priceNum = typeof fav.price === 'number' ? fav.price : (parseInt(String(fav.price).replace(/[^0-9]/g, '')) || 2950);
     quickAddProduct(fav.id, fav.title, fav.spec, priceNum, fav.img);
     removeFavoriteItem(idx);
     closeWishlist();
   };
 
   const openWishlist = () => {
-    wishlistDrawer.classList.add('active');
-    wishlistBackdrop.classList.add('active');
+    updateWishlistUI();
+    const drawer = document.getElementById('wishlistDrawer') || wishlistDrawer;
+    const backdrop = document.getElementById('wishlistBackdrop') || wishlistBackdrop;
+    if (drawer) drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
   };
 
   const closeWishlist = () => {
-    wishlistDrawer.classList.remove('active');
-    wishlistBackdrop.classList.remove('active');
+    const drawer = document.getElementById('wishlistDrawer') || wishlistDrawer;
+    const backdrop = document.getElementById('wishlistBackdrop') || wishlistBackdrop;
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
   };
 
-  if (wishlistBtn) wishlistBtn.addEventListener('click', openWishlist);
-  if (closeWishlistBtn) closeWishlistBtn.addEventListener('click', closeWishlist);
-  if (wishlistBackdrop) wishlistBackdrop.addEventListener('click', closeWishlist);
+  window.openWishlist = openWishlist;
+  window.closeWishlist = closeWishlist;
+
+  const wBtn = document.getElementById('wishlistBtn');
+  const closeWBtn = document.getElementById('closeWishlistBtn');
+  const wBackdrop = document.getElementById('wishlistBackdrop');
+  if (wBtn) wBtn.addEventListener('click', openWishlist);
+  if (closeWBtn) closeWBtn.addEventListener('click', closeWishlist);
+  if (wBackdrop) wBackdrop.addEventListener('click', closeWishlist);
+
+  // Sync favorites on init
+  updateWishlistUI();
 
   // 4. Shopping Bag Drawer State
   const cartBtn = document.getElementById('cartBtn');
@@ -278,68 +440,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateCartUI = () => {
     const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-    if (cartBadgeCount) {
-      cartBadgeCount.textContent = totalItems;
-      cartBadgeCount.classList.toggle('has-items', totalItems > 0);
+    const badge = document.getElementById('cartBadgeCount') || cartBadgeCount;
+    const dCount = document.getElementById('drawerCount') || drawerCount;
+    const emptyView = document.getElementById('emptyCartView') || emptyCartView;
+    const itemsList = document.getElementById('cartItemsList') || cartItemsList;
+    const footer = document.getElementById('cartDrawerFooter') || cartDrawerFooter;
+    const subtotalEl = document.getElementById('cartSubtotalValue') || cartSubtotalValue;
+
+    if (badge) {
+      badge.textContent = totalItems;
+      badge.classList.toggle('has-items', totalItems > 0);
     }
-    if (drawerCount) drawerCount.textContent = totalItems;
+    if (dCount) dCount.textContent = totalItems;
 
     if (cart.length === 0) {
-      if (emptyCartView) emptyCartView.style.display = 'block';
-      if (cartItemsList) cartItemsList.style.display = 'none';
-      if (cartDrawerFooter) cartDrawerFooter.style.display = 'none';
+      if (emptyView) emptyView.style.display = 'block';
+      if (itemsList) itemsList.style.display = 'none';
+      if (footer) footer.style.display = 'none';
     } else {
-      if (emptyCartView) emptyCartView.style.display = 'none';
-      if (cartItemsList) cartItemsList.style.display = 'block';
-      if (cartDrawerFooter) cartDrawerFooter.style.display = 'block';
+      if (emptyView) emptyView.style.display = 'none';
+      if (itemsList) itemsList.style.display = 'block';
+      if (footer) footer.style.display = 'block';
 
       let subtotal = 0;
-      cartItemsList.innerHTML = cart.map((item, idx) => {
-        const qty = item.quantity || 1;
-        const itemTotal = item.priceNum * qty;
-        subtotal += itemTotal;
-        return `
-          <div class="cart-item-row" data-id="${item.id}">
-            <img src="${item.img}" alt="${item.title}" class="cart-item-img">
-            <div class="cart-item-details">
-              <div class="cart-item-title">${item.title}</div>
-              <div class="cart-item-meta">${item.spec}</div>
-              <div class="cart-item-price-row">
-                <span class="cart-item-price">$${itemTotal.toLocaleString()}</span>
-                ${qty > 1 ? `<span class="cart-item-unit-note">($${item.priceNum.toLocaleString()} each)</span>` : ''}
-              </div>
-              <div class="cart-qty-wrapper">
-                <div class="cart-qty-btn-group">
-                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)" aria-label="Decrease quantity" title="Decrease quantity">−</button>
-                  <span class="cart-qty-val">${qty}</span>
-                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)" aria-label="Increase quantity" title="Increase quantity">+</button>
+      if (itemsList) {
+        itemsList.innerHTML = cart.map((item, idx) => {
+          const qty = item.quantity || 1;
+          const numPrice = typeof item.priceNum === 'number' ? item.priceNum : (parseInt(String(item.priceNum).replace(/[^0-9]/g, '')) || 2950);
+          const itemTotal = numPrice * qty;
+          subtotal += itemTotal;
+          return `
+            <div class="cart-item-row" data-id="${item.id}">
+              <img src="${getThemeAssetUrl(item.img)}" alt="${item.title}" class="cart-item-img">
+              <div class="cart-item-details">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-meta">${item.spec}</div>
+                <div class="cart-item-price-row">
+                  <span class="cart-item-price">$${itemTotal.toLocaleString()}</span>
+                  ${qty > 1 ? `<span class="cart-item-unit-note">($${numPrice.toLocaleString()} each)</span>` : ''}
                 </div>
-                <button type="button" class="cart-item-remove-link" onclick="removeCartItem(${idx})">Remove</button>
+                <div class="cart-qty-wrapper">
+                  <div class="cart-qty-btn-group">
+                    <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)" aria-label="Decrease quantity" title="Decrease quantity">−</button>
+                    <span class="cart-qty-val">${qty}</span>
+                    <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)" aria-label="Increase quantity" title="Increase quantity">+</button>
+                  </div>
+                  <button type="button" class="cart-item-remove-link" onclick="removeCartItem(${idx})">Remove</button>
+                </div>
               </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
 
-      if (cartSubtotalValue) {
-        cartSubtotalValue.textContent = `$${subtotal.toLocaleString()}.00`;
+      if (subtotalEl) {
+        subtotalEl.textContent = `$${subtotal.toLocaleString()}.00`;
       }
     }
   };
 
   const openCart = () => {
-    if (cartDrawer) cartDrawer.classList.add('active');
-    if (cartBackdrop) cartBackdrop.classList.add('active');
+    updateCartUI();
+    const drawer = document.getElementById('cartDrawer') || cartDrawer;
+    const backdrop = document.getElementById('cartBackdrop') || cartBackdrop;
+    if (drawer) drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
   };
 
   const closeCart = () => {
-    if (cartDrawer) cartDrawer.classList.remove('active');
-    if (cartBackdrop) cartBackdrop.classList.remove('active');
+    const drawer = document.getElementById('cartDrawer') || cartDrawer;
+    const backdrop = document.getElementById('cartBackdrop') || cartBackdrop;
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
   };
 
-  if (cartBtn) cartBtn.addEventListener('click', openCart);
-  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
-  if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
+  window.openCart = openCart;
+  window.closeCart = closeCart;
+
+  const cBtn = document.getElementById('cartBtn');
+  const closeCBtn = document.getElementById('closeCartBtn');
+  const cBackdrop = document.getElementById('cartBackdrop');
+  if (cBtn) cBtn.addEventListener('click', openCart);
+  if (closeCBtn) closeCBtn.addEventListener('click', closeCart);
+  if (cBackdrop) cBackdrop.addEventListener('click', closeCart);
 
   // Global Cart Manipulation Methods
   window.changeCartQty = (idx, delta) => {
@@ -367,7 +550,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.quickAddProduct = (id, title, spec, priceNum, img) => {
-    const existingIndex = cart.findIndex(item => item.id === id);
+    const num = typeof priceNum === 'number' ? priceNum : (parseInt(String(priceNum).replace(/[^0-9]/g, '')) || 2950);
+    const existingIndex = cart.findIndex(item => String(item.id) === String(id));
     if (existingIndex > -1) {
       cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
     } else {
@@ -375,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         id,
         title,
         spec,
-        priceNum,
+        priceNum: num,
         img,
         quantity: 1
       });
@@ -430,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
       subtotal += lineTotal;
       return `
         <div class="checkout-item-card">
-          <img src="${item.img}" alt="${item.title}" class="checkout-item-thumb">
+          <img src="${getThemeAssetUrl(item.img)}" alt="${item.title}" class="checkout-item-thumb">
           <div class="checkout-item-info">
             <div class="checkout-item-title">${item.title}</div>
             <div class="checkout-item-spec">${item.spec}</div>
@@ -482,12 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Wire all checkout buttons on the page
-  document.querySelectorAll('.checkout-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openCheckout();
-    });
-  });
+  // Real Shopify Checkout: allow .checkout-btn to proceed to /checkout directly
 
   if (closeCheckoutBtn) closeCheckoutBtn.addEventListener('click', closeCheckout);
   if (checkoutModalBackdrop) {
@@ -642,9 +821,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const customizeRingBtn = document.getElementById('customizeRingBtn');
   if (customizeRingBtn) {
-    customizeRingBtn.addEventListener('click', () => {
-      const info = diamondData[currentSelectedShape];
-      quickAddProduct(`shape-${currentSelectedShape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+    customizeRingBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const activeBtn = document.querySelector('.diamond-shape-btn.active') || document.querySelector('.diamond-shape-btn');
+      const shape = currentSelectedShape || activeBtn?.dataset?.shape || 'heart';
+      const info = (typeof diamondData !== 'undefined' && diamondData[shape]) ? diamondData[shape] : {
+        fullTitle: activeBtn?.dataset?.name ? `SWASTIC EXPORTS ${activeBtn.dataset.name} Certified Gemstone` : 'SWASTIC EXPORTS Heart Cut Certified Gemstone',
+        spec: activeBtn?.dataset?.spec || '2.05 CT • Natural Certified • VVS1 • GIA Certified',
+        priceNum: 3850,
+        img: activeBtn?.dataset?.img || getThemeAssetUrl('images/diamond-blue-heart.jpg')
+      };
+
+      if (typeof window.quickAddProduct === 'function') {
+        window.quickAddProduct(`shape-${shape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+      } else if (typeof window.addProductToBag === 'function') {
+        window.addProductToBag(`shape-${shape}`, info.fullTitle, info.priceNum, info.spec, info.img);
+      }
+      if (typeof window.openCart === 'function') {
+        window.openCart();
+      }
     });
   }
 
@@ -652,35 +847,112 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewSpecsBtn = document.getElementById('viewSpecsBtn');
   const specsModalBackdrop = document.getElementById('specsModalBackdrop');
   const closeSpecsModal = document.getElementById('closeSpecsModal');
+  const closeSpecsModalBottom = document.getElementById('closeSpecsModalBottom');
   const modalShapeTitle = document.getElementById('modalShapeTitle');
   const modalShapeVal = document.getElementById('modalShapeVal');
   const modalAddBagBtn = document.getElementById('modalAddBagBtn');
 
+  function hideSpecsModalDialog() {
+    if (specsModalBackdrop) {
+      specsModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function showSpecsModalDialog() {
+    if (!specsModalBackdrop) return;
+    const shape = currentSelectedShape || 'heart';
+    const info = diamondData && diamondData[shape] ? diamondData[shape] : null;
+
+    if (modalShapeTitle) {
+      if (info && info.title) {
+        modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+        modalShapeTitle.textContent = `${name} SPECIFICATIONS`;
+      }
+    }
+
+    if (modalShapeVal) {
+      if (info && info.spec) {
+        modalShapeVal.textContent = `${shape.charAt(0).toUpperCase() + shape.slice(1)} Cut • ${info.spec}`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified • VVS1';
+        modalShapeVal.textContent = spec;
+      }
+    }
+
+    specsModalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
   if (viewSpecsBtn && specsModalBackdrop) {
-    viewSpecsBtn.addEventListener('click', () => {
-      const info = diamondData[currentSelectedShape];
-      modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
-      modalShapeVal.textContent = `${currentSelectedShape.charAt(0).toUpperCase() + currentSelectedShape.slice(1)} Cut • ${info.spec}`;
-      specsModalBackdrop.classList.add('active');
-    });
+    viewSpecsBtn.addEventListener('click', showSpecsModalDialog);
 
     if (closeSpecsModal) {
-      closeSpecsModal.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-      });
+      closeSpecsModal.addEventListener('click', hideSpecsModalDialog);
+    }
+
+    if (closeSpecsModalBottom) {
+      closeSpecsModalBottom.addEventListener('click', hideSpecsModalDialog);
     }
 
     specsModalBackdrop.addEventListener('click', (e) => {
       if (e.target === specsModalBackdrop) {
-        specsModalBackdrop.classList.remove('active');
+        hideSpecsModalDialog();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && specsModalBackdrop.classList.contains('active')) {
+        hideSpecsModalDialog();
+      }
+    });
+
+    // Delegated click listeners for View Specs and Customize Buttons
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#viewSpecsBtn, #viewSpecsBtnView, .view-specs-trigger')) {
+        e.preventDefault();
+        showSpecsModalDialog();
+      }
+      if (e.target.closest('#customizeRingBtn, #customizeRingBtnView, .customize-ring-btn')) {
+        e.preventDefault();
+        const activeBtn = document.querySelector('.diamond-shape-btn.active') || document.querySelector('.diamond-shape-btn');
+        const shape = currentSelectedShape || activeBtn?.dataset?.shape || 'heart';
+        const info = (typeof diamondData !== 'undefined' && diamondData[shape]) ? diamondData[shape] : {
+          fullTitle: 'SWASTIC EXPORTS Heart Cut Certified Gemstone',
+          spec: '2.05 CT • Natural Certified • VVS1 • GIA Certified',
+          priceNum: 3850,
+          img: getThemeAssetUrl('images/diamond-blue-heart.jpg')
+        };
+        if (typeof addProductToBag === 'function') {
+          addProductToBag(`shape-${shape}`, info.fullTitle, info.priceNum || 3850, info.spec, info.img);
+        }
       }
     });
 
     if (modalAddBagBtn) {
       modalAddBagBtn.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-        const info = diamondData[currentSelectedShape];
-        quickAddProduct(`shape-${currentSelectedShape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        hideSpecsModalDialog();
+        const activeBtn = document.querySelector('.diamond-shape-btn.active') || document.querySelector('.diamond-shape-btn');
+        const shape = currentSelectedShape || activeBtn?.dataset?.shape || 'heart';
+        const info = (typeof diamondData !== 'undefined' && diamondData[shape]) ? diamondData[shape] : {
+          fullTitle: activeBtn?.dataset?.name ? `SWASTIC EXPORTS ${activeBtn.dataset.name} Certified Gemstone` : 'SWASTIC EXPORTS Heart Cut Certified Gemstone',
+          spec: activeBtn?.dataset?.spec || '2.05 CT • Natural Certified • VVS1 • GIA Certified',
+          priceNum: 3850,
+          img: activeBtn?.dataset?.img || getThemeAssetUrl('images/diamond-blue-heart.jpg')
+        };
+
+        if (typeof window.quickAddProduct === 'function') {
+          window.quickAddProduct(`shape-${shape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        } else if (typeof window.addProductToBag === 'function') {
+          window.addProductToBag(`shape-${shape}`, info.fullTitle, info.priceNum, info.spec, info.img);
+        }
+        if (typeof window.openCart === 'function') {
+          window.openCart();
+        }
       });
     }
   }
@@ -739,50 +1011,763 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Search Bar Trigger
-  const searchTrigger = document.getElementById('searchTrigger');
-  if (searchTrigger) {
-    searchTrigger.addEventListener('click', () => {
-      const query = prompt('Search SWASTIC EXPORTS Gemstones & Fine Jewelry (e.g., Solitaire, Eternity, Emerald):');
-      if (query) {
-        alert(`Searching Swastic Exports catalog for "${query}"...`);
+  // ==========================================================================
+  // SWASTIC EXPORTS - LUXURY WHITE SEARCH MODAL & GEMSTONE SUGGESTIONS
+  // ==========================================================================
+  const SWASTIC_SEARCH_CATALOG = [
+    {
+      id: 'gem-emerald',
+      title: '2.60 CT Colombian Emerald Cut Loose Gemstone',
+      price: 3800,
+      priceStr: '$3,800',
+      spec: 'GIA • Vivid Green • VVS • Royal Provenance',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-emerald.png'),
+      category: 'emerald colombian zambian green loose gemstone step cut beryl gia certified'
+    },
+    {
+      id: 'gem-burma-ruby',
+      title: '3.50 CT Natural Burma Pigeon Blood Ruby',
+      price: 6200,
+      priceStr: '$6,200',
+      spec: 'GIA Certified • Untreated • Vivid Pigeon Blood Red',
+      badge: 'RARE COLLECTOR',
+      img: getThemeAssetUrl('images/gem-burma-ruby.jpg'),
+      category: 'ruby burma red loose gemstone cushion gia corundum untreated'
+    },
+    {
+      id: 'gem-blue-sapphire',
+      title: '3.65 CT Ceylon Royal Blue Sapphire Precision Cut',
+      price: 4800,
+      priceStr: '$4,800',
+      spec: 'GIA • Velvety Royal Blue • VVS1 • Precision Cut',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-blue-aquamarine.jpg'),
+      category: 'sapphire blue ceylon royal blue loose gemstone precision cut gia'
+    },
+    {
+      id: 'gem-aquamarine',
+      title: '3.15 CT Santa Maria Aquamarine Cushion Cut',
+      price: 2100,
+      priceStr: '$2,100',
+      spec: 'GIA • Santa Maria Cyan • VVS1 • Radiant Cushion Cut',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-aquamarine.png'),
+      category: 'aquamarine cyan blue cushion cut loose gemstone beryl santa maria gia'
+    },
+    {
+      id: 'gem-goshenite-diamond',
+      title: '2.75 CT Goshenite Brilliant Pure Diamond Gemstone',
+      price: 3200,
+      priceStr: '$3,200',
+      spec: 'GIA • D Color • VVS1 • Triple Excellent Optical Fire',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-goshenite-diamond.png'),
+      category: 'diamond goshenite d color brilliant oval loose gemstone beryl gia'
+    },
+    {
+      id: 'gem-red-beryl',
+      title: '1.90 CT Red Beryl Step Cut Loose Gemstone',
+      price: 4500,
+      priceStr: '$4,500',
+      spec: 'GIA • Vivid Raspberry Red • VVS2 • Rare Utah Bixbite',
+      badge: 'ULTRA RARE',
+      img: getThemeAssetUrl('images/product-gem-red-beryl.png'),
+      category: 'red beryl ruby crimson step cut bixbite rare loose gemstone utah'
+    },
+    {
+      id: 'gem-morganite',
+      title: '3.40 CT Blush Peach Morganite Pear Cut Gemstone',
+      price: 1950,
+      priceStr: '$1,950',
+      spec: 'GIA • Blush Peach Pink • VVS1 • Heirloom Teardrop',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-morganite.png'),
+      category: 'morganite pink peach pear teardrop loose gemstone beryl blush'
+    },
+    {
+      id: 'gem-heliodor',
+      title: '3.20 CT Heliodor Golden Step Cut Loose Gemstone',
+      price: 1750,
+      priceStr: '$1,750',
+      spec: 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-heliodor.png'),
+      category: 'heliodor yellow golden step cut loose gemstone beryl sunshine'
+    },
+    {
+      id: 'gem-green-beryl',
+      title: '2.35 CT Mint Green Beryl Emerald Cut Gemstone',
+      price: 1850,
+      priceStr: '$1,850',
+      spec: 'GIA • Mint Green • VVS1 • Heirloom Step Cut',
+      badge: 'GIA CERTIFIED',
+      img: getThemeAssetUrl('images/product-gem-green-beryl.png'),
+      category: 'green beryl emerald cut mint green loose gemstone beryl gia'
+    },
+    {
+      id: 'gem-maxixe',
+      title: '2.80 CT Maxixe Cobalt Blue Oval Cut Gemstone',
+      price: 2950,
+      priceStr: '$2,950',
+      spec: 'GIA • Royal Cobalt Blue • VVS1 • Rare Natural Specimen',
+      badge: 'RARE SPECIMEN',
+      img: getThemeAssetUrl('images/product-gem-maxixe.png'),
+      category: 'maxixe blue cobalt blue oval loose gemstone beryl rare'
+    },
+    {
+      id: 'arrival-paraiba',
+      title: 'Baby Blue Paraiba Tourmaline 25.92ct Matched Pair',
+      price: 8400,
+      priceStr: '$8,400',
+      spec: 'Matched Pair • 25.92 CT • Neon Cyan Blue',
+      badge: 'MATCHED PAIR',
+      img: getThemeAssetUrl('images/pair-paraiba-tourmaline.png'),
+      category: 'paraiba tourmaline cyan neon blue pair matched earrings'
+    },
+    {
+      id: 'arrival-ct0458',
+      title: 'Vivid Green Chrome Tourmaline 5.73ct Matched Pair',
+      price: 2650,
+      priceStr: '$2,650',
+      spec: 'Matched Pair • 5.73 CT • Vivid Forest Green Teardrop',
+      badge: 'MATCHED PAIR',
+      img: getThemeAssetUrl('images/pair-chrome-tourmaline-5ct.png'),
+      category: 'chrome tourmaline green pear teardrop pair earrings'
+    },
+    {
+      id: 'shape-emerald-blue',
+      title: '2.45 CT Zambian Emerald-Cut Certified Gemstone',
+      price: 4400,
+      priceStr: '$4,400',
+      spec: 'Natural Certified • VVS1 • Step Cut Hall of Mirrors • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-emerald.jpg'),
+      category: 'emerald cut emerald step cut solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-round-blue',
+      title: '2.00 CT Round Brilliant Cut Certified Gemstone',
+      price: 4250,
+      priceStr: '$4,250',
+      spec: 'Natural Certified • VVS1 • 57 Facet Brilliant Fire • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-round.jpg'),
+      category: 'round brilliant cut diamond solitaire loose gemstone fire gia'
+    },
+    {
+      id: 'shape-oval-blue',
+      title: '2.15 CT Oval-Cut Royal Certified Gemstone',
+      price: 4050,
+      priceStr: '$4,050',
+      spec: 'Natural Certified • VVS1 • Royal Silhouette • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-oval.jpg'),
+      category: 'oval cut royal silhouette solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-cushion-blue',
+      title: '2.25 CT Cushion-Cut Certified Gemstone',
+      price: 3980,
+      priceStr: '$3,980',
+      spec: 'Natural Certified • VVS1 • Soft Pillow Faceting • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-cushion.jpg'),
+      category: 'cushion cut soft pillow solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-pear-blue',
+      title: '2.20 CT Pear-Cut Teardrop Certified Gemstone',
+      price: 4100,
+      priceStr: '$4,100',
+      spec: 'Natural Certified • VVS1 • Teardrop Elegance • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-pear.jpg'),
+      category: 'pear cut teardrop solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-heart-blue',
+      title: '2.05 CT Heart-Cut Certified Gemstone',
+      price: 3850,
+      priceStr: '$3,850',
+      spec: 'Natural Certified • VVS1 • Romantic Symmetry • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-heart.jpg'),
+      category: 'heart cut romantic solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-princess-blue',
+      title: '2.03 CT Princess-Cut Square Fire Gemstone',
+      price: 3950,
+      priceStr: '$3,950',
+      spec: 'Natural Certified • VVS2 • Square Brilliant Fire • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-princess.jpg'),
+      category: 'princess cut square fire solitaire loose gemstone gia'
+    },
+    {
+      id: 'shape-marquise-blue',
+      title: '2.10 CT Marquise-Cut Royal Silhouette Gemstone',
+      price: 4180,
+      priceStr: '$4,180',
+      spec: 'Natural Certified • VVS1 • Dramatic Royal Silhouette • GIA',
+      badge: 'SOLITAIRE GEM',
+      img: getThemeAssetUrl('images/diamond-blue-marquise.jpg'),
+      category: 'marquise cut dramatic royal solitaire loose gemstone gia'
+    },
+    {
+      id: 'ring-emerald-solitaire',
+      title: 'Emerald Cut Natural Solitaire Fine Jewelry Ring',
+      price: 5400,
+      priceStr: '$5,400',
+      spec: '18K Yellow Gold / Platinum • 2.50 CT Center • Handcrafted',
+      badge: 'FINE JEWELRY',
+      img: getThemeAssetUrl('images/ring-emerald.jpg'),
+      category: 'ring emerald cut solitaire diamond jewelry gold platinum'
+    },
+    {
+      id: 'ring-round-platinum',
+      title: 'Round Brilliant Platinum Solitaire Engagement Ring',
+      price: 4900,
+      priceStr: '$4,900',
+      spec: 'Solid Platinum 950 • 2.00 CT Center • Six-Prong Crown',
+      badge: 'FINE JEWELRY',
+      img: getThemeAssetUrl('images/ring-round.jpg'),
+      category: 'ring round brilliant platinum engagement jewelry solitaire'
+    },
+    {
+      id: 'collection-emerald-bracelet',
+      title: 'Signature Natural Emerald Tennis Bracelet',
+      price: 6800,
+      priceStr: '$6,800',
+      spec: '18K White Gold • 8.50 CT Total Zambian Emeralds',
+      badge: 'FINE JEWELRY',
+      img: getThemeAssetUrl('images/collection-bracelet.jpg'),
+      category: 'bracelet emerald tennis jewelry 18k white gold zambian'
+    },
+    {
+      id: 'collection-eternity-band',
+      title: 'Full Eternity Pavé Diamond & Gemstone Band',
+      price: 3600,
+      priceStr: '$3,600',
+      spec: '18K Yellow Gold • 3.20 CT Total • Hand-Set French Pavé',
+      badge: 'ETERNITY BAND',
+      img: getThemeAssetUrl('images/collection-eternity.jpg'),
+      category: 'eternity band ring pave diamond gold wedding anniversary'
+    }
+  ];
+
+  const initSwasticSearchModal = () => {
+    let modal = document.getElementById('swasticSearchModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'swastic-search-modal-backdrop';
+      modal.id = 'swasticSearchModal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.innerHTML = `
+        <div class="swastic-search-modal-container" role="dialog" aria-modal="true" aria-labelledby="swasticSearchTitle">
+          <div class="swastic-search-header">
+            <div class="swastic-search-topline">
+              <span class="swastic-search-brand-tag" id="swasticSearchTitle">
+                <svg viewBox="0 0 24 24" class="swastic-gem-icon"><path d="M6 3h12l4 6-10 12L2 9l4-6z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                SWASTIC EXPORTS • GEMSTONE CATALOG
+              </span>
+              <button type="button" class="swastic-search-close-btn" id="closeSearchModalBtn" aria-label="Close search">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>CLOSE</span>
+                <span class="swastic-esc-hint">ESC</span>
+              </button>
+            </div>
+
+            <div class="swastic-search-input-box">
+              <svg class="swastic-input-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="search" 
+                id="swasticSearchInput" 
+                class="swastic-search-input" 
+                placeholder="Search gemstones, cuts, or fine jewelry (e.g., Emerald, Ruby, Oval, Solitaire, Aquamarine)..." 
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button type="button" class="swastic-clear-btn" id="swasticClearSearchBtn" aria-label="Clear search">✕</button>
+            </div>
+
+            <div class="swastic-search-trending-pills">
+              <span class="trending-label">Trending:</span>
+              <button type="button" class="search-tag-chip" data-search="Emerald">✦ Emerald</button>
+              <button type="button" class="search-tag-chip" data-search="Ruby">✦ Burma Ruby</button>
+              <button type="button" class="search-tag-chip" data-search="Sapphire">✦ Ceylon Sapphire</button>
+              <button type="button" class="search-tag-chip" data-search="Aquamarine">✦ Aquamarine</button>
+              <button type="button" class="search-tag-chip" data-search="Oval">✦ Oval Cut</button>
+              <button type="button" class="search-tag-chip" data-search="Solitaire">✦ Solitaire Rings</button>
+              <button type="button" class="search-tag-chip" data-search="Heliodor">✦ Heliodor</button>
+              <button type="button" class="search-tag-chip" data-search="GIA">✦ GIA Certified</button>
+            </div>
+          </div>
+
+          <div class="swastic-search-body" id="swasticSearchBody">
+            <!-- DEFAULT SUGGESTIONS VIEW -->
+            <div class="swastic-search-default-view" id="swasticSearchDefaultView">
+              
+              <!-- 1. GEMSTONE IMAGE SUGGESTIONS -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;color:#cbb479;"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/></svg></span>
+                    POPULAR GEMSTONES
+                  </h3>
+                  <span class="swastic-section-hint">Select a gemstone to explore verified inventory</span>
+                </div>
+
+                <div class="swastic-gem-suggestions-grid">
+                  <div class="gem-suggest-card" data-search="Emerald">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-emerald.png')}" alt="Natural Emerald" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Emerald</span>
+                    <span class="gem-suggest-desc">Colombian & Zambian</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Ruby">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/gem-burma-ruby.jpg')}" alt="Burma Pigeon Blood Ruby" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Burma Ruby</span>
+                    <span class="gem-suggest-desc">Pigeon Blood Crimson</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Sapphire">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-blue-aquamarine.jpg')}" alt="Royal Ceylon Sapphire" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Royal Sapphire</span>
+                    <span class="gem-suggest-desc">Velvety Ceylon Blue</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Aquamarine">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-aquamarine.png')}" alt="Santa Maria Aquamarine" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Aquamarine</span>
+                    <span class="gem-suggest-desc">Santa Maria Cyan</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Diamond">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-goshenite-diamond.png')}" alt="Pure Brilliant Diamond" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Pure Diamond</span>
+                    <span class="gem-suggest-desc">D Color • VVS1 Fire</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Morganite">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-morganite.png')}" alt="Blush Peach Morganite" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Morganite</span>
+                    <span class="gem-suggest-desc">Blush Peach Pink</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Heliodor">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-heliodor.png')}" alt="Golden Heliodor" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Heliodor</span>
+                    <span class="gem-suggest-desc">Sunshine Golden Step</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Tourmaline">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/gem-green-tourmaline.jpg')}" alt="Chrome & Paraiba Tourmaline" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Tourmaline</span>
+                    <span class="gem-suggest-desc">Paraiba & Chrome Green</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Green Beryl">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-green-beryl.png')}" alt="Mint Green Beryl" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Green Beryl</span>
+                    <span class="gem-suggest-desc">Mint Green Step Cut</span>
+                  </div>
+
+                  <div class="gem-suggest-card" data-search="Red Beryl">
+                    <div class="gem-suggest-img-wrap">
+                      <img src="${getThemeAssetUrl('images/product-gem-red-beryl.png')}" alt="Rare Red Beryl" loading="lazy">
+                    </div>
+                    <span class="gem-suggest-name">Red Beryl</span>
+                    <span class="gem-suggest-desc">Utah Crimson Bixbite</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. BROWSE BY CUT & SHAPE -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon">✨</span>
+                    BROWSE BY CUT & SHAPE
+                  </h3>
+                </div>
+                <div class="swastic-shapes-suggestions-row">
+                  <button type="button" class="shape-suggest-pill" data-search="Emerald Cut">
+                    <img src="${getThemeAssetUrl('images/shape-emerald.png')}" alt="Emerald Cut"> Emerald Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Round">
+                    <img src="${getThemeAssetUrl('images/shape-round.png')}" alt="Round Brilliant"> Round Brilliant
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Oval">
+                    <img src="${getThemeAssetUrl('images/shape-oval.png')}" alt="Oval Cut"> Oval Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Cushion">
+                    <img src="${getThemeAssetUrl('images/shape-radiant.png')}" alt="Cushion Cut"> Cushion Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Pear">
+                    <img src="${getThemeAssetUrl('images/shape-pear.png')}" alt="Pear Cut"> Pear Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Princess">
+                    <img src="${getThemeAssetUrl('images/shape-princess.png')}" alt="Princess Cut"> Princess Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Heart">
+                    <img src="${getThemeAssetUrl('images/shape-heart.png')}" alt="Heart Cut"> Heart Cut
+                  </button>
+                  <button type="button" class="shape-suggest-pill" data-search="Marquise">
+                    <img src="${getThemeAssetUrl('images/shape-marquise.png')}" alt="Marquise Cut"> Marquise Cut
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3. FEATURED CERTIFIED STONES PREVIEW -->
+              <div class="swastic-search-section">
+                <div class="swastic-section-head">
+                  <h3 class="swastic-section-title">
+                    <span class="swastic-title-icon">⭐</span>
+                    FEATURED CERTIFIED STONES
+                  </h3>
+                  <span class="swastic-section-hint">Individually certified rare specimens</span>
+                </div>
+                <div class="swastic-search-results-grid" id="swasticSearchFeaturedGrid"></div>
+              </div>
+
+            </div>
+
+            <!-- RESULTS VIEW -->
+            <div class="swastic-search-results-view" id="swasticSearchResultsView" style="display: none;">
+              <div class="swastic-results-header-bar">
+                <span class="swastic-results-count" id="swasticResultsCount">Showing results</span>
+                <button type="button" class="swastic-reset-search-btn" id="swasticResetSearchBtn">✕ Clear</button>
+              </div>
+              <div class="swastic-search-results-grid" id="swasticSearchResultsGrid"></div>
+              <div class="swastic-search-empty" id="swasticSearchEmpty" style="display: none;">
+                <div class="empty-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#cbb479;"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/></svg></div>
+                <h4 class="empty-title">No matching gemstones found</h4>
+                <p class="empty-desc">We couldn't find any items matching your search query. Try one of our signature gemstones:</p>
+                <div class="empty-suggestions">
+                  <button type="button" class="search-tag-chip" data-search="Emerald">✦ Emerald</button>
+                  <button type="button" class="search-tag-chip" data-search="Ruby">✦ Burma Ruby</button>
+                  <button type="button" class="search-tag-chip" data-search="Sapphire">✦ Sapphire</button>
+                  <button type="button" class="search-tag-chip" data-search="Oval">✦ Oval Cut</button>
+                  <button type="button" class="search-tag-chip" data-search="Solitaire">✦ Solitaire Rings</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="swastic-search-footer">
+            <div class="footer-left">
+              <span>Looking for custom cutting, calibrated parcels, or GIA lots?</span>
+              <a href="about.html" class="footer-link">Consult Master Gemologist →</a>
+            </div>
+            <div class="footer-right">
+              <span>Press <kbd>ESC</kbd> to close</span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    const input = document.getElementById('swasticSearchInput');
+    const clearBtn = document.getElementById('swasticClearSearchBtn');
+    const closeBtn = document.getElementById('closeSearchModalBtn');
+    const defaultView = document.getElementById('swasticSearchDefaultView');
+    const resultsView = document.getElementById('swasticSearchResultsView');
+    const resultsGrid = document.getElementById('swasticSearchResultsGrid');
+    const featuredGrid = document.getElementById('swasticSearchFeaturedGrid');
+    const resultsCount = document.getElementById('swasticResultsCount');
+    const emptyState = document.getElementById('swasticSearchEmpty');
+    const resetBtn = document.getElementById('swasticResetSearchBtn');
+
+    // Render Clean Luxury Product Card Helper (Single action row, no cramped duplicate buttons)
+    const createProductCardHtml = (prod) => {
+      const specParts = prod.spec.split('•').map(s => s.trim()).filter(Boolean);
+      const shortSpec = specParts.slice(0, 2).join(' • ') || prod.spec;
+
+      return `
+        <article class="swastic-product-card" data-product-id="${prod.id}" role="button" tabindex="0" title="Click to view details of ${prod.title.replace(/"/g, '&quot;')}">
+          <div class="prod-thumb-box">
+            <span class="prod-badge">${prod.badge}</span>
+            <img src="${getThemeAssetUrl(prod.img)}" alt="${prod.title}" loading="lazy">
+          </div>
+          <div class="prod-info-box">
+            <span class="prod-spec-text">${shortSpec}</span>
+            <h4 class="prod-name-title">${prod.title}</h4>
+            <div class="prod-card-bottom-row">
+              <span class="prod-price-tag">${prod.priceStr}</span>
+              <button type="button" class="prod-add-bag-btn" data-id="${prod.id}" data-title="${prod.title.replace(/"/g, '&quot;')}" data-price="${prod.price}" data-spec="${prod.spec.replace(/"/g, '&quot;')}" data-img="${prod.img}" aria-label="Add to bag">
+                + BAG
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    };
+
+    // Attach Action Listeners to Product Cards
+    const bindProductCardEvents = (container) => {
+      if (!container) return;
+
+      // Click card to view details
+      container.querySelectorAll('.swastic-product-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.prod-add-bag-btn')) return;
+          closeModal();
+          if (window.location.pathname.includes('shapes.html')) {
+            const el = document.getElementById('diamond-products-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.location.href = 'shapes.html#diamond-products-section';
+          }
+        });
+      });
+
+      // Quick add to bag button
+      container.querySelectorAll('.prod-add-bag-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const { id, title, price, spec, img } = btn.dataset;
+          if (typeof window.addProductToBag === 'function') {
+            window.addProductToBag(id, title, parseFloat(price), spec, img);
+          } else if (typeof window.quickAddProduct === 'function') {
+            window.quickAddProduct(id, title, spec, parseFloat(price), img);
+          }
+          btn.classList.add('added-success');
+          btn.textContent = 'ADDED ✓';
+          setTimeout(() => {
+            btn.classList.remove('added-success');
+            btn.textContent = '+ BAG';
+          }, 1800);
+        });
+      });
+    };
+
+    // Populate Featured Products Preview (Top 4)
+    if (featuredGrid && featuredGrid.children.length === 0) {
+      const featured = SWASTIC_SEARCH_CATALOG.slice(0, 4);
+      featuredGrid.innerHTML = featured.map(createProductCardHtml).join('');
+      bindProductCardEvents(featuredGrid);
+    }
+
+    // Open Modal Function (Rock-solid focus with preventScroll: true to avoid mobile page jump)
+    const openModal = (keyword = '') => {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('swastic-search-active');
+      setTimeout(() => {
+        if (input) {
+          input.focus({ preventScroll: true });
+          if (keyword) {
+            input.value = keyword;
+            handleSearch(keyword);
+          }
+        }
+      }, 50);
+    };
+
+    // Close Modal Function
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('swastic-search-active');
+      if (input) input.blur();
+    };
+
+    // Perform Live Filtering
+    const handleSearch = (rawQuery) => {
+      const query = (rawQuery || '').trim().toLowerCase();
+      if (!query) {
+        defaultView.style.display = 'block';
+        resultsView.style.display = 'none';
+        clearBtn.classList.remove('visible');
+        return;
+      }
+
+      clearBtn.classList.add('visible');
+      defaultView.style.display = 'none';
+      resultsView.style.display = 'block';
+
+      const queryTokens = query.split(/\s+/).filter(Boolean);
+
+      const matchedProducts = SWASTIC_SEARCH_CATALOG.filter(prod => {
+        const searchText = `${prod.title} ${prod.spec} ${prod.category} ${prod.badge} ${prod.priceStr}`.toLowerCase();
+        return queryTokens.every(token => searchText.includes(token));
+      });
+
+      if (matchedProducts.length > 0) {
+        emptyState.style.display = 'none';
+        resultsGrid.style.display = 'grid';
+        resultsGrid.innerHTML = matchedProducts.map(createProductCardHtml).join('');
+        bindProductCardEvents(resultsGrid);
+        resultsCount.innerHTML = `<strong>${matchedProducts.length}</strong> Gemstones for "<strong>${rawQuery}</strong>"`;
+      } else {
+        resultsGrid.style.display = 'none';
+        resultsGrid.innerHTML = '';
+        emptyState.style.display = 'block';
+        resultsCount.innerHTML = `0 results for "<strong>${rawQuery}</strong>"`;
+      }
+    };
+
+    // Event Bindings
+    if (input) {
+      input.addEventListener('input', (e) => handleSearch(e.target.value));
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (input) {
+          input.value = '';
+          input.focus();
+          handleSearch('');
+        }
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (input) {
+          input.value = '';
+          input.focus();
+          handleSearch('');
+        }
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
       }
     });
-  }
+
+    // Delegate Clicks for Suggestion Chips & Cards
+    modal.addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-search]');
+      if (chip) {
+        const keyword = chip.dataset.search;
+        if (input && keyword) {
+          input.value = keyword;
+          input.focus();
+          handleSearch(keyword);
+        }
+      }
+    });
+
+    // Bind all Search Triggers in Navbar & Page (Desktop + Mobile touch)
+    const bindTriggers = () => {
+      const triggers = document.querySelectorAll('#searchTrigger, .search-pill-container, #headerSearchInput, .mobile-search-trigger, #mobileDrawerSearchBtn');
+      triggers.forEach(el => {
+        el.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal();
+        };
+      });
+    };
+    bindTriggers();
+
+    // Delegated click listener for any dynamically added triggers or mobile elements
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('#searchTrigger, .search-pill-container, #headerSearchInput, .mobile-search-trigger, #mobileDrawerSearchBtn');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        openModal();
+      }
+    });
+
+    // Global helper
+    window.openSwasticSearch = openModal;
+    window.closeSwasticSearch = closeModal;
+  };
+
+  initSwasticSearchModal();
 
   // 6. Featured Diamond & Ring Products Filter & Actions
   window.filterProductCategory = (category) => {
+    const targetCat = (category === 'gems' || category === 'gemstones') ? 'diamonds' : category;
+
     document.querySelectorAll('.prod-tab-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tab === category);
+      const btnTab = btn.dataset.tab;
+      const isMatch = (targetCat === 'all' && btnTab === 'all') || (targetCat === 'diamonds' && btnTab === 'diamonds');
+      btn.classList.toggle('active', isMatch);
     });
 
-    const cards = document.querySelectorAll('.product-item-card');
+    const cards = document.querySelectorAll('.diamond-products-grid .product-item-card, .product-item-card');
     cards.forEach(card => {
-      const cats = (card.dataset.category || '').split(' ');
-      if (category === 'all' || cats.includes(category)) {
-        card.style.display = 'flex';
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(8px)';
-        requestAnimationFrame(() => {
-          card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        });
-      } else {
-        card.style.display = 'none';
-      }
+      card.style.display = 'flex';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
     });
   };
 
   window.navigateToCategory = (category, event) => {
     if (event) {
       event.preventDefault();
+      event.stopPropagation();
     }
+
+    // Close any open navigation dropdowns
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(el => el.classList.remove('open'));
+    const navLink = document.getElementById('navGemsLink');
+    if (navLink) navLink.setAttribute('aria-expanded', 'false');
+
+    // Close mobile drawer if active
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+
+    const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
+
+    if (!isIndexPage) {
+      window.location.href = `index.html#diamond-products-section`;
+      return;
+    }
+
     // Update active tab and filter items
     window.filterProductCategory(category);
     
     // Smooth scroll to product collection
-    const targetSection = document.getElementById('diamond-products-section');
+    let targetSection = document.getElementById('diamond-products-section');
+    if (category === 'diamonds' && document.getElementById('diamond-shape-section')) {
+      targetSection = document.getElementById('diamond-shape-section');
+    }
     if (targetSection) {
       const header = document.getElementById('siteHeader');
       const headerHeight = header ? header.offsetHeight : 80;
@@ -799,26 +1784,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+
+
   // Check URL hash on page load or back/forward navigation
   const checkHashCategory = () => {
     const hash = (window.location.hash || '').toLowerCase();
-    if (hash === '#gems' || hash.includes('gem')) {
-      setTimeout(() => window.navigateToCategory('gems'), 100);
-    } else if (hash === '#diamonds' || hash.includes('diamond')) {
-      setTimeout(() => window.navigateToCategory('diamonds'), 100);
+    if (hash.includes('gem')) {
+      setTimeout(() => window.navigateToCategory('gemstones'), 150);
+    } else if (hash.includes('diamond')) {
+      setTimeout(() => window.navigateToCategory('diamonds'), 150);
+    } else if (hash.includes('jewelry')) {
+      setTimeout(() => window.navigateToCategory('jewelry'), 150);
+    } else if (hash.includes('pair')) {
+      setTimeout(() => window.navigateToCategory('pairs'), 150);
     }
   };
 
   window.addEventListener('DOMContentLoaded', checkHashCategory);
   window.addEventListener('hashchange', checkHashCategory);
 
-  window.addProductToBag = (id, title, price, spec, img) => {
-    window.quickAddProduct(id, title, spec, price, img);
+  
+  // Native Shopify Ajax Variant Adder Helper
+  window.addShopifyVariantToBag = async (variantId, quantity = 1) => {
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: quantity })
+      });
+      if (res.ok) {
+        if (typeof window.fetchShopifyCart === 'function') {
+          await window.fetchShopifyCart();
+        }
+        if (typeof window.openCart === 'function') {
+          window.openCart();
+        }
+        return true;
+      }
+    } catch(e) {
+      console.log('Shopify variant add attempt:', e);
+    }
+    return false;
+  };
+
+  // Enhanced Add to Bag supporting both native Shopify variant IDs and catalog stones
+  window.addProductToBag = async (id, title, price, spec, img, variantId) => {
+    if (variantId && parseInt(variantId)) {
+      const success = await window.addShopifyVariantToBag(parseInt(variantId), 1);
+      if (success) return;
+    }
+    const numPrice = typeof price === 'number' ? price : (parseInt(String(price).replace(/[^0-9]/g, '')) || 2950);
+    // Direct catalog add
+    window.quickAddProduct(id, title, spec, numPrice, img);
   };
 
   window.toggleProductFav = (btn, id, title, price, spec, img) => {
-    btn.classList.toggle('favorited');
-    window.toggleProductFavorite(id, title, spec, `$${price.toLocaleString()}`, img);
+    if (btn) btn.classList.toggle('favorited');
+    const formattedPrice = (typeof price === 'number') ? `$${price.toLocaleString()}` : price;
+    window.toggleProductFavorite(id, title, spec, formattedPrice, img);
   };
 
   // 7. Velora Stories Carousel (Arrow Navigation & Touch Drag)
@@ -945,7 +1968,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Oct 28, 2025',
       category: 'emeralds',
       text: 'Transatlantic delivery was seamless. The 3.85ct untreated Zambian emerald possesses an incredible vivid bluish-green saturation. Swastic Exports included a comprehensive lab dossier and origin authentication.',
-      img: 'images/gem-emerald-emerald-hd.jpg',
+      img: getThemeAssetUrl('images/gem-emerald-emerald-hd.jpg'),
       title: '3.85 CT Zambian Natural Emerald • Emerald Step Cut'
     },
     {
@@ -954,7 +1977,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Oct 15, 2025',
       category: 'sapphires',
       text: 'My custom cornflower blue sapphire pendant turned out beyond what I could have imagined. Pure fire, silky depth, and ethically mined directly from Ceylon mines by Swastic Exports.',
-      img: 'images/product-gem-blue-aquamarine.jpg',
+      img: getThemeAssetUrl('images/product-gem-blue-aquamarine.jpg'),
       title: '2.50 CT Natural Ceylon Cornflower Sapphire'
     },
     {
@@ -963,7 +1986,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Sep 30, 2025',
       category: 'rubies',
       text: 'Top tier natural Burmese ruby with intense red fluorescence. Swastic Exports verified the untreated crystalline structure prior to export. Master craftsmanship in every detail.',
-      img: 'images/product-gem-red-ruby.jpg',
+      img: getThemeAssetUrl('images/product-gem-red-ruby.jpg'),
       title: '3.18 CT Natural Burmese Ruby • Cushion Cut'
     },
     {
@@ -972,7 +1995,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Sep 12, 2025',
       category: 'fancy',
       text: 'The vibrant electric mint glow of this natural tourmaline gemstone is stunning in natural daylight. Swastic Exports is our premier destination for unheated rare gemstones.',
-      img: 'images/product-gem-cyan-cushion.jpg',
+      img: getThemeAssetUrl('images/product-gem-cyan-cushion.jpg'),
       title: '4.60 CT Natural Mint Tourmaline / Rare Gemstone'
     },
     {
@@ -981,7 +2004,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Aug 29, 2025',
       category: 'emeralds',
       text: 'Purchased for investment portfolio in Frankfurt. Swastic Exports provided exceptional pricing and high definition micro-gemological photography before final dispatch.',
-      img: 'images/gem-emerald-round-hd.jpg',
+      img: getThemeAssetUrl('images/gem-emerald-round-hd.jpg'),
       title: '4.50 CT Investment Zambian Emerald • Round Cut'
     },
     {
@@ -990,7 +2013,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Aug 04, 2025',
       category: 'sapphires',
       text: 'A royal blue gemstone worthy of heritage heirlooms. The luster and polish on this cushion sapphire reflects 30+ years of Swastic Exports gem cutting excellence.',
-      img: 'images/product-gem-blue-aquamarine.jpg',
+      img: getThemeAssetUrl('images/product-gem-blue-aquamarine.jpg'),
       title: '3.40 CT Royal Blue Ceylon Sapphire • Certified'
     }
   ];
@@ -1025,7 +2048,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p class="review-item-text">${rev.text}</p>
                 <div class="review-purchased-badge">
-                  <img src="${rev.img}" alt="${rev.title}" class="purchased-thumb">
+                  <img src="${getThemeAssetUrl(rev.img)}" alt="${rev.title}" class="purchased-thumb">
                   <span class="purchased-title">${rev.title}</span>
                   <div class="purchased-stars">
                     <svg viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -1135,8 +2158,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
       if (wrap) {
-        wrap.addEventListener('click', () => {
-          if (video.paused) { video.play(); } else { video.pause(); }
+        wrap.addEventListener('click', (e) => {
+          if (e.target.closest('.reel-sound-toggle')) return;
+          const instaLink = card.querySelector('.reel-insta-link');
+          if (instaLink && instaLink.href) {
+            window.open(instaLink.href, '_blank');
+          } else {
+            if (video.paused) { video.play(); } else { video.pause(); }
+          }
         });
       }
     }
@@ -1221,20 +2250,30 @@ document.addEventListener('DOMContentLoaded', () => {
       drawer.className = 'mobile-nav-drawer';
       drawer.innerHTML = `
         <div class="mobile-drawer-header">
-          <a href="index.html" class="mobile-drawer-logo">
+          <a href="/" class="mobile-drawer-logo">
             <span class="drawer-brand-title">SWASTIC EXPORTS</span>
             <span class="drawer-brand-sub">HOUSE OF GEMS</span>
           </a>
           <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close Menu">✕</button>
         </div>
         ${userBlock}
+        <div class="mobile-drawer-search-wrap">
+          <button type="button" class="mobile-drawer-search-btn" id="mobileDrawerSearchBtn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Search Gemstones &amp; Jewelry...</span>
+          </button>
+        </div>
         <ul class="mobile-drawer-links">
-          <li class="mobile-drawer-link-item"><a href="index.html"><span>Home</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="gemstones.html"><span>Natural Gemstones</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="promise.html"><span>The Swastic Promise</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="index.html#stories-section"><span>Exhibitions &amp; Stories</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="about.html"><span>About Atelier</span><span class="link-arrow">→</span></a></li>
-          <li class="mobile-drawer-link-item"><a href="account.html"><span>My Atelier Profile</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#heroSection" onclick="return window.showPageView ? window.showPageView('home', event) : true;"><span>Home</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#diamond-shape-section" onclick="return window.showPageView ? window.showPageView('shapes', event) : true;"><span>Shop by Shape</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#diamond-products-section" onclick="return window.showPageView ? window.showPageView('gemstones', event) : true;"><span>Gemstones Collection</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#promise" onclick="return window.showPageView ? window.showPageView('promise', event) : true;"><span>The Swastic Promise</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#stories-section" onclick="return window.showPageView ? window.showPageView('stories', event) : true;"><span>Exhibitions &amp; Stories</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="#about" onclick="return window.showPageView ? window.showPageView('about', event) : true;"><span>About Swastic Exports</span><span class="link-arrow">→</span></a></li>
+          <li class="mobile-drawer-link-item"><a href="/account"><span>My Atelier Profile</span><span class="link-arrow">→</span></a></li>
         </ul>
         <div class="mobile-drawer-footer">
           <a href="https://wa.me/919820012345" target="_blank" rel="noopener" class="mobile-drawer-wa-btn">
@@ -1252,6 +2291,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const closeBtn = drawer.querySelector('#mobileDrawerClose');
       if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
       backdrop.addEventListener('click', closeDrawer);
+
+      const drawerSearchBtn = drawer.querySelector('#mobileDrawerSearchBtn');
+      if (drawerSearchBtn) {
+        drawerSearchBtn.addEventListener('click', () => {
+          closeDrawer();
+          if (typeof window.openSwasticSearch === 'function') {
+            window.openSwasticSearch();
+          }
+        });
+      }
 
       drawer.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
@@ -1281,6 +2330,148 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Universal Section Smooth Scroll Handler (Matches Netlify & Localhost)
+  const initSmoothSectionScroll = () => {
+    const handleScrollToTarget = (targetId) => {
+      if (!targetId) return false;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        const header = document.getElementById('siteHeader') || document.querySelector('.site-header');
+        const headerOffset = header ? header.offsetHeight + 10 : 75;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        // Update active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+          const href = link.getAttribute('href') || '';
+          if (href.includes(targetId)) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+        return true;
+      }
+      return false;
+    };
+
+    // Delegate video sound toggle for all reels including dynamic about view
+    document.addEventListener('click', (e) => {
+      const soundBtn = e.target.closest('.reel-sound-toggle');
+      if (soundBtn) {
+        e.stopPropagation();
+        const card = soundBtn.closest('.reel-box-card');
+        const video = card ? card.querySelector('.reel-box-video') : null;
+        if (video) {
+          video.muted = !video.muted;
+          soundBtn.classList.toggle('unmuted', !video.muted);
+        }
+      }
+    });
+
+    // Delegate Instagram reel opener on clicking reel card/video
+    document.addEventListener('click', (e) => {
+      const reelWrap = e.target.closest('.reel-box-video-wrap');
+      if (reelWrap && !e.target.closest('.reel-sound-toggle')) {
+        const card = reelWrap.closest('.reel-box-card');
+        const instaLink = card ? card.querySelector('.reel-insta-link') : null;
+        if (instaLink && instaLink.href) {
+          window.open(instaLink.href, '_blank');
+        }
+      }
+    });
+
+    // Intercept clicks on links pointing to section IDs or data-scroll-to
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href*="#"], [data-scroll-to], [data-target]');
+      if (!link) return;
+
+      let targetId = link.getAttribute('data-scroll-to') || link.getAttribute('data-target');
+      if (!targetId) {
+        const href = link.getAttribute('href') || '';
+        const hashIndex = href.indexOf('#');
+        if (hashIndex !== -1) {
+          targetId = href.substring(hashIndex + 1);
+        }
+      }
+      if (!targetId) return;
+
+      if (targetId === 'about' || targetId === 'promise' || targetId === 'gemstones' || targetId === 'shapes' || targetId === 'diamond-products-section' || targetId === 'diamond-shape-section') {
+        let route = targetId;
+        if (targetId === 'diamond-products-section') route = 'gemstones';
+        if (targetId === 'diamond-shape-section') route = 'shapes';
+        e.preventDefault();
+        if (typeof window.showPageView === 'function') {
+          window.showPageView(route, e);
+        }
+        return;
+      }
+
+      if (targetId === 'heroSection' || targetId === 'home') {
+        if (typeof window.showPageView === 'function') {
+          window.showPageView('home', e);
+          return;
+        }
+      }
+
+      if (targetId === 'stories' || targetId === 'stories-section') {
+        if (typeof window.showPageView === 'function') {
+          window.showPageView('stories', e);
+          return;
+        }
+      }
+
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        // Ensure MainContent is visible if coming from any dynamic view
+        const mainContent = document.getElementById('MainContent');
+        const aboutView = document.getElementById('dynamicAboutView');
+        const promiseView = document.getElementById('dynamicPromiseView');
+        const gemstonesView = document.getElementById('dynamicGemstonesView');
+        const shapesView = document.getElementById('dynamicShapesView');
+        if (aboutView) aboutView.style.display = 'none';
+        if (promiseView) promiseView.style.display = 'none';
+        if (gemstonesView) gemstonesView.style.display = 'none';
+        if (shapesView) shapesView.style.display = 'none';
+        if (mainContent) mainContent.style.display = 'block';
+
+        handleScrollToTarget(targetId);
+
+        // Close mobile drawer if open
+        const drawer = document.querySelector('.mobile-nav-drawer');
+        const backdrop = document.querySelector('.mobile-nav-backdrop');
+        if (drawer && drawer.classList.contains('active')) {
+          drawer.classList.remove('active');
+          if (backdrop) backdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+
+  // FAQ Accordion Interactivity
+  const initFaqAccordion = () => {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.faq-question-btn');
+      if (!btn) return;
+      const item = btn.closest('.faq-item');
+      if (!item) return;
+      const isActive = item.classList.contains('active');
+      if (isActive) {
+        item.classList.remove('active');
+      } else {
+        item.classList.add('active');
+      }
+    });
+  };
+
+  initSmoothSectionScroll();
   initMobileNavDrawer();
+  initFaqAccordion();
 });
 

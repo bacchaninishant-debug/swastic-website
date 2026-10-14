@@ -1,0 +1,126 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "SWASTIC EXPORTS - Luxury Gemstone Theme",
+    "theme_version": "2.0.0",
+    "theme_author": "Swastic Exports Atelier",
+    "theme_documentation_url": "https://swasticexports.com",
+    "theme_support_url": "https://swasticexports.com"
+  },
+  {
+    "name": "Colors & Aesthetics",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg_dark",
+        "label": "Primary Dark Background",
+        "default": "#050606"
+      },
+      {
+        "type": "color",
+        "id": "color_card_bg",
+        "label": "Card & Container Background",
+        "default": "#0b0c0c"
+      },
+      {
+        "type": "color",
+        "id": "color_gold_accent",
+        "label": "Luxury Gold Accent",
+        "default": "#dfba87"
+      },
+      {
+        "type": "color",
+        "id": "color_text_light",
+        "label": "Primary Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Secondary Muted Text",
+        "default": "#a0a0a0"
+      }
+    ]
+  },
+  {
+    "name": "Branding & Logos",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Atelier Logo Image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 100,
+        "max": 350,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo Width (Desktop)",
+        "default": 220
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon Image"
+      }
+    ]
+  },
+  {
+    "name": "Cart & Checkout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Experience",
+        "options": [
+          { "value": "drawer", "label": "Slide-out Cart Bag Drawer" },
+          { "value": "page", "label": "Full Cart Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_note",
+        "label": "Show Complimentary Insured Shipping Note",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social & Concierge",
+    "settings": [
+      {
+        "type": "text",
+        "id": "instagram_url",
+        "label": "Instagram Atelier Link",
+        "default": "https://www.instagram.com/swasticexports/"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "WhatsApp Concierge Number",
+        "default": "919820012345"
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "Direct Contact Line",
+        "default": "+91 98200 12345"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Atelier Contact Email",
+        "default": "concierge@swasticexports.com"
+      },
+      {
+        "type": "text",
+        "id": "contact_location",
+        "label": "Atelier Location",
+        "default": "Bharat Diamond Bourse, BKC, Mumbai"
+      }
+    ]
+  }
+]

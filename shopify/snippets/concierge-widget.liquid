@@ -1,0 +1,33 @@
+<div class="concierge-floating-widget" id="conciergeWidget">
+  <div class="concierge-badge-card" id="conciergeTrigger">
+    <svg class="concierge-bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+    <span class="concierge-badge-text">MAY WE ASSIST YOU?</span>
+  </div>
+
+  <!-- Concierge Interactive Popover -->
+  <div class="concierge-panel" id="conciergePanel">
+    <div class="concierge-panel-header">
+      <div class="concierge-avatar">S</div>
+      <div class="concierge-title-box">
+        <h4>Swastic Exports Concierge</h4>
+        <span class="status-online">● Online &amp; Ready to help</span>
+      </div>
+      <button class="concierge-close" id="conciergeClose">&times;</button>
+    </div>
+    <div class="concierge-body">
+      <p class="concierge-greeting">Hello! Welcome to Swastic Exports. Our master gemstone specialists are here to guide you with gemstone cuts, custom sizing, and bespoke design.</p>
+      <div class="concierge-options">
+        <button class="concierge-chip" onclick="handleConciergeTopic('diamond-guide')">Gemstone Shape Recommendation</button>
+        <button class="concierge-chip" onclick="handleConciergeTopic('lab-vs-natural')">Natural vs Lab Gemstones</button>
+        <button class="concierge-chip" onclick="handleConciergeTopic('custom-ring')">Bespoke Gemstone Inquiry</button>
+      </div>
+      <div class="concierge-input-wrap">
+        <input type="text" placeholder="Type your question..." id="conciergeInput">
+        <button id="conciergeSendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

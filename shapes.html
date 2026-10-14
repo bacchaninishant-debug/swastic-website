@@ -600,46 +600,49 @@
     <div class="footer-inner">
       <div class="footer-column brand-col">
         <div class="footer-logo">SWASTIC EXPORTS</div>
-        <p class="footer-tagline">Mastering handcrafted fine gemstones across seven generations since 1890.</p>
+        <p class="footer-tagline">Four Decades of Gemstone Expertise. A Legacy Built on Trust since 1980.</p>
         <div class="footer-certifications">
+          <span class="cert-badge">IIGJ LAB CERTIFIED</span>
           <span class="cert-badge">GIA CERTIFIED</span>
           <span class="cert-badge">IGI CERTIFIED</span>
-          <span class="cert-badge">CONFLICT-FREE</span>
+          <span class="cert-badge">ETHICALLY SOURCED</span>
         </div>
       </div>
 
       <div class="footer-column">
-        <h4>FINE JEWELRY</h4>
+        <h4>FINE GEMSTONES</h4>
         <ul>
-          <li><a href="shapes.html">Shop by Shape</a></li>
-          <li><a href="index.html#diamond-products-section">Loose Certified Gemstones</a></li>
-          <li><a href="index.html#emerald-mines-section">Direct Mine Gemstones</a></li>
-          <li><a href="index.html#emerald-mines-section">Zambian Emerald Collection</a></li>
-          <li><a href="index.html#lab-diamonds">Lab Grown Gemstones</a></li>
+          <li><a href="gemstones.html">Natural Emeralds</a></li>
+          <li><a href="gemstones.html">Precious Rubies &amp; Sapphires</a></li>
+          <li><a href="shapes.html">Shop by Shape &amp; Cut</a></li>
+          <li><a href="gemstones.html">Calibrated Layouts &amp; Pairs</a></li>
+          <li><a href="promise.html">Direct Mine Sourcing</a></li>
         </ul>
       </div>
 
       <div class="footer-column">
-        <h4>SERVICES</h4>
+        <h4>SERVICES &amp; POLICIES</h4>
         <ul>
           <li><a href="promise.html">The Swastic Exports Promise</a></li>
-          <li><a href="shapes.html">Custom Jewelry Design</a></li>
-          <li><a href="#">Bespoke Stone Setting</a></li>
-          <li><a href="#">Lifetime Warranty</a></li>
-          <li><a href="#">Free Insured Shipping</a></li>
+          <li><a href="about.html#faq-section">Client FAQ &amp; Guide</a></li>
+          <li><a href="about.html#faq-section">Bespoke Millimeter Calibration</a></li>
+          <li><a href="about.html#faq-section">Insured Worldwide Delivery</a></li>
+          <li><a href="about.html#faq-section">10-Day Returns (Video Req.)</a></li>
+          <li><a href="about.html">Global Exhibitions (BGJF, IIJS, JJS)</a></li>
         </ul>
       </div>
 
       <div class="footer-column">
-        <h4>CONTACT & CONCIERGE</h4>
-        <p class="footer-contact-item"><strong>Toll Free:</strong> 1.844.400.0065</p>
-        <p class="footer-contact-item"><strong>Email:</strong> support@swasticexports.com</p>
-        <p class="footer-contact-item"><strong>Concierge:</strong> Available 24/7</p>
+        <h4>JAIPUR ATELIER &amp; CONTACT</h4>
+        <p class="footer-contact-item"><strong>WhatsApp / Call:</strong> <a href="https://wa.me/919660096877" target="_blank" rel="noopener">+91 96600 96877</a></p>
+        <p class="footer-contact-item"><strong>Email:</strong> <a href="mailto:exhibition.swasticexports@gmail.com">exhibition.swasticexports@gmail.com</a></p>
+        <p class="footer-contact-item"><strong>Address:</strong> C-4, 3rd Floor, Swastic House, Gopinath Marg, New Colony, MI Road, Jaipur, Rajasthan</p>
+        <p class="footer-tax-info"><strong>GSTIN:</strong> 08AAFFS8734E1Z0</p>
       </div>
     </div>
     
     <div class="footer-bottom-bar">
-      <p>&copy; 2026 SWASTIC EXPORTS Inc. All rights reserved. Handcrafted with bespoke precision.</p>
+      <p>&copy; 2026 SWASTIC EXPORTS (Est. 1980). All rights reserved. Handcrafted with bespoke precision.</p>
     </div>
   </footer>
 
@@ -724,12 +727,64 @@
     </div>
   </aside>
 
+  <!-- Interactive Gemstone Specs Modal -->
+  <div class="modal-backdrop specs-modal-backdrop" id="specsModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalShapeTitle">
+    <div class="specs-modal-card">
+      <div class="specs-modal-header">
+        <h3 id="modalShapeTitle" class="specs-modal-heading">HEART-CUT GIA CERTIFIED GEMSTONE SPECIFICATIONS</h3>
+        <button type="button" class="modal-close-btn specs-modal-close-btn" id="closeSpecsModal" aria-label="Close specifications modal">&times;</button>
+      </div>
+      <div class="specs-modal-content">
+        <p class="specs-intro">Every gemstone is hand-selected by our master gemologists for exceptional scintillation, brilliant fire, and natural purity.</p>
+        <table class="specs-table">
+          <tbody>
+            <tr><td>Shape / Cut:</td><td id="modalShapeVal">Heart Brilliant Cut • 2.05 CT • Natural Certified • VVS1 • Ideal Cut • GIA Certified</td></tr>
+            <tr><td>Grading Authority:</td><td>GIA (Gemological Institute of America)</td></tr>
+            <tr><td>Color Grade:</td><td>Natural Fine Hue (Top Vivid Color)</td></tr>
+            <tr><td>Clarity Grade:</td><td>VVS1 - VS1 (Eye-Clean / Superior Lustre)</td></tr>
+            <tr><td>Stone Format:</td><td>Loose Certified Natural Stone / Gemstone</td></tr>
+            <tr><td>Origin &amp; Authenticity:</td><td>100% Conflict-Free Natural Earth-Mined Certified Gemstone</td></tr>
+          </tbody>
+        </table>
+        <div class="specs-modal-actions">
+          <button type="button" class="hero-cta-btn dark-cta" id="modalAddBagBtn">ADD THIS CERTIFIED GEMSTONE TO BAG</button>
+          <button type="button" class="specs-modal-close-link" id="closeSpecsModalBottom">CLOSE WINDOW</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js?v=2.0"></script>
   <script>
-    // Handlers for Shape Action Buttons
+    // Handlers for Shape Action Buttons & Modal
     document.addEventListener('DOMContentLoaded', () => {
       const customizeBtn = document.getElementById('customizeRingBtn');
       const viewSpecsBtn = document.getElementById('viewSpecsBtn');
+      const modalBackdrop = document.getElementById('specsModalBackdrop');
+      const closeSpecsBtn = document.getElementById('closeSpecsModal');
+      const closeSpecsBottomBtn = document.getElementById('closeSpecsModalBottom');
+      const modalTitle = document.getElementById('modalShapeTitle');
+      const modalVal = document.getElementById('modalShapeVal');
+
+      function hideModal() {
+        if (modalBackdrop) {
+          modalBackdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+
+      function showModal() {
+        if (!modalBackdrop) return;
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const name = activeBtn ? activeBtn.dataset.name || 'HEART-CUT' : 'HEART-CUT';
+        const spec = activeBtn ? activeBtn.dataset.spec || '2.05 CT • Natural Certified' : '2.05 CT • Natural Certified';
+
+        if (modalTitle) modalTitle.textContent = name.toUpperCase() + ' GIA CERTIFIED GEMSTONE SPECIFICATIONS';
+        if (modalVal) modalVal.textContent = spec;
+
+        modalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
 
       if (customizeBtn) {
         customizeBtn.addEventListener('click', () => {
@@ -752,13 +807,22 @@
       }
 
       if (viewSpecsBtn) {
-        viewSpecsBtn.addEventListener('click', () => {
-          const target = document.getElementById('diamond-products-section');
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
+        viewSpecsBtn.addEventListener('click', showModal);
+      }
+      if (closeSpecsBtn) {
+        closeSpecsBtn.addEventListener('click', hideModal);
+      }
+      if (closeSpecsBottomBtn) {
+        closeSpecsBottomBtn.addEventListener('click', hideModal);
+      }
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', (e) => {
+          if (e.target === modalBackdrop) hideModal();
         });
       }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') hideModal();
+      });
     });
   </script>
 </body>

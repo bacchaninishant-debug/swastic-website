@@ -1,15 +1,11 @@
 {
-  "name": "Shop by Shape",
   "sections": {
-    "main_shapes": {
-      "type": "shop-by-shape",
-      "settings": {
-        "title": "Shop by Shape",
-        "subtitle": "Find the shape that matches your style"
-      }
+    "shapes_view": {
+      "type": "shapes-page-view",
+      "settings": {}
     }
   },
   "order": [
-    "main_shapes"
+    "shapes_view"
   ]
 }

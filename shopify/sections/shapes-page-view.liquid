@@ -1,0 +1,219 @@
+<div class="shapes-page-main" id="shapesPageContent">
+  <!-- Breadcrumb -->
+  <div class="promise-breadcrumb-wrapper">
+    <div class="promise-container">
+      <nav class="breadcrumb-nav">
+        <a href="#heroSection" onclick="return window.showPageView ? window.showPageView('home', event) : true;">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Shop by Shape</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Interactive Gemstone By Shape Section: Live Dynamic Loose Gemstone Switching -->
+  <section class="diamond-shape-selector-section" id="diamond-shape-section-view" style="padding-top: 20px;">
+    <div class="shape-selector-header">
+      <h1 class="section-title">GIA Certified Gemstones<br>by Shape</h1>
+      <p class="section-subtitle">
+        Browse our rare selection of <a href="#viewSpecsBtn" class="text-link view-specs-trigger">GIA-certified natural loose gemstones</a> across eight signature precision cuts. 100% loose natural gemstones with exceptional fire &amp; brilliance.
+      </p>
+    </div>
+
+    <!-- Main Stage Gemstone Showcase (Dynamically updates upon selecting gemstone shapes) -->
+    <div class="shape-ring-stage">
+      <div class="ring-display-container">
+        <img src="{{ 'diamond-blue-heart.jpg' | asset_url }}" alt="Certified Natural Heart Gemstone" id="shapesViewRingImage" class="active-ring-preview" width="600" height="600">
+        
+        <button class="stage-favorite-btn" id="shapesViewStageFavBtn" title="Add to Favorites" aria-label="Favorite">
+          <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+
+        <div class="ring-spec-overlay">
+          <span class="diamond-spec-pill" id="shapesViewCutBadge">HEART-CUT GIA CERTIFIED GEMSTONE</span>
+          <span class="diamond-spec-sub" id="shapesViewCaratBadge">2.05 CT • Natural Certified • VVS1 • GIA Certified</span>
+        </div>
+      </div>
+
+      <p class="selector-instructions">Click the gemstone shape below</p>
+    </div>
+
+    <!-- Interactive Diamond Shapes Bar -->
+    <div class="diamond-shapes-nav">
+      <!-- 1. HEART-CUT -->
+      <button class="diamond-shape-btn active" data-shape="heart" data-img="{{ 'diamond-blue-heart.jpg' | asset_url }}" data-name="HEART-CUT" data-spec="2.05 CT • Natural Certified • VVS1 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <path class="facet-outline" d="M50 88 C20 65, 8 48, 8 30 A20 20 0 0 1 48 24 L50 27 L52 24 A20 20 0 0 1 92 30 C92 48, 80 65, 50 88 Z" fill="none" stroke="#222" stroke-width="2.5" />
+            <path class="facet-line" d="M50 27 L50 88" stroke="#555" stroke-width="1.2" />
+            <path class="facet-line" d="M28 20 L50 48 L72 20" stroke="#555" stroke-width="1.2" fill="none" />
+            <path class="facet-line" d="M50 48 L22 55 L50 88 L78 55 Z" stroke="#666" stroke-width="1" fill="none" />
+            <path class="facet-line" d="M12 36 L22 55 M88 36 L78 55" stroke="#777" stroke-width="1" />
+            <polygon points="50,48 40,32 60,32" fill="rgba(240,240,250,0.5)" stroke="#777" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">HEART-CUT</span>
+      </button>
+
+      <!-- 2. PEAR-CUT -->
+      <button class="diamond-shape-btn" data-shape="pear" data-img="{{ 'diamond-blue-pear.jpg' | asset_url }}" data-name="PEAR-CUT" data-spec="2.20 CT • Natural Certified • VVS2 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <path class="facet-outline" d="M50 12 C30 38, 16 56, 16 70 A34 34 0 0 0 84 70 C84 56, 70 38, 50 12 Z" fill="none" stroke="#222" stroke-width="2.5" />
+            <path class="facet-line" d="M50 12 L50 96" stroke="#555" stroke-width="1.2" />
+            <path class="facet-line" d="M50 32 L26 62 L50 78 L74 62 Z" stroke="#666" stroke-width="1" fill="none" />
+            <path class="facet-line" d="M50 12 L26 62 M50 12 L74 62" stroke="#777" stroke-width="1" />
+            <path class="facet-line" d="M26 62 L16 70 M74 62 L84 70" stroke="#888" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">PEAR-CUT</span>
+      </button>
+
+      <!-- 3. PRINCESS-CUT -->
+      <button class="diamond-shape-btn" data-shape="princess" data-img="{{ 'diamond-blue-princess.jpg' | asset_url }}" data-name="PRINCESS-CUT" data-spec="2.03 CT • Natural Certified • VS1 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <rect class="facet-outline" x="15" y="15" width="70" height="70" fill="none" stroke="#222" stroke-width="2.5" />
+            <rect class="facet-line" x="32" y="32" width="36" height="36" fill="none" stroke="#555" stroke-width="1.2" />
+            <line class="facet-line" x1="15" y1="15" x2="32" y2="32" stroke="#666" stroke-width="1.2" />
+            <line class="facet-line" x1="85" y1="15" x2="68" y2="32" stroke="#666" stroke-width="1.2" />
+            <line class="facet-line" x1="15" y1="85" x2="32" y2="68" stroke="#666" stroke-width="1.2" />
+            <line class="facet-line" x1="85" y1="85" x2="68" y2="68" stroke="#666" stroke-width="1.2" />
+            <line class="facet-line" x1="50" y1="32" x2="50" y2="68" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="32" y1="50" x2="68" y2="50" stroke="#777" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">PRINCESS-CUT</span>
+      </button>
+
+      <!-- 4. EMERALD-CUT -->
+      <button class="diamond-shape-btn" data-shape="emerald" data-img="{{ 'diamond-blue-emerald.jpg' | asset_url }}" data-name="EMERALD-CUT" data-spec="2.45 CT • Natural Certified • VVS1 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <polygon class="facet-outline" points="26,12 74,12 88,26 88,74 74,88 26,88 12,74 12,26" fill="none" stroke="#222" stroke-width="2.5" />
+            <polygon class="facet-line" points="32,22 68,22 78,32 78,68 68,78 32,78 22,68 22,32" fill="none" stroke="#555" stroke-width="1.2" />
+            <polygon class="facet-line" points="38,32 62,32 70,40 70,60 62,68 38,68 30,60 30,40" fill="none" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="26" y1="12" x2="38" y2="32" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="74" y1="12" x2="62" y2="32" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="26" y1="88" x2="38" y2="68" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="74" y1="88" x2="62" y2="68" stroke="#777" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">EMERALD-CUT</span>
+      </button>
+
+      <!-- 5. ROUND-CUT -->
+      <button class="diamond-shape-btn" data-shape="round" data-img="{{ 'diamond-blue-round.jpg' | asset_url }}" data-name="ROUND-CUT" data-spec="2.00 CT • Natural Certified • IF Clarity • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <circle class="facet-outline" cx="50" cy="50" r="38" fill="none" stroke="#222" stroke-width="2.5" />
+            <polygon points="50,22 69,31 78,50 69,69 50,78 31,69 22,50 31,31" fill="none" stroke="#555" stroke-width="1.2" />
+            <polygon points="50,32 63,37 68,50 63,63 50,68 37,63 32,50 37,37" fill="none" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="50" y1="12" x2="50" y2="22" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="50" y1="78" x2="50" y2="88" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="12" y1="50" x2="22" y2="50" stroke="#777" stroke-width="1" />
+            <line class="facet-line" x1="78" y1="50" x2="88" y2="50" stroke="#777" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">ROUND-CUT</span>
+      </button>
+
+      <!-- 6. OVAL-CUT -->
+      <button class="diamond-shape-btn" data-shape="oval" data-img="{{ 'diamond-blue-oval.jpg' | asset_url }}" data-name="OVAL-CUT" data-spec="2.15 CT • Natural Certified • VVS1 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <ellipse class="facet-outline" cx="50" cy="50" rx="30" ry="40" fill="none" stroke="#222" stroke-width="2.5" />
+            <ellipse class="facet-line" cx="50" cy="50" rx="18" ry="26" fill="none" stroke="#555" stroke-width="1.2" />
+            <line class="facet-line" x1="50" y1="10" x2="50" y2="24" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="50" y1="76" x2="50" y2="90" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="20" y1="50" x2="32" y2="50" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="68" y1="50" x2="80" y2="50" stroke="#666" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">OVAL-CUT</span>
+      </button>
+
+      <!-- 7. CUSHION-CUT -->
+      <button class="diamond-shape-btn" data-shape="cushion" data-img="{{ 'diamond-blue-cushion.jpg' | asset_url }}" data-name="CUSHION-CUT" data-spec="2.25 CT • Natural Certified • VS1 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <rect class="facet-outline" x="18" y="18" width="64" height="64" rx="20" ry="20" fill="none" stroke="#222" stroke-width="2.5" />
+            <rect class="facet-line" x="30" y="30" width="40" height="40" rx="12" ry="12" fill="none" stroke="#555" stroke-width="1.2" />
+            <line class="facet-line" x1="18" y1="50" x2="30" y2="50" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="70" y1="50" x2="82" y2="50" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="50" y1="18" x2="50" y2="30" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="50" y1="70" x2="50" y2="82" stroke="#666" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">CUSHION-CUT</span>
+      </button>
+
+      <!-- 8. MARQUISE-CUT -->
+      <button class="diamond-shape-btn" data-shape="marquise" data-img="{{ 'diamond-blue-marquise.jpg' | asset_url }}" data-name="MARQUISE-CUT" data-spec="2.10 CT • Natural Certified • VVS2 • GIA Certified">
+        <div class="shape-icon-wrapper">
+          <svg class="diamond-shape-svg" viewBox="0 0 100 100">
+            <path class="facet-outline" d="M50 10 C24 35, 24 65, 50 90 C76 65, 76 35, 50 10 Z" fill="none" stroke="#222" stroke-width="2.5" />
+            <path class="facet-line" d="M50 26 C34 42, 34 58, 50 74 C66 58, 66 42, 50 26 Z" fill="none" stroke="#555" stroke-width="1.2" />
+            <line class="facet-line" x1="50" y1="10" x2="50" y2="90" stroke="#666" stroke-width="1" />
+            <line class="facet-line" x1="25" y1="50" x2="75" y2="50" stroke="#666" stroke-width="1" />
+          </svg>
+        </div>
+        <span class="shape-label">MARQUISE-CUT</span>
+      </button>
+    </div>
+
+    <!-- Action buttons under shape selector -->
+    <div class="shape-action-row">
+      <button class="shape-action-btn primary customize-ring-btn" id="customizeRingBtnView">SELECT THIS CERTIFIED GEMSTONE</button>
+      <button class="shape-action-btn secondary view-specs-trigger" id="viewSpecsBtnView">VIEW CERTIFIED GIA SPECS</button>
+    </div>
+  </section>
+
+  <!-- Gemological Silhouette Guide -->
+  <section class="shapes-page-section" style="padding: 40px 0;">
+    <div class="shapes-container">
+      <div class="shapes-header" style="text-align: center; margin-bottom: 30px;">
+        <span class="shapes-eyebrow" style="color: #c5a059; font-size: 0.75rem; letter-spacing: 2px;">✦ GEMOLOGICAL CUT GUIDE ✦</span>
+        <h2 class="shapes-title" style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; margin: 8px 0;">Master Gemstone &amp; Diamond Silhouettes</h2>
+        <p class="shapes-subtitle" style="color: #666; font-size: 0.95rem;">Explore each unique geometry engineered for optical fire, brilliance, and timeless elegance.</p>
+      </div>
+
+      <div class="shapes-cards-grid">
+        <div class="shape-info-card">
+          <img src="{{ 'clean-diamond-emerald.png' | asset_url }}" alt="Emerald Cut" class="shape-card-icon">
+          <h3>EMERALD STEP CUT</h3>
+          <p>The hallmark of nobility. Long parallel facets create a hypnotic hall-of-mirrors effect showcasing color purity and crystalline depth.</p>
+        </div>
+
+        <div class="shape-info-card">
+          <img src="{{ 'clean-diamond-oval.png' | asset_url }}" alt="Oval Cut" class="shape-card-icon">
+          <h3>OVAL BRILLIANT</h3>
+          <p>An elongating, flattering silhouette providing royal fire and contemporary sophistication for rings and bespoke pendants.</p>
+        </div>
+
+        <div class="shape-info-card">
+          <img src="{{ 'clean-diamond-round.png' | asset_url }}" alt="Round Brilliant" class="shape-card-icon">
+          <h3>ROUND BRILLIANT</h3>
+          <p>57 calibrated facets engineered to achieve maximum light refraction, optical dispersion, and scintillating sparkle.</p>
+        </div>
+
+        <div class="shape-info-card">
+          <img src="{{ 'clean-diamond-pear.png' | asset_url }}" alt="Pear Cut" class="shape-card-icon">
+          <h3>PEAR SHAPE</h3>
+          <p>A romantic teardrop fusion of round brilliance and marquise drama, symbolizing bespoke grace and rare beauty.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shape Video Reel Section -->
+  {% section 'shapes-video-reel' %}
+</div>
+
+{% schema %}
+{
+  "name": "Shapes Page View",
+  "settings": []
+}
+{% endschema %}

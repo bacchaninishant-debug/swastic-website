@@ -1,0 +1,237 @@
+<div class="gemstones-page-main" id="gemstonesPageContent">
+  <!-- Breadcrumb -->
+  <div class="promise-breadcrumb-wrapper">
+    <div class="promise-container">
+      <nav class="breadcrumb-nav">
+        <a href="#heroSection" onclick="return window.showPageView ? window.showPageView('home', event) : true;">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Certified Natural Gemstones</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Signature Certified Gemstone Collection Section -->
+  <section class="featured-diamond-products-section" id="diamond-products-section-view" style="border-top: none; padding-top: 20px;">
+    <div class="products-section-container">
+      
+      <div class="products-section-header">
+        <span class="products-eyebrow">HANDCRAFTED HEIRLOOMS &amp; CERTIFIED STONES</span>
+        <h1 class="products-main-title">Swastic Exports Signature Certified Loose Gemstone Collection</h1>
+        <p class="products-subtitle">
+          Explore individually certified GIA loose gemstones in our signature heirloom cuts. Sourced directly from ethical mines with verifiable provenance.
+        </p>
+
+        <!-- Filter Tabs -->
+        <div class="product-category-tabs">
+          <button class="prod-tab-btn active" data-tab="all" onclick="filterProductCategory('all')">ALL CREATIONS</button>
+          <button class="prod-tab-btn" data-tab="diamonds" onclick="filterProductCategory('diamonds')">LOOSE CERTIFIED GEMSTONES</button>
+        </div>
+      </div>
+
+      <!-- Product Grid: 8 GIA Certified Loose Gemstones & Diamonds -->
+      <div class="diamond-products-grid" id="gemstonesViewProductsGrid">
+        
+        <!-- 1. Green Beryl -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-green-beryl.png' | asset_url }}" alt="2.35 CT Green Beryl Emerald Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-green-beryl', '2.35 CT Green Beryl Emerald Cut Gemstone', 1850, 'GIA • Mint Green • VVS1 • Heirloom Cut', '{{ 'product-gem-green-beryl.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">2.35 CT • MINT GREEN • VVS1 • GIA</span>
+            <h3 class="product-title">Green Beryl Emerald Cut Loose Gemstone</h3>
+            <p class="product-price">$1,850</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-green-beryl', '2.35 CT Green Beryl Emerald Cut Gemstone', 1850, 'GIA • Mint Green • VVS1 • Heirloom Cut', '{{ 'product-gem-green-beryl.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 2. Emerald -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-emerald.png' | asset_url }}" alt="2.60 CT Colombian Emerald Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-emerald', '2.60 CT Colombian Emerald Cut Gemstone', 3800, 'GIA • Vivid Green • VVS • Royal Provenance', '{{ 'product-gem-emerald.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">2.60 CT • VIVID GREEN • VVS • GIA</span>
+            <h3 class="product-title">Colombian Emerald Cut Loose Gemstone</h3>
+            <p class="product-price">$3,800</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-emerald', '2.60 CT Colombian Emerald Cut Gemstone', 3800, 'GIA • Vivid Green • VVS • Royal Provenance', '{{ 'product-gem-emerald.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 3. Aquamarine -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-aquamarine.png' | asset_url }}" alt="3.15 CT Aquamarine Cushion Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-aquamarine', '3.15 CT Aquamarine Cushion Cut Gemstone', 2100, 'GIA • Santa Maria Cyan • VVS1 • Radiant Cut', '{{ 'product-gem-aquamarine.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">3.15 CT • SANTA MARIA CYAN • VVS1 • GIA</span>
+            <h3 class="product-title">Aquamarine Cushion Cut Loose Gemstone</h3>
+            <p class="product-price">$2,100</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-aquamarine', '3.15 CT Aquamarine Cushion Cut Gemstone', 2100, 'GIA • Santa Maria Cyan • VVS1 • Radiant Cut', '{{ 'product-gem-aquamarine.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 4. Maxixe -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-maxixe.png' | asset_url }}" alt="2.80 CT Maxixe Oval Brilliant Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-maxixe', '2.80 CT Maxixe Oval Brilliant Cut Gemstone', 2950, 'GIA • Royal Cobalt Blue • VVS1 • Rare Specimen', '{{ 'product-gem-maxixe.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">2.80 CT • ROYAL BLUE • VVS1 • GIA</span>
+            <h3 class="product-title">Maxixe Brilliant Oval Cut Loose Gemstone</h3>
+            <p class="product-price">$2,950</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-maxixe', '2.80 CT Maxixe Oval Brilliant Cut Gemstone', 2950, 'GIA • Royal Cobalt Blue • VVS1 • Rare Specimen', '{{ 'product-gem-maxixe.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 5. Red Beryl -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-red-beryl.png' | asset_url }}" alt="1.90 CT Red Beryl Step Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-red-beryl', '1.90 CT Red Beryl Step Cut Gemstone', 4500, 'GIA • Vivid Raspberry Red • VVS2 • Extremely Rare', '{{ 'product-gem-red-beryl.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">1.90 CT • VIVID CRIMSON RED • VVS2 • GIA</span>
+            <h3 class="product-title">Red Beryl Step Cut Loose Gemstone</h3>
+            <p class="product-price">$4,500</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-red-beryl', '1.90 CT Red Beryl Step Cut Gemstone', 4500, 'GIA • Vivid Raspberry Red • VVS2 • Extremely Rare', '{{ 'product-gem-red-beryl.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 6. Morganite -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-morganite.png' | asset_url }}" alt="3.40 CT Morganite Pear Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-morganite', '3.40 CT Morganite Pear Cut Gemstone', 1950, 'GIA • Blush Peach Pink • VVS1 • Heirloom Cut', '{{ 'product-gem-morganite.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">3.40 CT • BLUSH PEACH • VVS1 • GIA</span>
+            <h3 class="product-title">Morganite Pear Cut Loose Gemstone</h3>
+            <p class="product-price">$1,950</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-morganite', '3.40 CT Morganite Pear Cut Gemstone', 1950, 'GIA • Blush Peach Pink • VVS1 • Heirloom Cut', '{{ 'product-gem-morganite.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 7. Goshenite Diamond -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-goshenite-diamond.png' | asset_url }}" alt="2.75 CT Goshenite Oval Brilliant Loose Diamond Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-goshenite-diamond', '2.75 CT Goshenite Brilliant Diamond Gemstone', 3200, 'GIA • D Color • VVS1 • Triple Excellent Fire', '{{ 'product-gem-goshenite-diamond.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">2.75 CT • D COLOR • VVS1 • TRIPLE EXCELLENT</span>
+            <h3 class="product-title">Goshenite Oval Cut Diamond Gemstone</h3>
+            <p class="product-price">$3,200</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-goshenite-diamond', '2.75 CT Goshenite Brilliant Diamond Gemstone', 3200, 'GIA • D Color • VVS1 • Triple Excellent Fire', '{{ 'product-gem-goshenite-diamond.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+        <!-- 8. Heliodor -->
+        <div class="product-item-card" data-category="diamonds">
+          <div class="product-thumb-holder loose-diamond-holder">
+            <span class="product-badge cert-badge-card">GIA CERTIFIED</span>
+            <img src="{{ 'product-gem-heliodor.png' | asset_url }}" alt="3.20 CT Heliodor Golden Step Cut Loose Gemstone" class="product-img" width="400" height="400" loading="lazy">
+            <button class="product-fav-btn" onclick="toggleProductFav(this, 'gem-heliodor', '3.20 CT Heliodor Golden Step Cut Gemstone', 1750, 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut', '{{ 'product-gem-heliodor.png' | asset_url }}')" title="Save to Favorites" aria-label="Favorite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <div class="product-card-details">
+            <span class="product-spec-tag">3.20 CT • GOLDEN YELLOW • VVS1 • GIA</span>
+            <h3 class="product-title">Heliodor Golden Step Cut Loose Gemstone</h3>
+            <p class="product-price">$1,750</p>
+            <button class="product-card-add-btn" onclick="addProductToBag('gem-heliodor', '3.20 CT Heliodor Golden Step Cut Gemstone', 1750, 'GIA • Sunshine Golden Yellow • VVS1 • Precision Cut', '{{ 'product-gem-heliodor.png' | asset_url }}')">ADD TO BAG</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="products-view-all-row" style="margin-top: 40px; text-align: center;">
+        <a href="#diamond-shape-section" class="hero-cta-btn dark-cta" onclick="return window.showPageView ? window.showPageView('shapes', event) : true;">
+          <span>EXPLORE ALL SHAPES &amp; CUSTOM SETTINGS</span>
+          <span class="cta-arrow-icon">&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Rare Loose Gemstone Spectrum Section -->
+  <section class="gem-variety-strip-section" id="gem-variety-section-view" style="border-bottom: 1px solid rgba(0,0,0,0.06); padding: 50px 0;">
+    <div class="gem-variety-container">
+      <div class="gem-variety-header" style="text-align: center; margin-bottom: 30px;">
+        <span class="variety-eyebrow" style="color: #c5a059; font-size: 0.75rem; letter-spacing: 2px;">✦ NATURAL GEMSTONE CURATION ✦</span>
+        <h2 class="variety-title" style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin: 8px 0;">Explore Rare Gemstone Varieties</h2>
+        <p class="variety-subtitle" style="color: #666; font-size: 0.95rem;">Master-cut certified natural loose gemstones sourced directly from premier global mines.</p>
+      </div>
+      <div class="gem-variety-grid">
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-tsavorite-garnet.jpg' | asset_url }}" alt="Tsavorite Garnet" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Tsavorite Garnet</span>
+        </div>
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-burma-ruby.jpg' | asset_url }}" alt="Burma Ruby" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Burma Ruby</span>
+        </div>
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-green-tourmaline.jpg' | asset_url }}" alt="Green Tourmaline" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Green Tourmaline</span>
+        </div>
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-pink-sapphire.jpg' | asset_url }}" alt="Pink Sapphire" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Pink Sapphire</span>
+        </div>
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-yellow-sapphire.jpg' | asset_url }}" alt="Yellow Sapphire" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Yellow Sapphire</span>
+        </div>
+        <div class="gem-variety-item">
+          <div class="gem-variety-thumb">
+            <img src="{{ 'gem-pink-tourmaline.jpg' | asset_url }}" alt="Pink Tourmaline" loading="lazy">
+          </div>
+          <span class="gem-variety-name">Pink Tourmaline</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Gemstones Page View",
+  "settings": []
+}
+{% endschema %}

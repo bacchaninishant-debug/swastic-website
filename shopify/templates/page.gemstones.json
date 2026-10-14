@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "gemstones_view": {
+      "type": "gemstones-page-view",
+      "settings": {}
+    }
+  },
+  "order": [
+    "gemstones_view"
+  ]
+}

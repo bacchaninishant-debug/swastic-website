@@ -1,8 +1,3 @@
-{% comment %}
-  Shopify Section: Site Header & Navigation
-  VELORA branding with HOME | RINGS | DIAMONDS | ABOUT
-{% endcomment %}
-
 <header class="site-header" id="siteHeader">
   <div class="top-nav-bar">
     <div class="header-left">
@@ -13,25 +8,12 @@
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
-      <a href="tel:{{ section.settings.phone | default: '18444000065' }}" class="header-contact-link">
-        <svg class="icon phone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        <span>{{ section.settings.phone_display | default: '1.844.400.0065' }}</span>
-      </a>
-      <div class="location-currency">
-        <svg class="icon location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-          <circle cx="12" cy="10" r="3"></circle>
-        </svg>
-        <span>{{ section.settings.country_currency | default: 'USA (USD)' }}</span>
-      </div>
     </div>
 
     <div class="header-logo-container">
-      <a href="/" class="brand-logo">
-        <span class="logo-title">{{ section.settings.logo_title | default: 'VELORA' }}</span>
-        <span class="logo-sub">{{ section.settings.logo_sub | default: 'FINE JEWELRY' }}</span>
+      <a href="{{ routes.root_url }}" class="brand-logo">
+        <span class="logo-title">{{ section.settings.logo_title | default: 'SWASTIC EXPORTS' }}</span>
+        <span class="logo-sub">{{ section.settings.logo_sub | default: 'HOUSE OF GEMS' }}</span>
       </a>
     </div>
 
@@ -43,70 +25,87 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </div>
-
+      
       <!-- Wishlist / Favorites Button -->
-      <button class="nav-action-btn wishlist-btn" id="wishlistBtn" aria-label="Favorites">
+      <button class="nav-action-btn wishlist-btn" id="wishlistBtn" aria-label="Favorites" title="View Favorites">
         <svg class="icon heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
-        <span class="action-badge" id="wishlistBadgeCount">0</span>
+        <span class="action-badge" id="wishlistBadgeCount"></span>
       </button>
 
-      <a href="/account" class="nav-action-btn user-btn" aria-label="Account">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </a>
-
-      <a href="/cart" class="nav-action-btn cart-btn" id="cartBtn" aria-label="Shopping Bag">
+      <button class="nav-action-btn user-btn" id="userBtn" aria-label="Account">
+        <a href="{{ routes.account_url }}">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </button>
+      <button class="nav-action-btn cart-btn" id="cartBtn" aria-label="Shopping Bag">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
-        <span class="action-badge" id="cartBadgeCount">{{ cart.item_count | default: 0 }}</span>
-      </a>
+        <span class="action-badge" id="cartBadgeCount">{{ cart.item_count }}</span>
+      </button>
     </div>
   </div>
 
+  <!-- Navigation Menu Bar -->
   <nav class="main-navigation">
     <ul class="nav-menu">
-      <li class="nav-item"><a href="{{ routes.root_url }}" class="nav-link">HOME</a></li>
-      <li class="nav-item"><a href="#gemstonesSection" class="nav-link">GEMSTONES</a></li>
-      <li class="nav-item"><a href="/pages/promise" class="nav-link">PROMISE</a></li>
-      <li class="nav-item"><a href="#storySection" class="nav-link">ABOUT</a></li>
+      {% if section.settings.use_custom_menu and section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
+        {% for link in linklists[section.settings.menu].links %}
+          {%- assign target_anchor = link.url | split: '#' | last -%}
+          <li class="nav-item">
+            <a href="{{ link.url }}" 
+               class="nav-link{% if link.active %} active{% endif %}" 
+               data-target="{{ target_anchor }}" 
+               onclick="return window.scrollToSection ? window.scrollToSection('{{ target_anchor }}', event) : true;">
+              {{ link.title | upcase }}
+            </a>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="nav-item"><a href="#home" class="nav-link active highlight-menu" data-target="home" onclick="return window.showPageView ? window.showPageView('home', event) : true;">HOME</a></li>
+        <li class="nav-item"><a href="#shapes" class="nav-link" data-target="shapes" onclick="return window.showPageView ? window.showPageView('shapes', event) : true;">SHOP BY SHAPE</a></li>
+        <li class="nav-item"><a href="#gemstones" class="nav-link" id="navGemsLink" data-target="gemstones" onclick="return window.showPageView ? window.showPageView('gemstones', event) : true;">GEMSTONES</a></li>
+        <li class="nav-item"><a href="#promise" class="nav-link" data-target="promise" onclick="return window.showPageView ? window.showPageView('promise', event) : true;">PROMISE</a></li>
+        <li class="nav-item"><a href="#stories" class="nav-link" data-target="stories" onclick="return window.showPageView ? window.showPageView('stories', event) : true;">STORIES</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link" data-target="about" onclick="return window.showPageView ? window.showPageView('about', event) : true;">ABOUT</a></li>
+      {% endif %}
     </ul>
   </nav>
 </header>
 
 {% schema %}
 {
-  "name": "Header & Navigation",
+  "name": "Luxury Sticky Header",
   "settings": [
     {
       "type": "text",
       "id": "logo_title",
-      "label": "Brand Name",
-      "default": "VELORA"
+      "label": "Brand Title",
+      "default": "SWASTIC EXPORTS"
     },
     {
       "type": "text",
       "id": "logo_sub",
-      "label": "Brand Tagline",
-      "default": "FINE JEWELRY"
+      "label": "Brand Subtitle",
+      "default": "HOUSE OF GEMS"
     },
     {
-      "type": "text",
-      "id": "phone_display",
-      "label": "Phone Number",
-      "default": "1.844.400.0065"
+      "type": "checkbox",
+      "id": "use_custom_menu",
+      "label": "Use custom Shopify navigation menu instead of default sections",
+      "default": false
     },
     {
-      "type": "text",
-      "id": "country_currency",
-      "label": "Country & Currency",
-      "default": "USA (USD)"
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu (Optional)"
     }
   ]
 }

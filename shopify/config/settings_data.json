@@ -1,0 +1,17 @@
+{
+  "current": {
+    "color_bg_dark": "#050606",
+    "color_card_bg": "#0b0c0c",
+    "color_gold_accent": "#dfba87",
+    "color_text_light": "#ffffff",
+    "color_text_muted": "#a0a0a0",
+    "logo_width": 220,
+    "cart_type": "drawer",
+    "show_free_shipping_note": true,
+    "instagram_url": "https://www.instagram.com/swasticexports/",
+    "whatsapp_number": "919820012345",
+    "contact_phone": "+91 98200 12345",
+    "contact_email": "concierge@swasticexports.com",
+    "contact_location": "Bharat Diamond Bourse, BKC, Mumbai"
+  }
+}

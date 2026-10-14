@@ -1,0 +1,63 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search Gemstones & Jewelry...",
+      "submit": "Search",
+      "heading": "Search Our Collection",
+      "no_results": "No gemstones or creations matched your query."
+    },
+    "accessibility": {
+      "close": "Close",
+      "menu": "Menu",
+      "cart": "Shopping Bag"
+    }
+  },
+  "sections": {
+    "header": {
+      "title": "SWASTIC EXPORTS",
+      "subtitle": "HOUSE OF GEMS"
+    },
+    "cart": {
+      "title": "YOUR SHOPPING BAG",
+      "empty": "Your shopping bag is currently empty.",
+      "continue_shopping": "CONTINUE BROWSING",
+      "subtotal": "Subtotal",
+      "checkout": "PROCEED TO CHECKOUT",
+      "shipping_note": "Complimentary insured shipping & 30-day returns included."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "ADD TO BAG",
+      "sold_out": "SOLD OUT",
+      "unavailable": "UNAVAILABLE",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "quantity": "Quantity"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My Atelier Account",
+      "details": "Account Details",
+      "orders": "Order History",
+      "no_orders": "You haven't placed any commissions or orders yet."
+    },
+    "login": {
+      "title": "Sign In to Swastic Exports",
+      "email": "Email Address",
+      "password": "Password",
+      "sign_in": "SIGN IN",
+      "forgot_password": "Forgot your password?",
+      "create_account": "Create Atelier Account"
+    },
+    "register": {
+      "title": "Join Swastic Exports Collector Circle",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email Address",
+      "password": "Password",
+      "submit": "CREATE ACCOUNT"
+    }
+  }
+}

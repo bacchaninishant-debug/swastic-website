@@ -337,35 +337,84 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewSpecsBtn = document.getElementById('viewSpecsBtn');
   const specsModalBackdrop = document.getElementById('specsModalBackdrop');
   const closeSpecsModal = document.getElementById('closeSpecsModal');
+  const closeSpecsModalBottom = document.getElementById('closeSpecsModalBottom');
   const modalShapeTitle = document.getElementById('modalShapeTitle');
   const modalShapeVal = document.getElementById('modalShapeVal');
   const modalAddBagBtn = document.getElementById('modalAddBagBtn');
 
+  function hideSpecsModalDialog() {
+    if (specsModalBackdrop) {
+      specsModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function showSpecsModalDialog() {
+    if (!specsModalBackdrop) return;
+    const shape = currentSelectedShape || 'heart';
+    const info = diamondData && diamondData[shape] ? diamondData[shape] : null;
+
+    if (modalShapeTitle) {
+      if (info && info.title) {
+        modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+        modalShapeTitle.textContent = `${name} SPECIFICATIONS`;
+      }
+    }
+
+    if (modalShapeVal) {
+      if (info && info.spec) {
+        modalShapeVal.textContent = `${shape.charAt(0).toUpperCase() + shape.slice(1)} Cut • ${info.spec}`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified • VVS1';
+        modalShapeVal.textContent = spec;
+      }
+    }
+
+    specsModalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
   if (viewSpecsBtn && specsModalBackdrop) {
-    viewSpecsBtn.addEventListener('click', () => {
-      const info = diamondData[currentSelectedShape];
-      modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
-      modalShapeVal.textContent = `${currentSelectedShape.charAt(0).toUpperCase() + currentSelectedShape.slice(1)} Cut • ${info.spec}`;
-      specsModalBackdrop.classList.add('active');
-    });
+    viewSpecsBtn.addEventListener('click', showSpecsModalDialog);
 
     if (closeSpecsModal) {
-      closeSpecsModal.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-      });
+      closeSpecsModal.addEventListener('click', hideSpecsModalDialog);
+    }
+
+    if (closeSpecsModalBottom) {
+      closeSpecsModalBottom.addEventListener('click', hideSpecsModalDialog);
     }
 
     specsModalBackdrop.addEventListener('click', (e) => {
       if (e.target === specsModalBackdrop) {
-        specsModalBackdrop.classList.remove('active');
+        hideSpecsModalDialog();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && specsModalBackdrop.classList.contains('active')) {
+        hideSpecsModalDialog();
       }
     });
 
     if (modalAddBagBtn) {
       modalAddBagBtn.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-        const info = diamondData[currentSelectedShape];
-        quickAddProduct(`shape-${currentSelectedShape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        hideSpecsModalDialog();
+        const shape = currentSelectedShape || 'heart';
+        const info = diamondData && diamondData[shape] ? diamondData[shape] : null;
+        if (info) {
+          quickAddProduct(`shape-${shape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        } else if (typeof window.addProductToBag === 'function') {
+          const activeBtn = document.querySelector('.diamond-shape-btn.active');
+          const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+          const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified';
+          const img = activeBtn ? activeBtn.dataset.img : '';
+          window.addProductToBag(`shape-${shape}`, name + ' Certified Gemstone', 3850, spec, img);
+        }
       });
     }
   }

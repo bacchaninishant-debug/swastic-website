@@ -1,0 +1,17 @@
+<div class="cart-drawer-backdrop" id="wishlistBackdrop"></div>
+<aside class="cart-drawer" id="wishlistDrawer">
+  <div class="cart-drawer-header">
+    <h3>YOUR FAVORITES (<span id="wishlistDrawerCount">0</span>)</h3>
+    <button class="close-drawer-btn" id="closeWishlistBtn">&times;</button>
+  </div>
+  <div class="cart-drawer-body" id="wishlistDrawerBody">
+    <div class="empty-cart-view" id="emptyWishlistView">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-bag-icon">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+      <p>You have not saved any favorite jewelry pieces yet.</p>
+      <button class="hero-cta-btn dark-cta" onclick="document.getElementById('wishlistBackdrop').click()">EXPLORE GEMSTONES</button>
+    </div>
+    <div class="cart-items-list" id="wishlistItemsList" style="display:none;"></div>
+  </div>
+</aside>

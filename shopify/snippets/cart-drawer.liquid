@@ -1,0 +1,64 @@
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Bag Drawer">
+  <div class="cart-drawer-header">
+    <h3>{{ 'sections.cart.title' | t | default: 'YOUR SHOPPING BAG' }} (<span id="drawerCount">{{ cart.item_count | default: 0 }}</span>)</h3>
+    <button type="button" class="close-drawer-btn" id="closeCartBtn" aria-label="Close Shopping Bag">&times;</button>
+  </div>
+  
+  <div class="cart-drawer-body" id="cartDrawerBody">
+    <div class="empty-cart-view" id="emptyCartView" {% if cart.item_count > 0 %}style="display:none;"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-bag-icon">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+      </svg>
+      <p>{{ 'sections.cart.empty' | t | default: 'Your shopping bag is currently empty.' }}</p>
+      <a href="#diamond-shape-section" onclick="if(window.showPageView){window.showPageView('shapes', event);} document.getElementById('cartDrawer').classList.remove('active'); document.getElementById('cartBackdrop').classList.remove('active');" class="hero-cta-btn dark-cta">
+        {{ 'sections.cart.continue_shopping' | t | default: 'EXPLORE GEMSTONES' }}
+      </a>
+    </div>
+
+    <div class="cart-items-list" id="cartItemsList" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+      {% for item in cart.items %}
+        <div class="cart-item-row" data-line-key="{{ item.key }}" data-variant-id="{{ item.variant_id }}">
+          {% if item.image %}
+            <img src="{{ item.image | image_url: width: 140 }}" alt="{{ item.title | escape }}" width="70" height="70" class="cart-item-img">
+          {% endif %}
+          <div class="cart-item-details">
+            <div class="cart-item-title">{{ item.product.title }}</div>
+            {% unless item.variant.title contains 'Default' %}
+              <div class="cart-item-meta">{{ item.variant.title }}</div>
+            {% endunless %}
+            <div class="cart-item-price-row">
+              <span class="cart-item-price">{{ item.final_line_price | money }}</span>
+              {% if item.quantity > 1 %}
+                <span class="cart-item-unit-note">({{ item.final_price | money }} each)</span>
+              {% endif %}
+            </div>
+            <div class="cart-qty-wrapper">
+              <div class="cart-qty-btn-group">
+                <button type="button" class="cart-qty-btn" onclick="updateShopifyCartQty('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Decrease quantity">−</button>
+                <span class="cart-qty-val">{{ item.quantity }}</span>
+                <button type="button" class="cart-qty-btn" onclick="updateShopifyCartQty('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Increase quantity">+</button>
+              </div>
+              <button type="button" class="cart-item-remove-link" onclick="updateShopifyCartQty('{{ item.key }}', 0)">Remove</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cart-drawer-footer" id="cartDrawerFooter" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>
+    <div class="cart-subtotal-row">
+      <span>{{ 'sections.cart.subtotal' | t | default: 'Estimated Total:' }}</span>
+      <span id="cartSubtotalValue">{{ cart.total_price | money }}</span>
+    </div>
+    
+    <a href="/checkout" class="checkout-btn" id="drawerCheckoutBtn" onclick="if(window.openCheckoutModal){window.openCheckoutModal(); return false;}">
+      {{ 'sections.cart.checkout' | t | default: 'PROCEED TO CHECKOUT' }}
+    </a>
+    
+    <p class="cart-shipping-note">{{ 'sections.cart.shipping_note' | t | default: '✦ Fully Insured Priority Courier Worldwide Delivery' }}</p>
+  </div>
+</aside>
+
+<div class="cart-backdrop" id="cartBackdrop"></div>

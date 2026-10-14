@@ -1,0 +1,93 @@
+{% comment %}
+  Renders a luxury Swastic Exports product card
+  Accepts:
+  - product: {Object} Shopify Product object
+  - custom_badge: {String} Optional custom badge (e.g. 'GIA CERTIFIED')
+  - custom_spec: {String} Optional specs text
+{% endcomment %}
+
+{% liquid
+  assign card_product = product
+  assign product_title = card_product.title | default: title
+  assign product_price = card_product.price | default: price
+  assign product_image = card_product.featured_image
+  assign variant_id = card_product.first_available_variant.id
+  assign available = card_product.available
+  if card_product == blank
+    assign available = true
+  endif
+%}
+
+<div class="product-item-card" data-product-id="{{ card_product.id | default: id }}">
+  <div class="product-thumb-holder loose-diamond-holder">
+    <span class="product-badge cert-badge-card">{{ custom_badge | default: 'GIA CERTIFIED' }}</span>
+
+    <a href="{{ card_product.url | default: '#' }}" class="product-thumb-link">
+      {% if product_image != blank %}
+        <img 
+          src="{{ product_image | image_url: width: 600 }}" 
+          alt="{{ product_image.alt | default: product_title | escape }}"
+          class="product-img"
+          loading="lazy"
+          width="300"
+          height="300">
+      {% elsif image_asset != blank %}
+        <img 
+          src="{{ image_asset | asset_url }}" 
+          alt="{{ product_title | escape }}" 
+          width="400"
+          height="400"
+          class="product-img"
+          loading="lazy">
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'product-img placeholder-svg' }}
+      {% endif %}
+    </a>
+
+    <button 
+      type="button" 
+      class="product-fav-btn" 
+      data-id="{{ card_product.id | default: id }}"
+      data-title="{{ product_title | escape }}"
+      data-price="{{ product_price | money_without_trailing_zeros }}"
+      data-img="{% if product_image != blank %}{{ product_image | image_url: width: 300 }}{% else %}{{ image_asset | asset_url }}{% endif %}"
+      onclick="toggleProductFav(this, '{{ card_product.id | default: id }}', '{{ product_title | escape }}', {{ product_price | default: 2500 | divided_by: 100 }}, '{{ custom_spec | default: 'Certified Natural Gemstone' | escape }}', '{% if product_image != blank %}{{ product_image | image_url: width: 300 }}{% else %}{{ image_asset | asset_url }}{% endif %}')"
+      title="Save to Favorites" 
+      aria-label="Save to Favorites">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="product-card-details">
+    <span class="product-spec-tag">{{ custom_spec | default: 'CERTIFIED NATURAL GEMSTONE' }}</span>
+    <h3 class="product-title">
+      <a href="{{ card_product.url | default: '#' }}">{{ product_title }}</a>
+    </h3>
+    <p class="product-price">
+      {% if card_product != blank %}
+        {{ card_product.price | money }}
+        {% if card_product.compare_at_price > card_product.price %}
+          <s class="compare-price">{{ card_product.compare_at_price | money }}</s>
+        {% endif %}
+      {% else %}
+        ${{ price | default: '2,800' }}
+      {% endif %}
+    </p>
+
+    {% if available %}
+      <button 
+        type="button" 
+        class="product-card-add-btn"
+        data-variant-id="{{ variant_id }}"
+        onclick="addProductToBag('{{ card_product.id | default: id }}', '{{ product_title | escape }}', {{ product_price | default: 2800 | divided_by: 100 }}, '{{ custom_spec | default: 'Certified Natural Gemstone' | escape }}', '{% if product_image != blank %}{{ product_image | image_url: width: 300 }}{% else %}{{ image_asset | asset_url }}{% endif %}', '{{ variant_id }}')">
+        ADD TO BAG
+      </button>
+    {% else %}
+      <button type="button" class="product-card-add-btn disabled" disabled>
+        SOLD OUT
+      </button>
+    {% endif %}
+  </div>
+</div>

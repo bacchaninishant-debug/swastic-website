@@ -27,26 +27,27 @@
     </div>
 
     <div class="footer-column">
-      <h4>SERVICES</h4>
+      <h4>SERVICES & POLICIES</h4>
       <ul>
-        <li><a href="#">Custom Jewelry Design</a></li>
-        <li><a href="#">Complimentary Ring Resizing</a></li>
-        <li><a href="#">Lifetime Warranty</a></li>
-        <li><a href="#">Free Insured Shipping</a></li>
-        <li><a href="#">30-Day Returns</a></li>
+        <li><a href="#">The Swastic Exports Promise</a></li>
+        <li><a href="#">Client FAQ & Ordering Guide</a></li>
+        <li><a href="#">Bespoke Millimeter Calibration</a></li>
+        <li><a href="#">Insured Worldwide Delivery</a></li>
+        <li><a href="#">10-Day Returns (Video Req.)</a></li>
       </ul>
     </div>
 
     <div class="footer-column">
-      <h4>CONTACT & CONCIERGE</h4>
-      <p class="footer-contact-item"><strong>Toll Free:</strong> {{ section.settings.phone | default: '1.844.400.0065' }}</p>
-      <p class="footer-contact-item"><strong>Email:</strong> {{ shop.email | default: 'support@diamondere.com' }}</p>
-      <p class="footer-contact-item"><strong>Concierge:</strong> Available 24/7</p>
+      <h4>JAIPUR ATELIER & CONTACT</h4>
+      <p class="footer-contact-item"><strong>WhatsApp / Call:</strong> <a href="https://wa.me/919660096877" target="_blank">{{ section.settings.phone | default: '+91 96600 96877' }}</a></p>
+      <p class="footer-contact-item"><strong>Email:</strong> <a href="mailto:exhibition.swasticexports@gmail.com">{{ shop.email | default: 'exhibition.swasticexports@gmail.com' }}</a></p>
+      <p class="footer-contact-item"><strong>Address:</strong> C-4, 3rd Floor, Swastic House, Gopinath Marg, New Colony, MI Road, Jaipur, Rajasthan</p>
+      <p class="footer-tax-info"><strong>GSTIN:</strong> 08AAFFS8734E1Z0</p>
     </div>
   </div>
   
   <div class="footer-bottom-bar">
-    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Diamondère' }} Inc. All rights reserved. Handcrafted with bespoke precision.</p>
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'SWASTIC EXPORTS (Est. 1980)' }}. All rights reserved. Handcrafted with bespoke precision.</p>
   </div>
 </footer>
 
@@ -58,7 +59,7 @@
       "type": "text",
       "id": "phone",
       "label": "Phone Support",
-      "default": "1.844.400.0065"
+      "default": "+91 96600 96877"
     }
   ]
 }

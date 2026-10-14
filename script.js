@@ -158,6 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Favorites / Wishlist Management
   let favorites = [];
+  try {
+    const savedFav = localStorage.getItem('swastic_gem_wishlist');
+    if (savedFav) favorites = JSON.parse(savedFav);
+  } catch(e) {}
+
+  const saveWishlist = () => {
+    try {
+      localStorage.setItem('swastic_gem_wishlist', JSON.stringify(favorites));
+    } catch(e) {}
+  };
+
   const wishlistBtn = document.getElementById('wishlistBtn');
   const closeWishlistBtn = document.getElementById('closeWishlistBtn');
   const wishlistDrawer = document.getElementById('wishlistDrawer');
@@ -168,88 +179,121 @@ document.addEventListener('DOMContentLoaded', () => {
   const wishlistItemsList = document.getElementById('wishlistItemsList');
 
   function isItemInFavorites(id) {
-    return favorites.some(item => item.id === id);
+    return favorites.some(item => String(item.id) === String(id));
   }
 
   window.toggleProductFavorite = (id, title, spec, price, img, e) => {
-    if (e) {
+    if (e && e.stopPropagation) {
       e.stopPropagation();
-      const heartBtn = e.currentTarget;
-      heartBtn.classList.toggle('active');
     }
 
-    const index = favorites.findIndex(item => item.id === id);
+    const index = favorites.findIndex(item => String(item.id) === String(id));
     if (index > -1) {
       favorites.splice(index, 1);
     } else {
       favorites.push({ id, title, spec, price, img });
     }
 
+    saveWishlist();
     updateWishlistUI();
   };
 
   function updateWishlistUI() {
     const count = favorites.length;
-    if (wishlistBadgeCount) {
-      wishlistBadgeCount.textContent = count;
-      wishlistBadgeCount.classList.toggle('has-items', count > 0);
+    const badge = document.getElementById('wishlistBadgeCount') || wishlistBadgeCount;
+    const drawerCounter = document.getElementById('wishlistDrawerCount') || wishlistDrawerCount;
+    const emptyView = document.getElementById('emptyWishlistView') || emptyWishlistView;
+    const itemsList = document.getElementById('wishlistItemsList') || wishlistItemsList;
+
+    if (badge) {
+      badge.textContent = count;
+      badge.classList.toggle('has-items', count > 0);
     }
-    if (wishlistDrawerCount) wishlistDrawerCount.textContent = count;
+    if (drawerCounter) drawerCounter.textContent = count;
 
-    if (stageFavBtn) {
-      stageFavBtn.classList.toggle('favorited', isItemInFavorites(`shape-${currentSelectedShape}`));
+    if (typeof stageFavBtn !== 'undefined' && stageFavBtn) {
+      stageFavBtn.classList.toggle('favorited', isItemInFavorites(`shape-${typeof currentSelectedShape !== 'undefined' ? currentSelectedShape : 'emerald'}`));
     }
 
-    if (count === 0) {
-      emptyWishlistView.style.display = 'block';
-      wishlistItemsList.style.display = 'none';
-    } else {
-      emptyWishlistView.style.display = 'none';
-      wishlistItemsList.style.display = 'block';
+    // Sync all product cards heart buttons on the page
+    document.querySelectorAll('.product-fav-btn').forEach(btn => {
+      const onclickAttr = btn.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/toggleProductFav\([^,]+,\s*'([^']+)'/);
+      if (match && match[1]) {
+        btn.classList.toggle('favorited', isItemInFavorites(match[1]));
+      }
+    });
 
-      wishlistItemsList.innerHTML = favorites.map((item, idx) => `
-        <div class="cart-item-row">
-          <img src="${item.img}" alt="${item.title}" class="cart-item-img">
-          <div class="cart-item-details">
-            <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-meta">${item.spec}</div>
-            <div class="cart-item-price">${item.price}</div>
-            <div style="display:flex; gap:12px; margin-top:6px;">
-              <button class="hero-cta-btn dark-cta" style="padding:6px 12px !important; font-size:10px !important;" onclick="moveFavoriteToBag(${idx})">MOVE TO BAG</button>
-              <div class="cart-item-remove" onclick="removeFavoriteItem(${idx})">Remove</div>
+    if (emptyView && itemsList) {
+      if (count === 0) {
+        emptyView.style.display = 'block';
+        itemsList.style.display = 'none';
+      } else {
+        emptyView.style.display = 'none';
+        itemsList.style.display = 'block';
+
+        itemsList.innerHTML = favorites.map((item, idx) => `
+          <div class="cart-item-row" data-fav-id="${item.id}">
+            <img src="${item.img}" alt="${item.title}" class="cart-item-img">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-meta">${item.spec}</div>
+              <div class="cart-item-price-row">
+                <span class="cart-item-price">${item.price}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+                <button type="button" class="hero-cta-btn dark-cta" style="padding:7px 14px !important; font-size:11px !important; letter-spacing:0.04em; border-radius:3px;" onclick="moveFavoriteToBag(${idx})">MOVE TO BAG</button>
+                <button type="button" class="cart-item-remove-link" onclick="removeFavoriteItem(${idx})">Remove</button>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
     }
   }
 
   window.removeFavoriteItem = (idx) => {
     favorites.splice(idx, 1);
+    saveWishlist();
     updateWishlistUI();
   };
 
   window.moveFavoriteToBag = (idx) => {
     const fav = favorites[idx];
-    const priceNum = parseInt(fav.price.replace(/[^0-9]/g, '')) || 2950;
+    if (!fav) return;
+    const priceNum = typeof fav.price === 'number' ? fav.price : (parseInt(String(fav.price).replace(/[^0-9]/g, '')) || 2950);
     quickAddProduct(fav.id, fav.title, fav.spec, priceNum, fav.img);
     removeFavoriteItem(idx);
     closeWishlist();
   };
 
   const openWishlist = () => {
-    wishlistDrawer.classList.add('active');
-    wishlistBackdrop.classList.add('active');
+    updateWishlistUI();
+    const drawer = document.getElementById('wishlistDrawer') || wishlistDrawer;
+    const backdrop = document.getElementById('wishlistBackdrop') || wishlistBackdrop;
+    if (drawer) drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
   };
 
   const closeWishlist = () => {
-    wishlistDrawer.classList.remove('active');
-    wishlistBackdrop.classList.remove('active');
+    const drawer = document.getElementById('wishlistDrawer') || wishlistDrawer;
+    const backdrop = document.getElementById('wishlistBackdrop') || wishlistBackdrop;
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
   };
 
-  if (wishlistBtn) wishlistBtn.addEventListener('click', openWishlist);
-  if (closeWishlistBtn) closeWishlistBtn.addEventListener('click', closeWishlist);
-  if (wishlistBackdrop) wishlistBackdrop.addEventListener('click', closeWishlist);
+  window.openWishlist = openWishlist;
+  window.closeWishlist = closeWishlist;
+
+  const wBtn = document.getElementById('wishlistBtn');
+  const closeWBtn = document.getElementById('closeWishlistBtn');
+  const wBackdrop = document.getElementById('wishlistBackdrop');
+  if (wBtn) wBtn.addEventListener('click', openWishlist);
+  if (closeWBtn) closeWBtn.addEventListener('click', closeWishlist);
+  if (wBackdrop) wBackdrop.addEventListener('click', closeWishlist);
+
+  // Sync favorites on init
+  updateWishlistUI();
 
   // 4. Shopping Bag Drawer State
   const cartBtn = document.getElementById('cartBtn');
@@ -278,68 +322,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateCartUI = () => {
     const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-    if (cartBadgeCount) {
-      cartBadgeCount.textContent = totalItems;
-      cartBadgeCount.classList.toggle('has-items', totalItems > 0);
+    const badge = document.getElementById('cartBadgeCount') || cartBadgeCount;
+    const dCount = document.getElementById('drawerCount') || drawerCount;
+    const emptyView = document.getElementById('emptyCartView') || emptyCartView;
+    const itemsList = document.getElementById('cartItemsList') || cartItemsList;
+    const footer = document.getElementById('cartDrawerFooter') || cartDrawerFooter;
+    const subtotalEl = document.getElementById('cartSubtotalValue') || cartSubtotalValue;
+
+    if (badge) {
+      badge.textContent = totalItems;
+      badge.classList.toggle('has-items', totalItems > 0);
     }
-    if (drawerCount) drawerCount.textContent = totalItems;
+    if (dCount) dCount.textContent = totalItems;
 
     if (cart.length === 0) {
-      if (emptyCartView) emptyCartView.style.display = 'block';
-      if (cartItemsList) cartItemsList.style.display = 'none';
-      if (cartDrawerFooter) cartDrawerFooter.style.display = 'none';
+      if (emptyView) emptyView.style.display = 'block';
+      if (itemsList) itemsList.style.display = 'none';
+      if (footer) footer.style.display = 'none';
     } else {
-      if (emptyCartView) emptyCartView.style.display = 'none';
-      if (cartItemsList) cartItemsList.style.display = 'block';
-      if (cartDrawerFooter) cartDrawerFooter.style.display = 'block';
+      if (emptyView) emptyView.style.display = 'none';
+      if (itemsList) itemsList.style.display = 'block';
+      if (footer) footer.style.display = 'block';
 
       let subtotal = 0;
-      cartItemsList.innerHTML = cart.map((item, idx) => {
-        const qty = item.quantity || 1;
-        const itemTotal = item.priceNum * qty;
-        subtotal += itemTotal;
-        return `
-          <div class="cart-item-row" data-id="${item.id}">
-            <img src="${item.img}" alt="${item.title}" class="cart-item-img">
-            <div class="cart-item-details">
-              <div class="cart-item-title">${item.title}</div>
-              <div class="cart-item-meta">${item.spec}</div>
-              <div class="cart-item-price-row">
-                <span class="cart-item-price">$${itemTotal.toLocaleString()}</span>
-                ${qty > 1 ? `<span class="cart-item-unit-note">($${item.priceNum.toLocaleString()} each)</span>` : ''}
-              </div>
-              <div class="cart-qty-wrapper">
-                <div class="cart-qty-btn-group">
-                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)" aria-label="Decrease quantity" title="Decrease quantity">−</button>
-                  <span class="cart-qty-val">${qty}</span>
-                  <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)" aria-label="Increase quantity" title="Increase quantity">+</button>
+      if (itemsList) {
+        itemsList.innerHTML = cart.map((item, idx) => {
+          const qty = item.quantity || 1;
+          const numPrice = typeof item.priceNum === 'number' ? item.priceNum : (parseInt(String(item.priceNum).replace(/[^0-9]/g, '')) || 2950);
+          const itemTotal = numPrice * qty;
+          subtotal += itemTotal;
+          return `
+            <div class="cart-item-row" data-id="${item.id}">
+              <img src="${item.img}" alt="${item.title}" class="cart-item-img">
+              <div class="cart-item-details">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-meta">${item.spec}</div>
+                <div class="cart-item-price-row">
+                  <span class="cart-item-price">$${itemTotal.toLocaleString()}</span>
+                  ${qty > 1 ? `<span class="cart-item-unit-note">($${numPrice.toLocaleString()} each)</span>` : ''}
                 </div>
-                <button type="button" class="cart-item-remove-link" onclick="removeCartItem(${idx})">Remove</button>
+                <div class="cart-qty-wrapper">
+                  <div class="cart-qty-btn-group">
+                    <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)" aria-label="Decrease quantity" title="Decrease quantity">−</button>
+                    <span class="cart-qty-val">${qty}</span>
+                    <button type="button" class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)" aria-label="Increase quantity" title="Increase quantity">+</button>
+                  </div>
+                  <button type="button" class="cart-item-remove-link" onclick="removeCartItem(${idx})">Remove</button>
+                </div>
               </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
 
-      if (cartSubtotalValue) {
-        cartSubtotalValue.textContent = `$${subtotal.toLocaleString()}.00`;
+      if (subtotalEl) {
+        subtotalEl.textContent = `$${subtotal.toLocaleString()}.00`;
       }
     }
   };
 
   const openCart = () => {
-    if (cartDrawer) cartDrawer.classList.add('active');
-    if (cartBackdrop) cartBackdrop.classList.add('active');
+    updateCartUI();
+    const drawer = document.getElementById('cartDrawer') || cartDrawer;
+    const backdrop = document.getElementById('cartBackdrop') || cartBackdrop;
+    if (drawer) drawer.classList.add('active');
+    if (backdrop) backdrop.classList.add('active');
   };
 
   const closeCart = () => {
-    if (cartDrawer) cartDrawer.classList.remove('active');
-    if (cartBackdrop) cartBackdrop.classList.remove('active');
+    const drawer = document.getElementById('cartDrawer') || cartDrawer;
+    const backdrop = document.getElementById('cartBackdrop') || cartBackdrop;
+    if (drawer) drawer.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
   };
 
-  if (cartBtn) cartBtn.addEventListener('click', openCart);
-  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
-  if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
+  window.openCart = openCart;
+  window.closeCart = closeCart;
+
+  const cBtn = document.getElementById('cartBtn');
+  const closeCBtn = document.getElementById('closeCartBtn');
+  const cBackdrop = document.getElementById('cartBackdrop');
+  if (cBtn) cBtn.addEventListener('click', openCart);
+  if (closeCBtn) closeCBtn.addEventListener('click', closeCart);
+  if (cBackdrop) cBackdrop.addEventListener('click', closeCart);
 
   // Global Cart Manipulation Methods
   window.changeCartQty = (idx, delta) => {
@@ -367,7 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.quickAddProduct = (id, title, spec, priceNum, img) => {
-    const existingIndex = cart.findIndex(item => item.id === id);
+    const num = typeof priceNum === 'number' ? priceNum : (parseInt(String(priceNum).replace(/[^0-9]/g, '')) || 2950);
+    const existingIndex = cart.findIndex(item => String(item.id) === String(id));
     if (existingIndex > -1) {
       cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
     } else {
@@ -375,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         id,
         title,
         spec,
-        priceNum,
+        priceNum: num,
         img,
         quantity: 1
       });
@@ -652,35 +718,84 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewSpecsBtn = document.getElementById('viewSpecsBtn');
   const specsModalBackdrop = document.getElementById('specsModalBackdrop');
   const closeSpecsModal = document.getElementById('closeSpecsModal');
+  const closeSpecsModalBottom = document.getElementById('closeSpecsModalBottom');
   const modalShapeTitle = document.getElementById('modalShapeTitle');
   const modalShapeVal = document.getElementById('modalShapeVal');
   const modalAddBagBtn = document.getElementById('modalAddBagBtn');
 
+  function hideSpecsModalDialog() {
+    if (specsModalBackdrop) {
+      specsModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function showSpecsModalDialog() {
+    if (!specsModalBackdrop) return;
+    const shape = currentSelectedShape || 'heart';
+    const info = diamondData && diamondData[shape] ? diamondData[shape] : null;
+
+    if (modalShapeTitle) {
+      if (info && info.title) {
+        modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+        modalShapeTitle.textContent = `${name} SPECIFICATIONS`;
+      }
+    }
+
+    if (modalShapeVal) {
+      if (info && info.spec) {
+        modalShapeVal.textContent = `${shape.charAt(0).toUpperCase() + shape.slice(1)} Cut • ${info.spec}`;
+      } else {
+        const activeBtn = document.querySelector('.diamond-shape-btn.active');
+        const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified • VVS1';
+        modalShapeVal.textContent = spec;
+      }
+    }
+
+    specsModalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
   if (viewSpecsBtn && specsModalBackdrop) {
-    viewSpecsBtn.addEventListener('click', () => {
-      const info = diamondData[currentSelectedShape];
-      modalShapeTitle.textContent = `${info.title} SPECIFICATIONS`;
-      modalShapeVal.textContent = `${currentSelectedShape.charAt(0).toUpperCase() + currentSelectedShape.slice(1)} Cut • ${info.spec}`;
-      specsModalBackdrop.classList.add('active');
-    });
+    viewSpecsBtn.addEventListener('click', showSpecsModalDialog);
 
     if (closeSpecsModal) {
-      closeSpecsModal.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-      });
+      closeSpecsModal.addEventListener('click', hideSpecsModalDialog);
+    }
+
+    if (closeSpecsModalBottom) {
+      closeSpecsModalBottom.addEventListener('click', hideSpecsModalDialog);
     }
 
     specsModalBackdrop.addEventListener('click', (e) => {
       if (e.target === specsModalBackdrop) {
-        specsModalBackdrop.classList.remove('active');
+        hideSpecsModalDialog();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && specsModalBackdrop.classList.contains('active')) {
+        hideSpecsModalDialog();
       }
     });
 
     if (modalAddBagBtn) {
       modalAddBagBtn.addEventListener('click', () => {
-        specsModalBackdrop.classList.remove('active');
-        const info = diamondData[currentSelectedShape];
-        quickAddProduct(`shape-${currentSelectedShape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        hideSpecsModalDialog();
+        const shape = currentSelectedShape || 'heart';
+        const info = diamondData && diamondData[shape] ? diamondData[shape] : null;
+        if (info) {
+          quickAddProduct(`shape-${shape}`, info.fullTitle, info.spec, info.priceNum, info.img);
+        } else if (typeof window.addProductToBag === 'function') {
+          const activeBtn = document.querySelector('.diamond-shape-btn.active');
+          const name = activeBtn ? activeBtn.dataset.name : 'HEART-CUT';
+          const spec = activeBtn ? activeBtn.dataset.spec : '2.05 CT • Natural Certified';
+          const img = activeBtn ? activeBtn.dataset.img : '';
+          window.addProductToBag(`shape-${shape}`, name + ' Certified Gemstone', 3850, spec, img);
+        }
       });
     }
   }
@@ -710,7 +825,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const greeting = document.querySelector('.concierge-greeting');
       if (greeting) {
-        greeting.innerHTML = `<strong>You:</strong> ${text}<br><br><strong>Swastic Exports Gemologist:</strong> Thank you for asking. Our gemstone specialist is reviewing your inquiry about "${text}". We can assist you live at 1.844.400.0065 or set up a bespoke digital showcase!`;
+        greeting.innerHTML = `<strong>You:</strong> ${text}<br><br><strong>Swastic Exports Gemologist:</strong> Thank you for your inquiry regarding "${text}". Our Jaipur atelier is at your service. For instant wholesale quotes, custom millimeter cuts, or 4K videos, message us directly on WhatsApp at <a href="https://wa.me/919660096877" target="_blank" style="color:#25D366;font-weight:600;">+91 96600 96877</a> or email <a href="mailto:exhibition.swasticexports@gmail.com" style="color:#cbb479;">exhibition.swasticexports@gmail.com</a>.`;
       }
       conciergeInput.value = '';
     };
@@ -731,11 +846,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!greeting) return;
 
     if (topic === 'diamond-guide') {
-      greeting.innerHTML = `<strong>Swastic Exports Guide:</strong> The <strong>Round Brilliant</strong> offers maximum brilliance with 57 facets, while the <strong>Emerald Cut</strong> provides vintage architectural symmetry. Try clicking through our 8 shapes above to see each cut on the gemstone display!`;
+      greeting.innerHTML = `<strong>Swastic Exports Laboratory Certification:</strong> Every high-value solitaire, pair, and layout is authenticated with physical reports from <strong>IIGJ LAB</strong>, GIA, or IGI, guaranteeing 100% natural earth-mined origin and transparent disclosure.`;
     } else if (topic === 'lab-vs-natural') {
-      greeting.innerHTML = `<strong>Natural vs Lab Gemstones:</strong> Both possess identical chemical, optical, and physical properties. Swastic Exports lab gemstones are conflict-free and offer larger carat weights at exceptional value with IGI certification.`;
+      greeting.innerHTML = `<strong>100% Certified Natural Zambian Emeralds:</strong> Sourced direct-from-source from Zambia’s world-famous Kagem mining belt, celebrated for vivid green saturation, crystal transparency, and signature bluish undertones.`;
     } else if (topic === 'custom-ring') {
-      greeting.innerHTML = `<strong>Custom Design:</strong> Our 7th-generation master jewelers can handcraft any custom design. Call 1.844.400.0065 or click 'Customize in this shape' on your favorite gemstone!`;
+      greeting.innerHTML = `<strong>The Layout Masters & Bespoke Calibration:</strong> We specialize in perfectly matched pairs, calibrated layouts, and custom geometric cuts tailored to your jewelry sketches. WhatsApp us at <a href="https://wa.me/919660096877" target="_blank" style="color:#25D366;font-weight:600;">+91 96600 96877</a> with your specifications!`;
     }
   };
 
@@ -1044,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="swastic-search-section">
                 <div class="swastic-section-head">
                   <h3 class="swastic-section-title">
-                    <span class="swastic-title-icon">💎</span>
+                    <span class="swastic-title-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;color:#cbb479;"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/></svg></span>
                     POPULAR GEMSTONES
                   </h3>
                   <span class="swastic-section-hint">Select a gemstone to explore verified inventory</span>
@@ -1191,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="swastic-search-results-grid" id="swasticSearchResultsGrid"></div>
               <div class="swastic-search-empty" id="swasticSearchEmpty" style="display: none;">
-                <div class="empty-icon">💎</div>
+                <div class="empty-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#cbb479;"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/></svg></div>
                 <h4 class="empty-title">No matching gemstones found</h4>
                 <p class="empty-desc">We couldn't find any items matching your search query. Try one of our signature gemstones:</p>
                 <div class="empty-suggestions">
@@ -1854,8 +1969,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
       if (wrap) {
-        wrap.addEventListener('click', () => {
-          if (video.paused) { video.play(); } else { video.pause(); }
+        wrap.addEventListener('click', (e) => {
+          if (e.target.closest('.reel-sound-toggle')) return;
+          const instaLink = card.querySelector('.reel-insta-link');
+          if (instaLink && instaLink.href) {
+            window.open(instaLink.href, '_blank');
+          } else {
+            if (video.paused) { video.play(); } else { video.pause(); }
+          }
         });
       }
     }
@@ -2049,17 +2170,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     };
 
-    // Intercept clicks on links pointing to section IDs
+    // Intercept clicks on links pointing to section IDs or data-scroll-to
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[href*="#"]');
+      const link = e.target.closest('a[href*="#"], [data-scroll-to], [data-target]');
       if (!link) return;
 
-      const href = link.getAttribute('href');
-      if (!href) return;
-
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-      const targetId = href.substring(hashIndex + 1);
+      let targetId = link.getAttribute('data-scroll-to') || link.getAttribute('data-target');
+      if (!targetId) {
+        const href = link.getAttribute('href') || '';
+        const hashIndex = href.indexOf('#');
+        if (hashIndex !== -1) {
+          targetId = href.substring(hashIndex + 1);
+        }
+      }
       if (!targetId) return;
 
       const targetEl = document.getElementById(targetId);
@@ -2087,7 +2210,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // FAQ Accordion Interactivity
+  const initFaqAccordion = () => {
+    const faqButtons = document.querySelectorAll('.faq-question-btn');
+    faqButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        if (!item) return;
+        const isActive = item.classList.contains('active');
+        // Toggle current item
+        if (isActive) {
+          item.classList.remove('active');
+        } else {
+          item.classList.add('active');
+        }
+      });
+    });
+  };
+
   initSmoothSectionScroll();
   initMobileNavDrawer();
+  initFaqAccordion();
 });
 
